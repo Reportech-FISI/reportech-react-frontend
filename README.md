@@ -1,6 +1,6 @@
 # Reportech FISI
 
-<div style="text-align:center;">
+<div align="center">
     <img src="src/assets/IamProgrammer!.png" height="200">
 </div>
 
