@@ -54,6 +54,6 @@ Technical support ticket management system that uses data structures and algorit
 | Search Algorithm          | Used to quickly search for tickets by ID number, user or status.                                                                             |
 | Sorting Algorithm         | Se utiliza para almacenar registros de usuarios, técnicos y detalles de los tickets, permitiendo un acceso rápido y eficaz a la información. |
 | Troubleshooting Algorithm | Used to diagnose complex technical problems through network or system analysis.                                                              |
-| Algoritmo de Notificación | Utilizado para enviar notificaciones automáticas a usuarios y técnicos sobre cambios en el estado de los tickets.                            |
+| Notification Algorithm    | Used to send automatic notifications to users and technicians about changes in ticket status.                                                |
 
 #### Made with <3 by UNMSM
