@@ -40,9 +40,9 @@ Technical support ticket management system that uses data structures and algorit
 - Registers page: `/registers`, file path `src/pages/registers/Registers.tsx`
 - Register details page: `/details/:registerId`, file path `src/pages/registers/RegisterDetails.tsx`
 - Add register page: `/add/register`, file path `src/pages/registers/SaveRegister.tsx`
-- Edit register page: `edit/:registerId`, file path `src/pages/registers/SaveRegister.tsx`
-- Add user page: `add/user`, file path `src/pages/admin/SaveUser.tsx`
-- Edit user page: `edit/:userId`, file path `src/pages/admin/SaveUser.tsx`
+- Edit register page: `/edit/:registerId`, file path `src/pages/registers/SaveRegister.tsx`
+- Add user page: `/add/user`, file path `src/pages/admin/SaveUser.tsx`
+- Edit user page: `/edit/:userId`, file path `src/pages/admin/SaveUser.tsx`
 
 ## Implementations
 
