@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { Button, ButtonGroup, TableBody, TableCell, TableHead, TableRow, Paper, TablePagination, TableContainer } from '@mui/material'
+import { TableBody, TableCell, TableHead, TableRow, Paper, TablePagination, TableContainer } from '@mui/material'
 import Table from '@mui/material/Table';
 import DeleteIcon from '@mui/icons-material/Delete';
 import quickSort from '../../algorithms/quickSort';
 import SortButtons from '../sortButtons/SortButtons';
 
-
+// TODO: Crear mockup de reporte
 interface Reporte {
   id: number;
   titulo: string;
@@ -13,10 +13,6 @@ interface Reporte {
   fechaPublicacion: string;
   prioridad: string
 }
-
-// TODO: Arreglar el ordenamiento. Se debe de guardar todo en un Array en un inicio del backend. 
-// BUG: La función ordenamiento requiere del backend para funcionar correctamente, cuando debería de ser independiente. 
-// DONE
 
 const RegistersTable = () => {
 
@@ -37,6 +33,7 @@ const RegistersTable = () => {
     setReportes(data);
   };
 
+  // 1/5 Algoritmos
   const sortedReportes = quickSort([...reportes], (a: Reporte, b: Reporte) => {
     const comparison = String(a[sortField]).localeCompare(String(b[sortField]));
     return sortDirection === 'asc' ? comparison : -comparison;
@@ -101,7 +98,9 @@ const RegistersTable = () => {
               const fechaFormateada = `${fecha.toLocaleDateString()} ${fecha.toLocaleTimeString()}`;
 
               return (
-                <TableRow key={reporte.id}>
+                <TableRow 
+                key={reporte.id} 
+                onClick={() => alert(`Reporte seleccionado: ${reporte.titulo}`)}>
                   <TableCell>{reporte.id}</TableCell>
                   <TableCell>{reporte.titulo}</TableCell>
                   <TableCell>{reporte.estado}</TableCell>
