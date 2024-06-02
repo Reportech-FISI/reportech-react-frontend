@@ -3,7 +3,7 @@ import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';impo
 
 const Appbar = () => {
   return (
-    <div className='flex justify-between bg-slate-100 p-2'>
+    <div className='flex justify-between bg-slate-100 p-2 fixed w-full'>
       <div className='flex items-center'>
         <Box sx={{flexGrow: 0}}>
           <AdminPanelSettingsIcon fontSize='large' color='primary'/>
