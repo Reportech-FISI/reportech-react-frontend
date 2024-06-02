@@ -14,6 +14,10 @@ interface Reporte {
   prioridad: string
 }
 
+// TODO: Arreglar el ordenamiento. Se debe de guardar todo en un Array en un inicio del backend. 
+// BUG: La función ordenamiento requiere del backend para funcionar correctamente, cuando debería de ser independiente. 
+// DONE
+
 const RegistersTable = () => {
 
   const [reportes, setReportes] = useState<Reporte[]>([]);
@@ -30,12 +34,13 @@ const RegistersTable = () => {
   const fetchReportes = async () => {
     const response = await fetch('http://localhost:8080/api/reportes');
     const data: Reporte[] = await response.json();
-    const sortedData = quickSort([...data], (a: Reporte, b: Reporte) => {
-      const comparison = String(a[sortField]).localeCompare(String(b[sortField]));
-      return sortDirection === 'asc' ? comparison : -comparison;
-    });
-    setReportes(sortedData);
+    setReportes(data);
   };
+
+  const sortedReportes = quickSort([...reportes], (a: Reporte, b: Reporte) => {
+    const comparison = String(a[sortField]).localeCompare(String(b[sortField]));
+    return sortDirection === 'asc' ? comparison : -comparison;
+  });
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -48,6 +53,14 @@ const RegistersTable = () => {
   
   useEffect(() => {
     fetchReportes();
+  }, []);
+
+  useEffect(() => {
+    const sortedData = quickSort([...reportes], (a: Reporte, b: Reporte) => {
+      const comparison = String(a[sortField]).localeCompare(String(b[sortField]));
+      return sortDirection === 'asc' ? comparison : -comparison;
+    });
+    setReportes(sortedData);
   }, [sortField, sortDirection]);
 
   return (
@@ -80,7 +93,7 @@ const RegistersTable = () => {
           </TableHead>
 
           <TableBody>
-            {reportes
+            {sortedReportes
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((reporte : Reporte) => {
 
