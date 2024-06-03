@@ -1,0 +1,15 @@
+.encabezado{
+    display : flex;
+    flex-direction: row;
+
+    justify-content: space-between;
+    padding: 10px;
+}
+.btnvolver{
+    padding-right: 100px;
+    padding-top: 40px;
+}
+.menu{
+    font-size: 150px;
+    text-align: center;
+}

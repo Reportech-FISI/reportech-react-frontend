@@ -1,3 +1,21 @@
+import adminfoto from "../../assets/adminfoto.png";
+import "../../css/home.css"
 export const Home = () => {
-  return <h1 className="text-5xl">This is the home page for the admin</h1>;
+  return (
+    <>
+        <div>
+            <div className="encabezado">
+              <div> <img src={adminfoto} alt="adminfoto" /> </div>
+              <div className="btnvolver"> <button> volver </button> </div>
+            </div>
+
+            <div className="menu">
+              <h1>Menu</h1>
+            </div>
+
+            <div></div>
+
+        </div>
+    </>
+  )
 };
