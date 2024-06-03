@@ -4,15 +4,9 @@ import Table from '@mui/material/Table';
 import DeleteIcon from '@mui/icons-material/Delete';
 import quickSort from '../../algorithms/quickSort';
 import SortButtons from '../sortButtons/SortButtons';
+import { Reporte } from '../../models/Reporte_Fila';
 
 // TODO: Crear mockup de reporte
-interface Reporte {
-  id: number;
-  titulo: string;
-  estado: string;
-  fechaPublicacion: string;
-  prioridad: string
-}
 
 const RegistersTable = () => {
 
