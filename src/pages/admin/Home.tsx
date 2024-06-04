@@ -16,7 +16,7 @@ export const Home = () => {
               <h1>Menu</h1>
             </div>
 
-                        <div className="container">
+            <div className="container">
               <div className="registerSection">
                 <div className="registerBTN">
                   <button className="image1Button">
@@ -33,7 +33,7 @@ export const Home = () => {
                 </div>
                 <div className="userTXT"> Usuarios </div>
               </div>
-            </div>
+        </div>
 
         </div>
     </>
