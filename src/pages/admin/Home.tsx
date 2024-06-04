@@ -1,16 +1,13 @@
-import adminfoto from "../../assets/adminfoto.png";
-import registerIcon from "../../assets/registro.png";
-import userIcon from "../../assets/usuario.png";
+import registerIcon from "../../assets/registro.svg";
+import userIcon from "../../assets/usuario.svg";
+import Appbar from '../../components/appbar/Appbar';
 
 import "../../css/home.css"
 export const Home = () => {
   return (
     <>
         <div>
-            <div className="encabezado">
-              <div> <img src={adminfoto} alt="adminfoto" /> </div>
-              <div className="btnvolver"> <button> volver </button> </div>
-            </div>
+            <Appbar/>
 
             <div className="menutitle">
               <h1>Menu</h1>
