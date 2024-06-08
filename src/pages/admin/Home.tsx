@@ -1,38 +1,31 @@
 import registerIcon from "../../assets/registro.svg";
 import userIcon from "../../assets/usuario.svg";
-import Appbar from '../../components/appbar/Appbar';
+import Appbar from "../../components/appbar/Appbar";
 
-import "../../css/home.css"
 export const Home = () => {
   return (
     <>
-        <div>
-            <Appbar/>
-
-            <div className="menutitle">
-              <h1>Menu</h1>
-            </div>
-
-            <div className="container">
-              <div className="registerSection">
-                <div className="registerBTN">
-                  <button className="image1Button">
-                    <img src={registerIcon} alt="registro" className="buttonRegistro"/>
-                  </button>
-                </div>
-                <div className="registerTXT"> Registros </div>
-              </div>
-              <div className="userSection">
-                <div className="userBTN">
-                  <button className="image2Button">
-                    <img src={userIcon} alt="user" className="buttonUsuario"/>
-                  </button>
-                </div>
-                <div className="userTXT"> Usuarios </div>
-              </div>
+      <Appbar />
+      <div className="pt-16 flex justify-evenly items-center h-screen">
+        <div className="flex flex-col items-center w-1/5">
+          <button className="size-full">
+            <img src={registerIcon} alt="registro" className="size-full" />
+          </button>
+          <h2 className="text-4xl"> Registros </h2>
         </div>
-
+        <div className="flex flex-col items-center w-1/5">
+          <button className="size-full">
+            <img src={userIcon} alt="user" className="size-full" />
+          </button>
+          <h2 className="text-4xl"> Usuarios </h2>
         </div>
+        <div className="flex flex-col items-center w-1/5">
+          <button className="size-full">
+            <img src={userIcon} alt="user" className="size-full" />
+          </button>
+          <h2 className="text-4xl"> Usuarios </h2>
+        </div>
+      </div>
     </>
-  )
+  );
 };
