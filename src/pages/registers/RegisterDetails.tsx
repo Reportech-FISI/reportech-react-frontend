@@ -1,17 +1,10 @@
+import Appbar from '../../components/appbar/Appbar';
 import './RegisterDetails.css';
 export const RegisterDetails = () => {
   return (
+    <>
+    <Appbar/>
     <div className="container">
-      <div className="header">
-        <div className="profile">
-          <img src="profile-placeholder.png" alt="Profile Picture" />
-          <div>
-            <p>Nombre1 Apellido1</p>
-            <p>(Tipo de cuenta)</p>
-          </div>
-        </div>
-        <button> ← Volver</button>
-      </div>
       <h1>Detalles</h1>
       <div>
         <div className="section-title">Datos del registro:</div>
@@ -20,7 +13,7 @@ export const RegisterDetails = () => {
             <tr>
               <td>ID:</td>
               <td>Título:</td>
-            </tr>s
+            </tr>
             <tr>
               <td>Fecha:</td>
               <td>Estado:</td>
@@ -57,6 +50,7 @@ export const RegisterDetails = () => {
         </table>
       </div>
     </div>
+    </>
   );
 };
 
