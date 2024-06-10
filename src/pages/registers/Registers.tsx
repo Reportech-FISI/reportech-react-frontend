@@ -1,5 +1,5 @@
-import React from 'react';
-import { Button, ButtonGroup } from '@mui/material';
+// import React from 'react';
+// import { Button, ButtonGroup } from '@mui/material';
 import RegistersTable from '../../components/registers/RegistersTable';
 import RegisterSearchBar from '../../components/registers/RegisterSearchBar';
 import Appbar from '../../components/appbar/Appbar';
