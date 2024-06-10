@@ -3,8 +3,8 @@ export const RegisterDetails = () => {
   return (
     <>
     <Appbar/>
-    <div className="container mx-auto my-5 p-5 bg-white rounded-lg shadow-md">
-      <h1 className="text-3xl font-bold mb-5">Detalles</h1>
+    <div className="container mx-auto pt-16 p-5 bg-white shadow-md">
+      <h1 className="text-3xl font-bold mb-5 text-center">Detalles</h1>
       <div>
         <div className="text-lg font-semibold mb-2">Datos del registro:</div>
         <table className="w-full border-collapse table-auto">
