@@ -4,7 +4,7 @@ import { Trabajador } from '../../models/trabajador/Trabajador';
 // Ando usando FALSO en vez de Faker debido a que el último no me funcionaba (LO ODIO)
 
 const roles = ['ADMIN', 'SOPORTE', 'TECNICO'];
-const cargos = ['REPARACION_COMPUTADORAS', 'MANTENIMIENTO_SERVIDORES', 'CONFIGURACION_REDES', 'SOPORTE_SOFTWARE', 'PROGRAMACION', 'ADMINISTRACION_BASEDATOS', 'SEGURIDAD_INFORMATICA', 'ANALISIS_SISTEMAS', 'GESTION_PROYECTOS', 'CAPACITACION_USUARIOS', 'REDACCION_DOCUMENTACION', 'RESOLUCION_PROBLEMAS', 'ATENCION_CLIENTE', 'TRABAJO_EQUIPO', 'COMUNICACION_EFECTIVA', 'APRENDIZAJE_CONTINUO', 'INSTALACION_CABLEADO', 'MANTENIMIENTO_IMPRESORAS', 'CONFIGURACION_TELEFONIA', 'MANEJO_HERRAMIENTAS'];
+const cargos = ['REPARACION_COMPUTADORAS', 'CONFIGURACION_REDES', 'SOPORTE_SOFTWARE', 'PROGRAMACION', 'ADMINISTRACION_BASEDATOS', 'SEGURIDAD_INFORMATICA', 'ANALISIS_SISTEMAS', 'CAPACITACION_USUARIOS', 'REDACCION_DOCUMENTACION', 'RESOLUCION_PROBLEMAS', 'ATENCION_CLIENTE', 'INSTALACION_CABLEADO', 'MANTENIMIENTO_IMPRESORAS', 'CONFIGURACION_TELEFONIA', 'MANEJO_HERRAMIENTAS'];
 
 async function createTrabajadores() {
     const promises = [];
@@ -16,9 +16,7 @@ async function createTrabajadores() {
             apellidos: randLastName(),
             rol: roles[Math.floor(Math.random() * roles.length)],
             cargo: [cargos[Math.floor(Math.random() * cargos.length)]],
-            habilidades: 'x',
-            tiempoExperiencia: Math.floor(Math.random() * 10) + 1,
-            reportesHechos: null
+            tiempoExperiencia: Math.floor(Math.random() * 10) + 1
         }
 
         const promesa = fetch('http://localhost:8080/api/test/trabajador', {

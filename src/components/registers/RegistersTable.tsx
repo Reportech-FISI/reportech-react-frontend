@@ -5,10 +5,13 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import quickSort from '../../algorithms/quickSort';
 import SortButtons from '../sortButtons/SortButtons';
 import { Reporte } from '../../models/Reporte_Fila';
+import { useNavigate } from 'react-router-dom';
 
 // TODO: Crear mockup de reporte
 
 const RegistersTable = () => {
+
+  const navigate = useNavigate();
 
   const [reportes, setReportes] = useState<Reporte[]>([]);
   const [page, setPage] = useState(0);
@@ -94,7 +97,7 @@ const RegistersTable = () => {
               return (
                 <TableRow 
                 key={reporte.id} 
-                onClick={() => alert(`Reporte seleccionado: ${reporte.titulo}`)}>
+                onClick={() => navigate(`/details/${reporte.id}`)}>
                   <TableCell>{reporte.id}</TableCell>
                   <TableCell>{reporte.titulo}</TableCell>
                   <TableCell>{reporte.estado}</TableCell>

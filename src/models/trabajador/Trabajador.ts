@@ -24,8 +24,6 @@ export interface Trabajador {
     apellidos: string;
     rol: string;
     cargo: string[];
-    habilidades: string;
     tiempoExperiencia: number;
-    reportesHechos: any;
 }
 

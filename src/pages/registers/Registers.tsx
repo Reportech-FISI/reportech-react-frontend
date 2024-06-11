@@ -3,6 +3,7 @@
 import RegistersTable from '../../components/registers/RegistersTable';
 import RegisterSearchBar from '../../components/registers/RegisterSearchBar';
 import Appbar from '../../components/appbar/Appbar';
+import RegistersModal from '../../components/registers/RegistersModal';
 
 export const Registers = () => {
   return (

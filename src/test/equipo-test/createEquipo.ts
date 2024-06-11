@@ -10,7 +10,6 @@ async function createEquipo() {
             estadoReparacion: estados[Math.floor(Math.random() * estados.length)],
             descripcion: randProductDescription(),
             foto: null,
-            historial: 'test',
             nombre: `PC ${i}`
         }
 

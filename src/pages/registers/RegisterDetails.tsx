@@ -1,5 +1,61 @@
+import { useParams } from 'react-router-dom';
 import Appbar from '../../components/appbar/Appbar';
+import { useEffect, useState } from 'react';
+import { Registro } from '../../models/registro/Registro';
+import { Equipo } from '../../models/equipo/Equipo';
 export const RegisterDetails = () => {
+
+  const { registerId } = useParams<{ registerId: string }>();
+  const [reporte, setReporte] = useState<Registro>({
+    id: 0,
+    titulo: '',
+    estado: '',
+    fechaPublicacion: '',
+    prioridad: '',
+    userDesignado: null,
+    userReporterNombre: null,
+    clasificacion: '',
+    equipo: {
+      id: 0
+    },
+    trabajador: {
+      id: 0
+    }
+  });
+
+  const [equipo, setEquipo] = useState<Equipo>({
+    id: 0,
+    estadoReparacion: '',
+    descripcion: '',
+    foto: null,
+    nombre: ''
+  });
+
+
+  useEffect(() => {
+    fetch(`http://localhost:8080/api/reporte/${registerId}`)
+      .then(response => response.json())
+      .then(data => setReporte(data));
+  }, [registerId]);
+  
+  const fecha = new Date(reporte.fechaPublicacion);
+  const fechaFormateada = `${fecha.toLocaleDateString()} ${fecha.toLocaleTimeString()}`;
+
+  const fetchEquipo = async () => {
+    await fetch(`http://localhost:8080/api/reporte/${registerId}/equipo/${reporte.titulo}`)
+      .then(response => response.json())
+      .then(data => setEquipo(data));
+  };
+
+  useEffect(() => {
+    fetchEquipo();
+  }, [registerId, reporte.titulo]);
+
+  useEffect(() => {
+    console.log(reporte);
+    console.log(equipo);
+  } , []);
+
   return (
     <>
     <Appbar/>
@@ -10,15 +66,15 @@ export const RegisterDetails = () => {
         <table className="w-full border-collapse table-auto">
           <tbody>
             <tr>
-              <td className="border p-2">ID:</td>
-              <td className="border p-2">Título:</td>
+              <td className="border p-2">ID: {reporte.id}</td>
+              <td className="border p-2">Título: {reporte.titulo}</td>
             </tr>
             <tr>
-              <td className="border p-2">Fecha:</td>
-              <td className="border p-2">Estado:</td>
+              <td className="border p-2">Fecha: {fechaFormateada} </td>
+              <td className="border p-2">Estado: {reporte.estado} </td>
             </tr>
             <tr>
-              <td className="border p-2">Prioridad:</td>
+              <td className="border p-2">Prioridad: {reporte.prioridad} </td>
               <td className="border p-2">Ubicación:</td>
             </tr>
             <tr>
@@ -35,15 +91,15 @@ export const RegisterDetails = () => {
         <table className="w-full border-collapse table-auto">
           <tbody>
             <tr>
-              <td className="border p-2">ID:</td>
-              <td className="border p-2 w-2/4 whitespace-normal break-words">Nombre:</td>
-              <td className="border p-2 align-text-top" rowSpan={3}>Foto:</td>
+              <td className="border p-2">ID: {equipo.id}</td>
+              <td className="border p-2 w-2/4 whitespace-normal break-words">Nombre: {equipo.nombre}</td>
+              <td className="border p-2 align-text-top" rowSpan={3}>Foto {equipo.foto}:</td>
             </tr>
             <tr>
-              <td className="border p-2 w-3/4 whitespace-normal break-words" colSpan={2}>Descripción del problema: </td>
+              <td className="border p-2 w-3/4 whitespace-normal break-words" colSpan={2}>Descripción del problema: {equipo.descripcion}</td>
             </tr>
             <tr>
-              <td className="border p-2" colSpan={2}>Estado de reparación:</td>
+              <td className="border p-2" colSpan={2}>Estado de reparación: {equipo.estadoReparacion} </td>
             </tr>
           </tbody>
         </table>

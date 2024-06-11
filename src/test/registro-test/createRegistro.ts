@@ -1,20 +1,22 @@
 import { randBetweenDate } from '@ngneat/falso';
 import { Registro } from '../../models/registro/Registro';
 
-const estados = ['APROBADO', 'RECHAZADO', 'POR_REVISAR'];
+const estados = ['TECNICO_NO_NECESARIO', 'TECNICO_POR_ASIGNAR','TECNICO_ASIGNADO'];
 const prioridades = ['URGENTE', 'NO_URGENTE'];
+const clasificacion = ['HARDWARE','SOFTWARE', 'REDES', 'BASES_DE_DATOS','SEGURIDAD',
+    'TELEFONÍA', 'IMPRESIÓN', 'CABLEADO'];
 
 async function createRegistros() {
     const promises = [];
     for (let i = 0; i < 50; i++) {
-        const date = randBetweenDate({ from: new Date('10/07/2024'), to: new Date('10/07/2025')});
+        const date = randBetweenDate({ from: new Date('10/06/2024'), to: new Date('10/07/2025')});
         const registro: Registro = {
             estado: estados[Math.floor(Math.random() * estados.length)],
             fechaPublicacion: new Date(date).toISOString(),
             prioridad: prioridades[Math.floor(Math.random() * prioridades.length)],
             titulo: `Registro ${i}`,
             userDesignado: null,
-            userReporterNombre: null,
+            clasificacion: clasificacion[Math.floor(Math.random() * clasificacion.length)],
             equipo: {
                 id: Math.floor(Math.random() * 50) + 1
             },
