@@ -47,7 +47,7 @@ function createTrabajadores() {
             switch (_a.label) {
                 case 0:
                     promises = [];
-                    for (i = 0; i < 50; i++) {
+                    for (i = 0; i < 1000; i++) {
                         trabajador = {
                             email: (0, falso_1.randEmail)(),
                             password: (0, falso_1.randPassword)(),

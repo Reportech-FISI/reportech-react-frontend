@@ -8,7 +8,10 @@ import { SaveRegister } from "./pages/registers/SaveRegister.tsx";
 import { SaveUser } from "./pages/admin/AddUser.tsx";
 import { Home } from "./pages/admin/Home.tsx";
 import { RegisterDetails } from "./pages/registers/RegisterDetails.tsx";
+import AssignRegister from "./pages/assign/AssignRegister.tsx";
+import ManualAssign from "./pages/assign/ManualAssign.tsx";
 import RegisterEstadisticas from "./pages/registers/RegisterEstadisticas.tsx";
+import Users from "./pages/admin/Users.tsx";
 
 const router = createBrowserRouter([
   {
@@ -36,12 +39,24 @@ const router = createBrowserRouter([
     element: <SaveRegister />,
   },
   {
+    path: "/users",
+    element: <Users /> 
+  },
+  {
     path: "/add/user",
     element: <SaveUser />,
   },
   {
     path: "/edit/:userId",
     element: <SaveUser />,
+  },
+  {
+    path: "/assign",
+    element: <AssignRegister />
+  },
+  {
+    path: "/assign/manual",
+    element: <ManualAssign />
   },
   {
     path: "/registers/estadisticas",

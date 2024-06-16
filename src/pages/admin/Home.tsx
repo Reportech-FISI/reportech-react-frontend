@@ -18,13 +18,13 @@ export const Home = () => {
           <h2 className="text-4xl"> Registros </h2>
         </div>
         <div className="flex flex-col items-center w-1/5">
-          <button className="size-full">
+          <button className="size-full" onClick={ () => navigate('/users')}>
             <img src={userIcon} alt="user" className="size-full" />
           </button>
           <h2 className="text-4xl"> Usuarios </h2>
         </div>
         <div className="flex flex-col items-center w-1/5">
-          <button className="size-full">
+          <button className="size-full" onClick={ () =>  navigate('/assign')}>
             <img src={userIcon} alt="user" className="size-full" />
           </button>
           <h2 className="text-4xl"> Asignación </h2>

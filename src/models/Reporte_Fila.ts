@@ -3,5 +3,6 @@ export interface Reporte {
   titulo: string;
   estado: string;
   fechaPublicacion: string;
-  prioridad: string
+  prioridad: string;
+  clasificacion: string;
 }

@@ -1,17 +1,19 @@
-import { useState } from 'react'
-import { styled, css } from '@mui/system';
-import { grey } from '@mui/material/colors';
-import { Fade, FormControl, InputLabel, MenuItem, Modal, Select, TextField } from '@mui/material';
+import { useEffect, useState } from 'react'
+import { Button, Fade, FormControl, InputLabel, MenuItem, Modal, Select, TextField } from '@mui/material';
+import { ModalContent } from '../../styles/modalContent';
+import { style } from '../../styles/style';
+import { Equipo } from '../../models/equipo/Equipo';
 
 const RegistersModal = () => {
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [addingNewEquipo, setAddingNewEquipo] = useState(false);
 
   // Form fields states
   const [estado, setEstado] = useState("");
-  const [fechaPublicacion, setFechaPublicacion] = useState("");
+  const [fechaPublicacion, setFechaPublicacion] = useState(new Date());
   const [prioridad, setPrioridad] = useState("");
   const [titulo, setTitulo] = useState("");
   const [clasificacion, setClasificacion] = useState("");
@@ -19,16 +21,30 @@ const RegistersModal = () => {
   const [descripcion, setDescripcion] = useState("");
   const [imagen, setImagen] = useState(null);
   const [nombre, setNombre] = useState("");
+  
+  const [equipos, setEquipos] = useState([]);
+  const [equipo_id, setEquipoId] = useState('');
 
-  const handleSubmit = async (event) => {
+  useEffect(() => {
+    const fetchEquipos = async () => {
+      const response = await fetch('http://localhost:8080/api/equipo');
+      const data = await response.json();
+      setEquipos(data);
+    };
+  
+    fetchEquipos();
+  }, []);
+
+  const handleSubmit = async (event: { preventDefault: () => void; }) => {
     event.preventDefault();
 
     const teamData = {
       estado,
-      fechaPublicacion,
+      fechaPublicacion: fechaPublicacion.toISOString(),
       prioridad,
       titulo,
       clasificacion,
+      equipo: { id: equipo_id }
     };
 
     const teamDataEquipo = {
@@ -39,21 +55,26 @@ const RegistersModal = () => {
     };
 
     try {
-      // Primera solicitud a /api/equipo
-      const responseEquipo = await fetch('http://localhost:8080/api/equipo', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(teamDataEquipo)
-      });
+      if (addingNewEquipo) {
+        // Primera solicitud a /api/equipo
+        const responseEquipo = await fetch('http://localhost:8080/api/equipo', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(teamDataEquipo)
+        });
   
-      if (!responseEquipo.ok) {
-        throw new Error('Error al enviar los datos a /api/equipo');
+        if (!responseEquipo.ok) {
+          throw new Error('Error al enviar los datos a /api/equipo');
+        }
+  
+        const dataEquipo = await responseEquipo.json();
+        console.log(dataEquipo);
+  
+        // Actualizar equipo_id con el ID del equipo recién creado
+        teamData.equipo = { id: dataEquipo.id };
       }
-  
-      const dataEquipo = await responseEquipo.json();
-      console.log(dataEquipo);
   
       // Segunda solicitud a /api/reporte
       const responseReporte = await fetch('http://localhost:8080/api/reporte', {
@@ -116,8 +137,8 @@ const RegistersModal = () => {
                       id="datetime-local"
                       label="Fecha de publicación"
                       type="datetime-local"
-                      value={fechaPublicacion}
-                      onChange={(e) => setFechaPublicacion(e.target.value)}
+                      value={fechaPublicacion.toISOString().substring(0,16)}
+                      onChange={(e) => setFechaPublicacion(new Date(e.target.value))}
                       InputLabelProps={{
                         shrink: true,
                       }}
@@ -151,47 +172,72 @@ const RegistersModal = () => {
                     </Select>
                   </FormControl>
                 </div>
-
+                
                 <div>
-                  <h3 className="text-lg mb-4">Datos del equipo</h3>
-                  <div className='mt-6 mb-6'>
-                    <TextField label="Nombre del equipo" value={nombre} onChange={(e) => setNombre(e.target.value)}/>
-                  </div>
-                  <FormControl fullWidth>
-                    <InputLabel>Estado de reparación</InputLabel>
-                    <Select value={estadoReparacion} onChange={(e) => setEstadoReparacion(e.target.value)}>
-                      <MenuItem value={"REPARABLE"}>REPARABLE</MenuItem>
-                      <MenuItem value={"IRREPARABLE"}>IRREPARABLE</MenuItem>
-                    </Select>
-                  </FormControl>
-                  <div className='mt-4'>
-                    <TextField
-                      label="Descripción"
-                      multiline
-                      rows={4}
-                      variant="outlined"
-                      className="mt-4"
-                      value={descripcion}
-                      onChange={(e) => setDescripcion(e.target.value)}
-                    />
-                  </div>
-                  
-                  <input
-                    accept="image/*"
-                    id="contained-button-file"
-                    type="file"
-                    className="mt-4"
-                    onChange={() => setImagen(null)}
-                  />
+                  <Button onClick={() => setAddingNewEquipo(false)}>Seleccionar equipo existente</Button>
+                  {addingNewEquipo == false ? (
+                    <div>
+                       <div>
+                        <FormControl fullWidth>
+                          <InputLabel>Equipo</InputLabel>
+                          <Select value={equipo_id} onChange={(e) => setEquipoId(e.target.value)}>
+                            {equipos.map((equipo: Equipo) => (
+                              <MenuItem 
+                                key={equipo.id} value={equipo.id}>
+                                {equipo.nombre}
+                              </MenuItem>
+                            ))}
+                          </Select>
+                        </FormControl>
+                      </div>
+                    </div>
+                  ): null}
+                  <Button onClick={() => setAddingNewEquipo(true)}>Añadir nuevo equipo</Button>
+                  {addingNewEquipo == true ? (
+                    <div>
+                      <h3 className="text-lg mb-4">Datos del equipo</h3>
+                      <div className='mt-6 mb-6'>
+                        <TextField label="Nombre del equipo" value={nombre} onChange={(e) => setNombre(e.target.value)}/>
+                      </div>
+
+                      <FormControl fullWidth>
+                        <InputLabel>Estado de reparación</InputLabel>
+                        <Select value={estadoReparacion} onChange={(e) => setEstadoReparacion(e.target.value)}>
+                          <MenuItem value={"REPARABLE"}>REPARABLE</MenuItem>
+                          <MenuItem value={"IRREPARABLE"}>IRREPARABLE</MenuItem>
+                        </Select>
+                      </FormControl>
+                      
+                      <div className='mt-4'>
+                        <TextField
+                          label="Descripción"
+                          multiline
+                          rows={4}
+                          variant="outlined"
+                          className="mt-4"
+                          value={descripcion}
+                          onChange={(e) => setDescripcion(e.target.value)}
+                        />
+                      </div>
+                
+                      <input
+                        accept="image/*"
+                        id="contained-button-file"
+                        type="file"
+                        className="mt-4"
+                        onChange={() => setImagen(null)}
+                      />
+                    </div>
+                  ): null}
                 </div>
                 
                 <button 
                   className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-2" 
                   type="submit"
-                  
                 >
                   Guardar
                 </button>
+
                 <button 
                   className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" 
                   type="button" 
@@ -201,9 +247,7 @@ const RegistersModal = () => {
                 </button>
               </form>   
             </div>
-            <div className="flex justify-end mt-4">
-                  
-              </div>
+
           </ModalContent>
         </Fade>
       </Modal>
@@ -211,47 +255,5 @@ const RegistersModal = () => {
   )
 }
 
-
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 700,
-};
-
-const ModalContent = styled('div')(
-  ({ theme }) => css`
-    font-family: 'IBM Plex Sans', sans-serif;
-    font-weight: 500;
-    text-align: start;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    overflow: hidden;
-    background-color: ${theme.palette.mode === 'dark' ? grey[900] : '#fff'};
-    border-radius: 8px;
-    border: 1px solid ${theme.palette.mode === 'dark' ? grey[700] : grey[200]};
-    box-shadow: 0 4px 12px
-      ${theme.palette.mode === 'dark' ? 'rgb(0 0 0 / 0.5)' : 'rgb(0 0 0 / 0.2)'};
-    padding: 24px;
-    color: ${theme.palette.mode === 'dark' ? grey[50] : grey[900]};
-
-    & .modal-title {
-      margin: 0;
-      line-height: 1.5rem;
-      margin-bottom: 8px;
-    }
-
-    & .modal-description {
-      margin: 0;
-      line-height: 1.5rem;
-      font-weight: 400;
-      color: ${theme.palette.mode === 'dark' ? grey[400] : grey[800]};
-      margin-bottom: 4px;
-    }
-  `,
-);
 
 export default RegistersModal
