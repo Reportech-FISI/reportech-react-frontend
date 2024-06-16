@@ -18,6 +18,7 @@
 */
 
 export interface Trabajador {
+    id: number;
     email: string;
     password: string;
     nombres: string;
