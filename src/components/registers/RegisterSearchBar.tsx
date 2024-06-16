@@ -59,8 +59,9 @@ const RegisterSearchBar = () => {
         }} 
         className='justify-end mb-2 flex-col'
       >
-        <div className='flex justify-end w-full'>
-
+        
+        
+        <div className='flex justify-end w-full mt-2'>
           <div>
             <RegistersModal/>
           </div>
@@ -81,6 +82,14 @@ const RegisterSearchBar = () => {
               </InputAdornment>
             }
           />
+        </div>
+        <div className=' flex justify-start w-full'>
+          <button 
+            className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded mr-2"
+            onClick={() => navigate('/registers/estadisticas')}
+          >
+            Ver estadisticas
+          </button>
         </div>
       </Toolbar>
       

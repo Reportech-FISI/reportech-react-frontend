@@ -6,6 +6,7 @@ import quickSort from '../../algorithms/quickSort';
 import SortButtons from '../sortButtons/SortButtons';
 import { Reporte } from '../../models/Reporte_Fila';
 import { useNavigate } from 'react-router-dom';
+import RegistersDeleteModal from './RegistersDeleteModal';
 
 // TODO: Crear mockup de reporte
 
@@ -97,16 +98,14 @@ const RegistersTable = () => {
               return (
                 <TableRow 
                 key={reporte.id} 
-                onClick={() => navigate(`/details/${reporte.id}`)}>
-                  <TableCell>{reporte.id}</TableCell>
-                  <TableCell>{reporte.titulo}</TableCell>
-                  <TableCell>{reporte.estado}</TableCell>
-                  <TableCell>{reporte.prioridad}</TableCell>
-                  <TableCell>{fechaFormateada}</TableCell>
+                >
+                  <TableCell onClick={() => navigate(`/details/${reporte.id}`)}>{reporte.id}</TableCell>
+                  <TableCell onClick={() => navigate(`/details/${reporte.id}`)}>{reporte.titulo}</TableCell>
+                  <TableCell onClick={() => navigate(`/details/${reporte.id}`)}>{reporte.estado}</TableCell>
+                  <TableCell onClick={() => navigate(`/details/${reporte.id}`)}>{reporte.prioridad}</TableCell>
+                  <TableCell onClick={() => navigate(`/details/${reporte.id}`)}>{fechaFormateada}</TableCell>
                   <TableCell>
-                    <button>
-                      <DeleteIcon color='error' />
-                    </button>
+                    <RegistersDeleteModal userId={reporte.id}/>
                   </TableCell>
                 </TableRow>
               );

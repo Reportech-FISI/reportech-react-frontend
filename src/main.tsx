@@ -8,6 +8,7 @@ import { SaveRegister } from "./pages/registers/SaveRegister.tsx";
 import { SaveUser } from "./pages/admin/AddUser.tsx";
 import { Home } from "./pages/admin/Home.tsx";
 import { RegisterDetails } from "./pages/registers/RegisterDetails.tsx";
+import RegisterEstadisticas from "./pages/registers/RegisterEstadisticas.tsx";
 
 const router = createBrowserRouter([
   {
@@ -42,6 +43,10 @@ const router = createBrowserRouter([
     path: "/edit/:userId",
     element: <SaveUser />,
   },
+  {
+    path: "/registers/estadisticas",
+    element: <RegisterEstadisticas/>
+  }
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
