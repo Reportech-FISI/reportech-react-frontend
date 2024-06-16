@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { TableBody, TableCell, TableHead, TableRow, Paper, TablePagination, TableContainer } from '@mui/material'
 import Table from '@mui/material/Table';
-import DeleteIcon from '@mui/icons-material/Delete';
 import quickSort from '../../algorithms/quickSort';
 import SortButtons from '../sortButtons/SortButtons';
 import { Reporte } from '../../models/Reporte_Fila';

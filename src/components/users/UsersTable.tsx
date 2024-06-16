@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Trabajador } from '../../models/trabajador/Trabajador';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TablePagination } from '@mui/material';
 import mergeSort from '../../algorithms/mergeSort';
 import SortButtons from '../sortButtons/SortButtons';
 
@@ -22,6 +22,15 @@ const UsersTable = () => {
     const data: Set<Trabajador> = await response.json();
     setTrabajadores(data);
   }
+
+  const handleChangePage = (event: unknown, newPage: number) => {
+    setPage(newPage);
+  };
+  
+  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };  
 
   // 3/5  Algoritmos
   const sortedTrabajadores = mergeSort([...trabajadores], sortField, sortDirection);
@@ -56,22 +65,31 @@ const UsersTable = () => {
                 Cargo
                 <SortButtons field='cargo' onSort={toggleSort} />
               </TableCell>
-              {/* Agrega aquí más celdas de encabezado si tus usuarios tienen más campos */}
             </TableRow>
           </TableHead>
           <TableBody>
-            {sortedTrabajadores.map((trabajador: Trabajador) => (
+            {sortedTrabajadores
+            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+            .map((trabajador: Trabajador) => (
               <TableRow key={trabajador.id}>
                 <TableCell>{trabajador.id}</TableCell>
                 <TableCell>{trabajador.nombres}</TableCell>
                 <TableCell>{trabajador.apellidos}</TableCell>
                 <TableCell>{trabajador.email}</TableCell>
                 <TableCell>{trabajador.cargo}</TableCell>
-                {/* Agrega aquí más celdas si tus usuarios tienen más campos */}
               </TableRow>
             ))}
           </TableBody>
         </Table>
+        <TablePagination
+          rowsPerPageOptions={[10, 25, 100]}
+          component="div"
+          count={Array.from(trabajadores).length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
       </TableContainer>
       
     </div>
