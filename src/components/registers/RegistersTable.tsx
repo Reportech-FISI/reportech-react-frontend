@@ -104,7 +104,7 @@ const RegistersTable = () => {
                   <TableCell onClick={() => navigate(`/details/${reporte.id}`)}>{reporte.prioridad}</TableCell>
                   <TableCell onClick={() => navigate(`/details/${reporte.id}`)}>{fechaFormateada}</TableCell>
                   <TableCell>
-                    <RegistersDeleteModal userId={reporte.id}/>
+                    <RegistersDeleteModal reporteId={reporte.id}/>
                   </TableCell>
                 </TableRow>
               );

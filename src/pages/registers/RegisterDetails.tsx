@@ -51,10 +51,10 @@ export const RegisterDetails = () => {
     fetchEquipo();
   }, [registerId, reporte.titulo]);
 
-  useEffect(() => {
-    console.log(reporte);
-    console.log(equipo);
-  } , []);
+  // useEffect(() => {
+  //   console.log(reporte);
+  //   console.log(equipo);
+  // } , []);
 
   return (
     <>
@@ -107,12 +107,16 @@ export const RegisterDetails = () => {
         </div>  
       </div>
       <div className='flex justify-start mt-4'>
-        <button
-          className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mr-2 flex" 
+        <div 
+          className="border-red-500 hover:bg-red-500 text-red-500 hover:text-white font-bold py-2 px-4 rounded mr-2 flex cursor-pointer"
         >
-          <RegistersDeleteModal userId={reporte.id} />
-            Eliminar
-        </button>
+          <a
+            className="border-red-500 hover:bg-red-500 text-red-500 hover:text-white font-bold py-2 px-4 rounded mr-2 flex" 
+          >
+            Eliminar: 
+          </a>
+          <RegistersDeleteModal reporteId={+registerId!} />
+        </div>
         <button
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2" 
         >

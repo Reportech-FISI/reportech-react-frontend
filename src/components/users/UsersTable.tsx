@@ -3,6 +3,7 @@ import { Trabajador } from '../../models/trabajador/Trabajador';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TablePagination } from '@mui/material';
 import mergeSort from '../../algorithms/mergeSort';
 import SortButtons from '../sortButtons/SortButtons';
+import UsersDeleteModal from './UsersDeleteModal';
 
 const UsersTable = () => {
 
@@ -41,7 +42,7 @@ const UsersTable = () => {
 
   return (
     <div className='flex justify-center'>
-      <TableContainer component={Paper} sx={{width: '70%'}}>
+      <TableContainer component={Paper} >
         <Table>
           <TableHead>
             <TableRow>
@@ -65,6 +66,7 @@ const UsersTable = () => {
                 Cargo
                 <SortButtons field='cargo' onSort={toggleSort} />
               </TableCell>
+              <TableCell></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -77,6 +79,9 @@ const UsersTable = () => {
                 <TableCell>{trabajador.apellidos}</TableCell>
                 <TableCell>{trabajador.email}</TableCell>
                 <TableCell>{trabajador.cargo}</TableCell>
+                <TableCell>
+                  <UsersDeleteModal userId={trabajador.id ?? 0}/>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
