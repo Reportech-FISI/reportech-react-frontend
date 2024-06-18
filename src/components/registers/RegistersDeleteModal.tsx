@@ -3,12 +3,15 @@ import { ModalContent } from '../../styles/modalContent'
 import { style } from '../../styles/style'
 import { Fade, Modal } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete';
+import { useNavigate } from 'react-router-dom';
 
 const RegistersDeleteModal = ({reporteId}: {reporteId: number}) => {
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const navigate = useNavigate();
 
   const fetchDeleteRegister = async () => {
     const response = await fetch(`http://localhost:8080/api/reporte/${reporteId}`, {
@@ -46,7 +49,8 @@ const RegistersDeleteModal = ({reporteId}: {reporteId: number}) => {
                 className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-2" 
                 onClick={() => {
                   fetchDeleteRegister();
-                  handleClose()
+                  navigate('/registers');
+                  location.reload()
                 }}
               >
                 Si
