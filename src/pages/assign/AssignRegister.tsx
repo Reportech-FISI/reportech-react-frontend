@@ -1,11 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Appbar from '../../components/appbar/Appbar'
 import RegisterSearchBar from '../../components/registers/RegisterSearchBar'
 import AssignTable from '../../components/assign/AssignTable'
 import { Button } from '@mui/material'
 import AssignModal from '../../components/assign/AssignModal'
+import AssignDetails from '../../components/assign/AssignDetails'
+import ManualAssignModal from '../../components/assign/ManualAssignModal'
 
 const AssignRegister = () => {
+
+  const [selectedReportId, setSelectedReportId] = useState<number | null>(null);
+  const [flag, setFlag] = useState<boolean | null>(false);
+
   return (
     <div className='bg-white'>
       <Appbar />
@@ -16,18 +22,22 @@ const AssignRegister = () => {
             <p>Seleccione un registro a asignar.</p>
           </div>
           {/* <RegisterSearchBar/> */}
-          <AssignTable />
+          <AssignTable onReportClick={setSelectedReportId} flagReportClickeado={setFlag}/>
         </div>
 
         <div className='bg-blue-300'>
           <div>
-            <h1>Información</h1>
+            <h1 className='flex justify-center p-6 font-semibold text-5xl mb-2'>Información</h1>
             <div>
-              TODO: Datos del reporte seleccionado.
+              <AssignDetails registerId = {selectedReportId!} flag = {flag!}/>
             </div>
-            <div>
-              <AssignModal/>
-              <Button sx={{backgroundColor: 'white'}}>Asignacion manual</Button>
+            <div className=''>
+              <div className='flex justify-center'>
+                <AssignModal/>
+              </div>
+              <div className='mt-2 flex justify-center'>
+                <ManualAssignModal registerId={selectedReportId!}/>
+              </div>
             </div>
           </div>
         </div>

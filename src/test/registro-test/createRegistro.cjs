@@ -48,7 +48,7 @@ function createRegistros() {
             switch (_a.label) {
                 case 0:
                     promises = [];
-                    for (i = 0; i < 50; i++) {
+                    for (i = 0; i < 200; i++) {
                         date = (0, falso_1.randBetweenDate)({ from: new Date('10/06/2024'), to: new Date('10/07/2025') });
                         registro = {
                             estado: estados[Math.floor(Math.random() * estados.length)],
@@ -61,7 +61,7 @@ function createRegistros() {
                                 id: Math.floor(Math.random() * 50) + 1
                             },
                             trabajador: {
-                                id: Math.floor(Math.random() * 50) + 1
+                                id: Math.floor(Math.random() * 300) + 1
                             }
                         };
                         promesa = fetch('http://localhost:8080/api/test/reporte', {

@@ -5,9 +5,12 @@ import quickSort from '../../algorithms/quickSort';
 import SortButtons from '../sortButtons/SortButtons';
 import { Reporte } from '../../models/Reporte_Fila';
 
-// TODO: Crear mockup de reporte
+type AssignTableProps = {
+  onReportClick: (reportId: number) => void;
+  flagReportClickeado: (flag: boolean) => void;
+};
 
-const AssignTable = () => {
+const AssignTable: React.FC<AssignTableProps> = ({onReportClick, flagReportClickeado}) => {
 
   const [reportes, setReportes] = useState<Reporte[]>([]);
   const [page, setPage] = useState(0);
@@ -21,7 +24,7 @@ const AssignTable = () => {
   };
   
   const fetchReportes = async () => {
-    const response = await fetch('http://localhost:8080/api/reportes');
+    const response = await fetch('http://localhost:8080/api/assign/reportes');
     const data: Reporte[] = await response.json();
     setReportes(data);
   };
@@ -87,8 +90,12 @@ const AssignTable = () => {
 
               return (
                 <TableRow 
-                key={reporte.id} 
-                onClick={() => alert(`Reporte seleccionado: ${reporte.titulo}`)}>
+                  key={reporte.id} 
+                  onClick={() => {
+                    //alert(`Reporte seleccionado: ${reporte.titulo}`);
+                    onReportClick(reporte.id);
+                    flagReportClickeado(true);
+                  }}>
                   <TableCell>{reporte.id}</TableCell>
                   <TableCell>{reporte.titulo}</TableCell>
                   <TableCell>{reporte.clasificacion}</TableCell>

@@ -8,7 +8,7 @@ const clasificacion = ['HARDWARE','SOFTWARE', 'REDES', 'BASES_DE_DATOS','SEGURID
 
 async function createRegistros() {
     const promises = [];
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < 200; i++) {
         const date = randBetweenDate({ from: new Date('10/06/2024'), to: new Date('10/07/2025')});
         const registro: Registro = {
             estado: estados[Math.floor(Math.random() * estados.length)],
@@ -21,7 +21,7 @@ async function createRegistros() {
                 id: Math.floor(Math.random() * 50) + 1
             },
             trabajador: {
-                id: Math.floor(Math.random() * 50) + 1
+                id: Math.floor(Math.random() * 300) + 1
             }
         }
 

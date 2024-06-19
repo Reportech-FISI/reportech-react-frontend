@@ -10,7 +10,7 @@ import UserAssignedCard from './UserAssignedCard';
 
 const AssignModal = () => {
 
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
