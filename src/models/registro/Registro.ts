@@ -17,13 +17,14 @@ Ejemplo:
 */
 
 export interface Registro {
-    id: number;
+    id?: number;
     titulo: string;
     estado: string;
     fechaPublicacion: string;
     prioridad: string;
     userDesignado: any;
     clasificacion: string;
+    ubicacion: string;
     equipo: {
         id: number;
     };

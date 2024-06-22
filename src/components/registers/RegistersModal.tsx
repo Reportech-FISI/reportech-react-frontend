@@ -21,7 +21,8 @@ const RegistersModal = () => {
   const [descripcion, setDescripcion] = useState("");
   const [imagen, setImagen] = useState(null);
   const [nombre, setNombre] = useState("");
-  
+  const [ubicacion, setUbicacion] = useState("");
+
   const [equipos, setEquipos] = useState([]);
   const [equipo_id, setEquipoId] = useState('');
 
@@ -44,6 +45,7 @@ const RegistersModal = () => {
       prioridad,
       titulo,
       clasificacion,
+      ubicacion,
       equipo: { id: equipo_id }
     };
 
@@ -157,6 +159,9 @@ const RegistersModal = () => {
                   </FormControl>
                   <div className='mt-6 mb-6'>
                     <TextField label="Titulo" value={titulo} onChange={(e) => setTitulo(e.target.value)}/>
+                  </div>
+                  <div className='mt-6 mb-6'>
+                    <TextField label="Ubicacion" value={ubicacion} onChange={(e) => setUbicacion(e.target.value)}/>
                   </div>
                   <FormControl fullWidth>
                     <InputLabel>Clasificación</InputLabel>

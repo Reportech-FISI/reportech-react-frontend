@@ -15,6 +15,7 @@ export const RegisterDetails = () => {
     prioridad: '',
     userDesignado: null,
     clasificacion: '',
+    ubicacion: '',
     equipo: {
       id: 0
     },
@@ -76,13 +77,13 @@ export const RegisterDetails = () => {
               </tr>
               <tr>
                 <td className="border p-2">Prioridad: {reporte.prioridad} </td>
-                <td className="border p-2">Ubicación:</td>
+                <td className="border p-2">Ubicación: {reporte.ubicacion}</td>
               </tr>
               <tr>
                 <td className="border p-2" colSpan={2}>Usuario reportador:</td>
               </tr>
               <tr>
-                <td className="border p-2" colSpan={2}>Encargado asignado:</td>
+                <td className="border p-2" colSpan={2}>Encargado asignado: {reporte.userDesignado}</td>
               </tr>
             </tbody>
           </table>

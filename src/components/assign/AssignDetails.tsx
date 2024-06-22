@@ -2,7 +2,6 @@ import { useEffect, useState } from "react"
 import { Registro } from "../../models/registro/Registro"
 import { Equipo } from "../../models/equipo/Equipo"
 import { Typography, Paper } from "@mui/material"
-import { styled } from "@mui/system";
 
 type AssignDetailsProps = {
   registerId: number;
@@ -22,6 +21,7 @@ const AssignDetails: React.FC<AssignDetailsProps> = ({ registerId, flag }) => {
     prioridad: '',
     userDesignado: null,
     clasificacion: '',
+    ubicacion: '',
     equipo: {
       id: 0
     },
@@ -103,6 +103,10 @@ const AssignDetails: React.FC<AssignDetailsProps> = ({ registerId, flag }) => {
           <Paper className="p-5 bg-gray-100 mb-3 w-2/3">
             <Typography variant="h6" className="text-orange-600">Estado reparacion:</Typography>
             <Typography variant="body1" className="text-gray-700">{equipo.estadoReparacion}</Typography>
+          </Paper>
+          <Paper className="p-5 bg-gray-100 mb-3 w-2/3">
+            <Typography variant="h6" className="text-orange-600">Ubicacion:</Typography>
+            <Typography variant="body1" className="text-gray-700">{registro.ubicacion}</Typography>
           </Paper>
         </div>
       </div>
