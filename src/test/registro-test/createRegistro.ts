@@ -17,8 +17,9 @@ async function createRegistros() {
             titulo: `Registro ${i}`,
             userDesignado: null,
             clasificacion: clasificacion[Math.floor(Math.random() * clasificacion.length)],
+            ubicacion: 'Aula 205 NP',
             equipo: {
-                id: Math.floor(Math.random() * 50) + 1
+                id: Math.floor(Math.random() * 150) + 1
             },
             trabajador: {
                 id: Math.floor(Math.random() * 300) + 1

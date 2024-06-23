@@ -45,7 +45,7 @@ function createEquipo() {
             switch (_a.label) {
                 case 0:
                     promises = [];
-                    for (i = 0; i < 50; i++) {
+                    for (i = 0; i < 150; i++) {
                         equipo = {
                             estadoReparacion: estados[Math.floor(Math.random() * estados.length)],
                             descripcion: (0, falso_1.randProductDescription)(),

@@ -8,7 +8,7 @@ const cargos = ['REPARACION_COMPUTADORAS', 'CONFIGURACION_REDES', 'SOPORTE_SOFTW
 
 async function createTrabajadores() {
     const promises = [];
-    for (let i = 0; i < 1000; i++) {
+    for (let i = 0; i < 500; i++) {
         const trabajador: Trabajador = {
             email: randEmail(),
             password: randPassword(),

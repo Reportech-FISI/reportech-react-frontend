@@ -35,7 +35,11 @@ const AssignDetails: React.FC<AssignDetailsProps> = ({ registerId, flag }) => {
     id: 0,
     estadoReparacion: '',
     descripcion: '',
-    foto: null,
+    foto: {
+      id: 0,
+      name: '',
+      type: ''
+    },
     nombre: ''
   })
 
@@ -49,9 +53,14 @@ const AssignDetails: React.FC<AssignDetailsProps> = ({ registerId, flag }) => {
   const fechaFormateada = `${fecha.toLocaleDateString()} ${fecha.toLocaleTimeString()}`;
 
   const fetchEquipo = async () => {
-    await fetch(`http://localhost:8080/api/reporte/${registerId}/equipo/${registro.titulo}`)
-      .then(response => response.json())
-      .then(data => setEquipo(data));
+    try {
+      const response = await fetch(`http://localhost:8080/api/reporte/${registerId}/equipo/${registro.titulo}`);
+      const data = await response.json();
+      console.log('Datos del equipo recibidos:', data);
+      setEquipo(data);
+    } catch (error) {
+      console.error('Error al obtener datos del equipo:', error);
+    }
   };
 
   useEffect(() => {
@@ -107,6 +116,14 @@ const AssignDetails: React.FC<AssignDetailsProps> = ({ registerId, flag }) => {
           <Paper className="p-5 bg-gray-100 mb-3 w-2/3">
             <Typography variant="h6" className="text-orange-600">Ubicacion:</Typography>
             <Typography variant="body1" className="text-gray-700">{registro.ubicacion}</Typography>
+          </Paper>
+          <Paper className="p-5 bg-gray-100 mb-3 w-2/3">
+            <Typography variant="h6" className="text-orange-600">Imagen: </Typography>
+            {equipo.foto && equipo.foto.id ? (
+              <img src={`http://localhost:8080/api/equipo/img/${equipo.foto.id}`} alt="imagen" className="w-60"/>
+            ) : (
+              <Typography variant="body1" className="text-gray-700">No hay imagen disponible</Typography>
+            )}
           </Paper>
         </div>
       </div>
