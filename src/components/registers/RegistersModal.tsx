@@ -3,8 +3,11 @@
   import { ModalContent } from '../../styles/modalContent';
   import { style } from '../../styles/style';
   import { Equipo } from '../../models/equipo/Equipo';
+import { useAuth } from '../../AuthProvider';
 
   const RegistersModal = () => {
+
+    const { id } = useAuth();
 
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
@@ -50,6 +53,7 @@
         titulo,
         clasificacion,
         ubicacion,
+        trabajador: { id },
         equipo: { id: equipo_id }
       };
 

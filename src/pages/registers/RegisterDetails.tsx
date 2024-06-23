@@ -10,6 +10,7 @@ export const RegisterDetails = () => {
   const { registerId } = useParams<{ registerId: string }>();
   const [reporte, setReporte] = useState<Registro>({
     id: 0,
+    userReporterNombre: '',
     titulo: '',
     estado: '',
     fechaPublicacion: '',
@@ -79,7 +80,7 @@ export const RegisterDetails = () => {
                 <td className="border p-2">Ubicación: {reporte.ubicacion}</td>
               </tr>
               <tr>
-                <td className="border p-2" colSpan={2}>Usuario reportador:</td>
+                <td className="border p-2" colSpan={2}>Usuario reportador: {reporte.userReporterNombre}</td>
               </tr>
               <tr>
                 <td className="border p-2" colSpan={2}>Encargado asignado: {reporte.userDesignado}</td>

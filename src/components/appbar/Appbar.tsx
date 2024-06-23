@@ -1,9 +1,13 @@
 import { Box } from '@mui/material'
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../AuthProvider';
 const Appbar = () => {
 
   const navigate = useNavigate();
+
+  const { nombres, apellidos, rol } = useAuth();
+  
 
   return (
     <div className='flex justify-between bg-slate-100 p-2  w-full'>
@@ -12,12 +16,12 @@ const Appbar = () => {
           <AdminPanelSettingsIcon fontSize='large' color='primary'/>
         </Box>
         <div className="ml-2">
-          <h3>Nombre</h3>
-          <h3 className="text-xs text-gray-500">Administrador</h3>
+          <h3>{nombres} {apellidos}</h3>
+          <h3 className="text-xs text-gray-500">{rol}</h3>
         </div>
       </div>
       <div className="flex items-center">
-        <button onClick={() => navigate('/')} className="p-2 bg-slate-700 hover:bg-slate-600 rounded text-zinc-100">
+        <button onClick={() => navigate('/home')} className="p-2 bg-slate-700 hover:bg-slate-600 rounded text-zinc-100">
           Atrás
         </button>
       </div>

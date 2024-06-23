@@ -18,6 +18,7 @@ Ejemplo:
 
 export interface Registro {
     id?: number;
+    userReporterNombre?: string;
     titulo: string;
     estado: string;
     fechaPublicacion: string;

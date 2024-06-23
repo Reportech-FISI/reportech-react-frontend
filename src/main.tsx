@@ -12,15 +12,16 @@ import AssignRegister from "./pages/assign/AssignRegister.tsx";
 import ManualAssign from "./pages/assign/ManualAssign.tsx";
 import RegisterEstadisticas from "./pages/registers/RegisterEstadisticas.tsx";
 import Users from "./pages/admin/Users.tsx";
+import { AuthProvider } from "./AuthProvider.tsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home />,
+    element: <Login />,
   },
   {
-    path: "/login",
-    element: <Login />,
+    path: "/home",
+    element: <Home />,
   },
   {
     path: "/registers",
@@ -66,6 +67,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <RouterProvider router={router}></RouterProvider>
+    <AuthProvider>
+      <RouterProvider router={router}></RouterProvider>
+    </AuthProvider>
   </React.StrictMode>,
 );
