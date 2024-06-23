@@ -28,6 +28,8 @@
 
     const [foto, setFoto] = useState(null); // Agrega un estado para la imagen
 
+    let id_equipo;
+
     useEffect(() => {
       const fetchEquipos = async () => {
         const response = await fetch('http://localhost:8080/api/equipos');
@@ -78,24 +80,8 @@
     
           // Se actualiza equipo_id con el ID del equipo recién creado
           teamData.equipo = { id: dataEquipo.id };
-
-          // Enviar imagen si existe
-          if (foto) {
-            const formData = new FormData();
-            formData.append('imagen', foto);
-
-            const imageResponse = await fetch(`http://localhost:8080/api/equipo/${dataEquipo.id}/img`, {
-              method: 'POST',
-              body: formData
-            });
-
-            if (!imageResponse.ok) {
-              throw new Error('Error al enviar la imagen');
-            }
-
-            const imageData = await imageResponse.json();
-            console.log(imageData);
-          }
+          id_equipo = dataEquipo.id;
+          
         }
     
         // Segunda solicitud a /api/reporte
@@ -113,6 +99,27 @@
 
         const dataReporte = await responseReporte.json();
         console.log(dataReporte);
+        
+        if (addingNewEquipo) {
+          // Enviar imagen si existe
+          if (foto) {
+            const formData = new FormData();
+            formData.append('imagen', foto);
+
+            const imageResponse = await fetch(`http://localhost:8080/api/equipo/${id_equipo}/img`, {
+              method: 'POST',
+              body: formData
+            });
+
+            if (!imageResponse.ok) {
+              throw new Error('Error al enviar la imagen');
+            }
+
+            // const imageData = await imageResponse.json();
+            // console.log(imageData);
+          }
+          handleClose();
+        }
 
         handleClose();
 
