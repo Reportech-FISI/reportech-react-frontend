@@ -24,21 +24,31 @@ export const Login = () => {
       });
 
       if (!response.ok) {
-        throw new Error('Error en el login');
+        console.log('Error en la solicitud:', response.statusText);
+        return;
       }
 
-      const { id, nombres, apellidos, rol } = await response.json();
+      const data = await response.json();
 
-      setId(id);
-      setNombres(nombres);
-      setApellidos(apellidos);
-      setRol(rol);
-      // Redirigir al usuario o mostrar mensaje de éxito
+      // JSON no vacío: usuario encontrado
+      if (Object.keys(data).length !== 0) {
+
+        const { id, nombres, apellidos, rol } = data;
+        setId(id);
+        setNombres(nombres);
+        setApellidos(apellidos);
+        setRol(rol);
+
+        navigate('/home');
+      } else {
+        // JSON vacío: backend no devuelve nada
+        console.log('Usuario no encontrado');
+      }
+
+
     } catch (error) {
       console.error('Error al hacer login:', error);
-      // Manejar el error (mostrar mensaje al usuario, etc.)
     }
-    navigate('/home');
   }
 
   return (
