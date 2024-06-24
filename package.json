@@ -19,6 +19,7 @@
     "@mui/material": "^5.15.18",
     "@mui/styled-engine-sc": "^6.0.0-alpha.18",
     "@mui/system": "^5.15.20",
+    "@mui/x-charts": "^7.7.1",
     "@ngneat/falso": "^7.2.0",
     "@types/node": "^20.14.4",
     "react": "^18.2.0",
