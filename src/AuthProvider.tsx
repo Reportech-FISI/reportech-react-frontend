@@ -72,6 +72,7 @@ export const AuthProvider = ({ children }) => {
 // Hook personalizado para usar el contexto de autenticación
 export const useAuth = () => {
   const context = useContext(AuthContext);
+  console.log("useAuth: ", context);
   if (context === undefined) {
     throw new Error('useAuth debe usarse dentro de un AuthProvider');
   }

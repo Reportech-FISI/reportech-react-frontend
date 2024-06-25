@@ -13,11 +13,18 @@ import ManualAssign from "./pages/assign/ManualAssign.tsx";
 import RegisterEstadisticas from "./pages/registers/RegisterEstadisticas.tsx";
 import Users from "./pages/admin/Users.tsx";
 import { AuthProvider } from "./AuthProvider.tsx";
+import Test from "./test.tsx";
+import { ReporteProvider } from "./documents/ReporteContext.tsx";
+import PDF from "./documents/PDF.tsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Login />,
+  },
+  {
+    path: "test",
+    element: <Test />
   },
   {
     path: "/home",
@@ -68,7 +75,9 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <AuthProvider>
-      <RouterProvider router={router}></RouterProvider>
+      <ReporteProvider>
+        <RouterProvider router={router}></RouterProvider>
+      </ReporteProvider>
     </AuthProvider>
   </React.StrictMode>,
 );

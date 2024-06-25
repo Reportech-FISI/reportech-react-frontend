@@ -5,7 +5,11 @@ import { Registro } from '../../models/registro/Registro';
 import { Equipo } from '../../models/equipo/Equipo';
 import RegistersDeleteModal from '../../components/registers/RegistersDeleteModal';
 import RegistersUpdate from '../../components/registers/RegistersUpdate';
+import { useReporte } from '../../documents/ReporteContext';
+
 export const RegisterDetails = () => {
+
+  const { setReporteC, setEquipoC } = useReporte();
 
   const { registerId } = useParams<{ registerId: string }>();
   const [reporte, setReporte] = useState<Registro>({
@@ -31,7 +35,8 @@ export const RegisterDetails = () => {
     estadoReparacion: '',
     descripcion: '',
     foto: {
-      id: 0
+      id: 0,
+      name: ''
     },
     nombre: '' 
   });
@@ -50,12 +55,25 @@ export const RegisterDetails = () => {
     await fetch(`http://localhost:8080/api/reporte/${registerId}/equipo/${reporte.titulo}`)
       .then(response => response.json())
       .then(data => setEquipo(data));
+
   };
 
   useEffect(() => {
     fetchEquipo();
   }, [registerId, reporte.titulo]);
 
+  useEffect(() => {
+    setReporteC(reporte);
+    setEquipoC(equipo);
+    localStorage.setItem("fotoid", String(equipo.foto.id));
+  }, [reporte, equipo]);
+
+  const handleSetContext = () => {
+    setReporteC(reporte);
+    setEquipoC(equipo);
+
+
+  }
 
   return (
     <>
@@ -127,7 +145,16 @@ export const RegisterDetails = () => {
             <RegistersUpdate registro = {reporte}/>
           </button>
         </div>
-
+        <div>
+          <button
+            className="bg-orange-500 hover:bg-orange-700 text-white font-bold  rounded mr-2" 
+            onClick={handleSetContext}
+          >
+            <a href={`http://localhost:5173/test`}>
+              Generar PDF
+            </a>
+          </button>
+        </div>
       </div>
       
     </div>
