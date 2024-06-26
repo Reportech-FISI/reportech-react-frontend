@@ -11,6 +11,8 @@ export const RegisterDetails = () => {
 
   const { setReporteC, setEquipoC } = useReporte();
 
+  const [flagEstado, setFlagEstado] = useState(false);
+
   const { registerId } = useParams<{ registerId: string }>();
   const [reporte, setReporte] = useState<Registro>({
     id: 0,
@@ -65,15 +67,9 @@ export const RegisterDetails = () => {
   useEffect(() => {
     setReporteC(reporte);
     setEquipoC(equipo);
-    localStorage.setItem("fotoid", String(equipo.foto.id));
+    if(equipo.foto == null) localStorage.setItem("fotoid", String("0"));
+    else localStorage.setItem("fotoid", String(equipo.foto.id)); 
   }, [reporte, equipo]);
-
-  const handleSetContext = () => {
-    setReporteC(reporte);
-    setEquipoC(equipo);
-
-
-  }
 
   return (
     <>
@@ -98,11 +94,19 @@ export const RegisterDetails = () => {
                 <td className="border p-2">Ubicación: {reporte.ubicacion}</td>
               </tr>
               <tr>
-                <td className="border p-2" colSpan={2}>Usuario reportador: {reporte.userReporterNombre}</td>
+                <td className="border p-2" >Reportante: {reporte.userReporterNombre}</td>
+                <td className='border p-2' >Clasificacion: {reporte.clasificacion} </td>
               </tr>
-              <tr>
-                <td className="border p-2" colSpan={2}>Encargado asignado: {reporte.userDesignado}</td>
-              </tr>
+              { reporte.estado == "TECNICO_NO_NECESARIO" ? (
+                <tr>
+                  <td className="border p-2" colSpan={2}>Tecnico especializado no necesario: Designado a soporte.</td>
+                </tr>
+              ) : (
+                <tr>
+                  <td className="border p-2" colSpan={2}>Encargado asignado: {reporte.userDesignado}</td>
+                </tr>
+              )}
+
             </tbody>
           </table>
         </div>
@@ -148,7 +152,6 @@ export const RegisterDetails = () => {
         <div>
           <button
             className="bg-orange-500 hover:bg-orange-700 text-white font-bold  rounded mr-2" 
-            onClick={handleSetContext}
           >
             <a href={`http://localhost:5173/test`}>
               Generar PDF

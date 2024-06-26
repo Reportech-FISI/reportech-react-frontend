@@ -8,7 +8,7 @@ import UserAssignedCard from './UserAssignedCard';
 
 
 
-const AssignModal = () => {
+const AssignModal = (registerId) => {
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -44,9 +44,13 @@ const AssignModal = () => {
     },
   ]
 
+  const registerTitle = sessionStorage.getItem("registertoassign");
+
   return (
     <div>
-      <Button sx={{backgroundColor: 'white'}} onClick={handleOpen}>Autoasignacion</Button>
+      <Button sx={{backgroundColor: 'white'}} onClick={handleOpen}>
+        Autoasignacion
+      </Button>
       <Modal
         aria-labelledby="unstyled-modal-title"
         aria-describedby="unstyled-modal-description"
@@ -55,8 +59,8 @@ const AssignModal = () => {
       >
         <Fade in={open}>
           <ModalContent sx={style} >
-            <h1 className="modal-title flex justify-center">Autoasignacion</h1>
-            <h2>Seleccione uno de los resultados</h2>
+            <h1 className="modal-title flex justify-center font-bold text-3xl my-3">Autoasignacion</h1>
+            <h2 className='text-center mb-4'>Seleccione uno de los resultados obtenidos del algoritmo</h2>
             <div className='grid grid-cols-3 gap-4'>
               { 
                 userFetched.map((user, index) => {
@@ -82,13 +86,16 @@ const AssignModal = () => {
             </div>
             {
               showContent && (
-              <div>
-                <h1>Desea asignar a {userAssigned} al registro ### ?</h1>
-                <Button>Asignar</Button>
-                <Button onClick={() => {
-                  setShowContent(false);
-                  handleClose();
-                }}>Cancelar</Button>
+              <div className=''>
+                <h1 className='text-center text-lg my-2'>Desea asignar a {userAssigned} a {registerTitle} ?</h1>
+                <div className='flex justify-center'>
+                  <Button>Asignar</Button>
+                  <Button onClick={() => {
+                    setShowContent(false);
+                    handleClose();
+                  }}>Cancelar</Button>
+                </div>
+
               </div>
             )}
             

@@ -95,6 +95,7 @@ const AssignTable: React.FC<AssignTableProps> = ({onReportClick, flagReportClick
                     //alert(`Reporte seleccionado: ${reporte.titulo}`);
                     onReportClick(reporte.id);
                     flagReportClickeado(true);
+                    sessionStorage.setItem("registertoassign", reporte.titulo);
                   }}>
                   <TableCell>{reporte.id}</TableCell>
                   <TableCell>{reporte.titulo}</TableCell>

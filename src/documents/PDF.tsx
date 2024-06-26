@@ -146,13 +146,17 @@ export const PDF = () => {
               </Text>
             </View>
             <View style={styles.column}>
-              <Text style={styles.boldText}>Tecnico asignado</Text>
+              <Text style={styles.boldText}>Técnico asignado</Text>
               <Text style={styles.grayText}>
                 <Text children={<UserDesignado/>} />
               </Text>
-              <Text style={[styles.boldText, { marginTop: 15 }]}>Estado</Text>
+              <Text style={[styles.boldText, { marginTop: 15 }]}>Estado de reparación</Text>
               <Text style={styles.grayText}>
                 <Text children={<EstadoReparacion/>} />
+              </Text>
+              <Text style={[styles.boldText, { marginTop: 15 }]}>Clasificacion del problema</Text>
+              <Text style={styles.grayText}>
+                <Text children={<Clasificacion/>} />
               </Text>
             </View>
           </View>

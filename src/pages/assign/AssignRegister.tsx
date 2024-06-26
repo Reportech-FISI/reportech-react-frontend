@@ -33,7 +33,7 @@ const AssignRegister = () => {
             </div>
             <div className=''>
               <div className='flex justify-center'>
-                <AssignModal/>
+                <AssignModal registerId = {selectedReportId}/>
               </div>
               <div className='mt-2 flex justify-center'>
                 <ManualAssignModal registerId={selectedReportId!}/>

@@ -21,6 +21,13 @@ const Appbar = () => {
           <h3 className="text-xs text-gray-500">{rol}</h3>
         </div>
       </div>
+      <div className="flex">
+        <ul>
+          <li>Registros</li>
+          <li>Usuarios</li>
+          <li>Asignacion</li>
+        </ul>
+      </div>
       <div className="flex items-center">
         <button
           onClick={() => navigate("/home")}
