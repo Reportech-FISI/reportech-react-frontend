@@ -37,8 +37,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var falso_1 = require("@ngneat/falso");
+// Ando usando FALSO en vez de Faker debido a que el último no me funcionaba (LO ODIO)
 var roles = ['ADMIN', 'SOPORTE', 'TECNICO'];
-var cargos = ['REPARACION_COMPUTADORAS', 'MANTENIMIENTO_SERVIDORES', 'CONFIGURACION_REDES', 'SOPORTE_SOFTWARE', 'PROGRAMACION', 'ADMINISTRACION_BASEDATOS', 'SEGURIDAD_INFORMATICA', 'ANALISIS_SISTEMAS', 'GESTION_PROYECTOS', 'CAPACITACION_USUARIOS', 'REDACCION_DOCUMENTACION', 'RESOLUCION_PROBLEMAS', 'ATENCION_CLIENTE', 'TRABAJO_EQUIPO', 'COMUNICACION_EFECTIVA', 'APRENDIZAJE_CONTINUO', 'INSTALACION_CABLEADO', 'MANTENIMIENTO_IMPRESORAS', 'CONFIGURACION_TELEFONIA', 'MANEJO_HERRAMIENTAS'];
+var cargos = ['REPARACION_COMPUTADORAS', 'CONFIGURACION_REDES', 'SOPORTE_SOFTWARE', 'PROGRAMACION', 'ADMINISTRACION_BASEDATOS', 'SEGURIDAD_INFORMATICA', 'ANALISIS_SISTEMAS', 'CAPACITACION_USUARIOS', 'REDACCION_DOCUMENTACION', 'RESOLUCION_PROBLEMAS', 'ATENCION_CLIENTE', 'INSTALACION_CABLEADO', 'MANTENIMIENTO_IMPRESORAS', 'CONFIGURACION_TELEFONIA', 'MANEJO_HERRAMIENTAS'];
 function createTrabajadores() {
     return __awaiter(this, void 0, void 0, function () {
         var promises, i, trabajador, promesa, error_1;
@@ -46,7 +47,7 @@ function createTrabajadores() {
             switch (_a.label) {
                 case 0:
                     promises = [];
-                    for (i = 0; i < 50; i++) {
+                    for (i = 0; i < 500; i++) {
                         trabajador = {
                             email: (0, falso_1.randEmail)(),
                             password: (0, falso_1.randPassword)(),
@@ -54,9 +55,7 @@ function createTrabajadores() {
                             apellidos: (0, falso_1.randLastName)(),
                             rol: roles[Math.floor(Math.random() * roles.length)],
                             cargo: [cargos[Math.floor(Math.random() * cargos.length)]],
-                            habilidades: 'x',
-                            tiempoExperiencia: Math.floor(Math.random() * 10) + 1,
-                            reportesHechos: null
+                            tiempoExperiencia: Math.floor(Math.random() * 10) + 1
                         };
                         promesa = fetch('http://localhost:8080/api/test/trabajador', {
                             method: 'POST',
@@ -90,4 +89,6 @@ function createTrabajadores() {
 }
 createTrabajadores();
 // Comando para ejecutar este script: (No importa si da error SOLO el ts)
-// tsc src/test/createTrabajador.ts && node src/test/createTrabajador.cjs
+// tsc src/test/trabajador-test/createTrabajador.ts 
+// CAMBIAR el nombre del archivo js a 'createTrabajador.cjs'
+// node src/test/trabajador-test/createTrabajador.cjs

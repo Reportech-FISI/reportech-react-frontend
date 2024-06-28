@@ -45,12 +45,11 @@ function createEquipo() {
             switch (_a.label) {
                 case 0:
                     promises = [];
-                    for (i = 0; i < 50; i++) {
+                    for (i = 0; i < 150; i++) {
                         equipo = {
                             estadoReparacion: estados[Math.floor(Math.random() * estados.length)],
                             descripcion: (0, falso_1.randProductDescription)(),
                             foto: null,
-                            historial: 'test',
                             nombre: "PC ".concat(i)
                         };
                         promesa = fetch('http://localhost:8080/api/test/equipo', {
@@ -87,4 +86,4 @@ createEquipo();
 // Comando para ejecutar este script: (No importa si da error SOLO el ts)
 // tsc src/test/equipo-test/createEquipo.ts
 // CAMBIAR el nombre del archivo js a 'createEquipo.cjs'
-// node src/test/createEquipo.cjs
+// node src/test/equipo-test/createEquipo.cjs

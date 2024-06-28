@@ -18,14 +18,13 @@
 */
 
 export interface Trabajador {
+    id?: number;
     email: string;
     password: string;
     nombres: string;
     apellidos: string;
     rol: string;
-    cargo: string[];
-    habilidades: string;
+    cargo: string[] | string; 
     tiempoExperiencia: number;
-    reportesHechos: any;
 }
 

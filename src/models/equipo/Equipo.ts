@@ -10,9 +10,15 @@ Ejemplo:
 */
 
 export interface Equipo {
+    id?: number;
     estadoReparacion: string;
     descripcion: string;
-    foto: any;
-    historial: string;
+    foto?: Foto
     nombre: string;
 }
+
+type Foto = {
+    id?: number;
+    name?: string;
+    type?: string;
+  };

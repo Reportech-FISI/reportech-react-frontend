@@ -37,8 +37,10 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var falso_1 = require("@ngneat/falso");
-var estados = ['APROBADO', 'RECHAZADO', 'POR_REVISAR'];
+var estados = ['TECNICO_NO_NECESARIO', 'TECNICO_POR_ASIGNAR', 'TECNICO_ASIGNADO'];
 var prioridades = ['URGENTE', 'NO_URGENTE'];
+var clasificacion = ['HARDWARE', 'SOFTWARE', 'REDES', 'BASES_DE_DATOS', 'SEGURIDAD',
+    'TELEFONÍA', 'IMPRESIÓN', 'CABLEADO'];
 function createRegistros() {
     return __awaiter(this, void 0, void 0, function () {
         var promises, i, date, registro, promesa, error_1;
@@ -46,20 +48,21 @@ function createRegistros() {
             switch (_a.label) {
                 case 0:
                     promises = [];
-                    for (i = 0; i < 50; i++) {
-                        date = (0, falso_1.randBetweenDate)({ from: new Date('10/07/2024'), to: new Date('10/07/2025') });
+                    for (i = 0; i < 200; i++) {
+                        date = (0, falso_1.randBetweenDate)({ from: new Date('10/06/2024'), to: new Date('10/07/2025') });
                         registro = {
                             estado: estados[Math.floor(Math.random() * estados.length)],
                             fechaPublicacion: new Date(date).toISOString(),
                             prioridad: prioridades[Math.floor(Math.random() * prioridades.length)],
                             titulo: "Registro ".concat(i),
                             userDesignado: null,
-                            userReporterNombre: null,
+                            clasificacion: clasificacion[Math.floor(Math.random() * clasificacion.length)],
+                            ubicacion: 'Aula 205 NP',
                             equipo: {
-                                id: Math.floor(Math.random() * 50) + 1
+                                id: Math.floor(Math.random() * 150) + 1
                             },
                             trabajador: {
-                                id: Math.floor(Math.random() * 50) + 1
+                                id: Math.floor(Math.random() * 300) + 1
                             }
                         };
                         promesa = fetch('http://localhost:8080/api/test/reporte', {

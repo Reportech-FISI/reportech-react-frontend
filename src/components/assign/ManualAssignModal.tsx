@@ -33,6 +33,7 @@ const ManualAssignModal = ({registerId}: {registerId: number}) => {
 
   const [userNombreAsignado, setUserNombreAsignado] = useState('');
   const [userApellidoAsignado, setUserApellidoAsignado] = useState('');
+  const [trabajadorId, setTrabajadorId] = useState(0);
 
   const [registro, setRegistro] = useState({
     id: 0,
@@ -51,6 +52,35 @@ const ManualAssignModal = ({registerId}: {registerId: number}) => {
   useEffect(() => {
     fetchTrabajadores();
   }, []);
+
+  // const [estado, setEstado] = useState("TECNICO_ASIGNADO");
+  const [userDesignado, setUserDesignado] = useState("");
+
+  const handleSetUserDesignado = async (event: { preventDefault: () => void; }) => {
+    event.preventDefault();
+
+    const data = {
+      userDesignado
+      // estado
+    }
+
+    const response = await fetch(`http://localhost:8080/api/reporte/${registerId}/${trabajadorId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+
+    if (!response.ok) {
+      throw new Error('Error al enviar los datos a /api/reporte/registerId/trabajadorId');
+    }
+
+    console.log(response.json())
+
+    setTimeout(() => {console.log("Enviando...")}, 1000)
+    location.reload();
+  }
 
   return (
     <div>
@@ -98,7 +128,9 @@ const ManualAssignModal = ({registerId}: {registerId: number}) => {
                     () => {
                       setUserNombreAsignado(trabajador.nombres);
                       setUserApellidoAsignado(trabajador.apellidos);
+                      setTrabajadorId(trabajador.id!);
                       setOpenDialog(true);
+                      setUserDesignado(trabajador.nombres + ' ' + trabajador.apellidos);
                     }
                   }>
                     <TableCell>{trabajador.id}</TableCell>
@@ -134,7 +166,9 @@ const ManualAssignModal = ({registerId}: {registerId: number}) => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button>
+          <Button
+            onClick = {handleSetUserDesignado}
+          >
             Aceptar
           </Button>
           <Button onClick={() => setOpenDialog(false)}>

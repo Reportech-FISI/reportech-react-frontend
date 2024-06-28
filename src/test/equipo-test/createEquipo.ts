@@ -5,12 +5,11 @@ const estados = ['REPARABLE', 'IRREPARABLE'];
 
 async function createEquipo() {
     const promises = [];
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < 150; i++) {
         const equipo: Equipo = {
             estadoReparacion: estados[Math.floor(Math.random() * estados.length)],
             descripcion: randProductDescription(),
             foto: null,
-            historial: 'test',
             nombre: `PC ${i}`
         }
 
