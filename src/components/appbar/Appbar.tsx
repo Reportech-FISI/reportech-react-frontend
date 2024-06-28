@@ -31,6 +31,8 @@ const Appbar = () => {
           <li><button onClick={() => navigate("/users")} className="text-blue-500 hover:text-blue-700">Usuarios</button></li>
           <li className="mx-6 text-blue-300">|</li>
           <li><button onClick={() => navigate("/assign")} className="text-blue-500 hover:text-blue-700">Asignacion</button></li>
+          <li className="mx-6 text-blue-300">|</li>
+          <li><button onClick={() => navigate("/registers/estadisticas")} className="text-blue-500 hover:text-blue-700">Estadisticas</button></li>
         </ul>
       </div>
 

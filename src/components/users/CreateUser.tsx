@@ -10,6 +10,9 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogActions from '@mui/material/DialogActions';
 import { Trabajador } from "../../models/trabajador/Trabajador";
 
+import { Toolbar } from "@mui/material";
+
+
 const CreateUser = () => {
 
   const [nombres, setNombres] = useState('');
@@ -73,9 +76,23 @@ const CreateUser = () => {
 
   return (
     <div className="">
-      <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-2" color="secondary" onClick={handleOpen}>
-          Añadir usuario
-      </button>
+      <div className="p-0 flex flex-col items-center justify-end">
+        <Toolbar
+          sx={{
+            width: "90%",
+            "@media (min-width: 600px)": {
+              paddingLeft: 0,
+              paddingRight: 0,
+            },
+          }}
+        >
+          <div className="flex justify-start w-full ">
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-2" color="secondary" onClick={handleOpen}>
+              Añadir usuario
+            </button>
+          </div>
+        </Toolbar>
+      </div>
       <Modal
         aria-labelledby="spring-modal-title"
         aria-describedby="spring-modal-description"
@@ -85,55 +102,70 @@ const CreateUser = () => {
       >
         <Fade in={open}>
           <ModalContent sx={style}>
-            <h2 id="spring-modal-title" className="text-xl modal-title flex justify-center">
+            <h2 id="spring-modal-title" className="text-3xl modal-title flex justify-center">
               Añadir usuario
             </h2>
             <div>
-              <form onSubmit={handleSubmit}>
-                <FormControl fullWidth>
-                  <TextField 
-                    label="Nombres" 
-                    value = {nombres}
-                    onChange={(e) => setNombres(e.target.value)}
-                  />
-                </FormControl>
+              <form onSubmit={handleSubmit} >
+              <div className="flex space-x-4">
+                <div className='w-1/2 mb-4 mt-2'>
+                  <FormControl fullWidth >
+                    <TextField 
+                      label="Nombres" 
+                      value = {nombres}
+                      onChange={(e) => setNombres(e.target.value)}
+                    />
+                  </FormControl>
+                </div>
+
+                <div className='w-1/2 mb-4 mt-2'>
+                  <FormControl fullWidth>
+                    <TextField 
+                      label="Apellidos" 
+                      value = {apellidos}
+                      onChange={(e) => setApellidos(e.target.value)}
+                    />
+                  </FormControl>
+                </div>
+                </div>
                 
-                <FormControl fullWidth>
-                  <TextField 
-                    label="Apellidos" 
-                    value = {apellidos}
-                    onChange={(e) => setApellidos(e.target.value)}
-                  />
-                </FormControl>
+                <div className="flex space-x-4">
+                <div className='w-3/4 mb-4'>
+                  <FormControl fullWidth>
+                    <TextField 
+                      label="Email" 
+                      value = {email}
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
+                  </FormControl>
+                </div>
 
-                <FormControl fullWidth>
-                  <TextField 
-                    label="Email" 
-                    value = {email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                </FormControl>
-
+                <div className='mb-4'>
                 <FormControl fullWidth>
                   <TextField
-                    label="TiempoExperiencia"
+                    label="Tiempo Experiencia"
                     type="number"
                     value = {tiempoExperiencia}
                     onChange={(e) => setTiempoExperiencia(parseInt(e.target.value))}
                   />
                 </FormControl>
+                </div> 
+                </div>
 
-                <FormControl fullWidth>
-                  {/* Solo SOPORTE o TECNICO */}
-                  <InputLabel>Rol</InputLabel>
-                  <Select value={rol} onChange={(e) => setRol(e.target.value)}>
-                    <MenuItem value={"SOPORTE"}>SOPORTE</MenuItem>
-                    <MenuItem value={"TECNICO"}>TECNICO</MenuItem>
-                  </Select>
-                </FormControl>
+                <div className='mb-4'>
+                  <FormControl fullWidth>
+                    {/* Solo SOPORTE o TECNICO */}
+                    <InputLabel>Rol</InputLabel>
+                    <Select value={rol} onChange={(e) => setRol(e.target.value)}>
+                      <MenuItem value={"SOPORTE"}>SOPORTE</MenuItem>
+                      <MenuItem value={"TECNICO"}>TECNICO</MenuItem>
+                    </Select>
+                  </FormControl>
+                </div>
                 
+                <div className='mb-4'>
                 <FormControl fullWidth>
-                  <InputLabel>cargo</InputLabel>
+                  <InputLabel>Cargo</InputLabel>
                   <Select
                     open={openCargo}
                     onOpen={() => setOpenCargo(true)}
@@ -150,25 +182,26 @@ const CreateUser = () => {
                       }
                     }}
                   >
-                    <MenuItem value={"REPARACION_COMPUTADORAS"}>REPARACION_COMPUTADORAS</MenuItem>
-                    <MenuItem value={"CONFIGURACION_REDES"}>CONFIGURACION_REDES</MenuItem>
-                    <MenuItem value={"SOPORTE_SOFTWARE"}>SOPORTE_SOFTWARE</MenuItem>
+                    <MenuItem value={"REPARACION_COMPUTADORAS"}>REPARACION COMPUTADORAS</MenuItem>
+                    <MenuItem value={"CONFIGURACION_REDES"}>CONFIGURACION REDES</MenuItem>
+                    <MenuItem value={"SOPORTE_SOFTWARE"}>SOPORTE SOFTWARE</MenuItem>
                     <MenuItem value={"PROGRAMACION"}>PROGRAMACION</MenuItem>
-                    <MenuItem value={"ADMINISTRACION_BASEDATOS"}>ADMINISTRACION_BASEDATOS</MenuItem>
-                    <MenuItem value={"SEGURIDAD_INFORMATICA"}>SEGURIDAD_INFORMATICA</MenuItem>
-                    <MenuItem value={"ANALISIS_SISTEMAS"}>ANALISIS_SISTEMAS</MenuItem>
-                    <MenuItem value={"CAPACITACION_USUARIOS"}>CAPACITACION_USUARIOS</MenuItem>
-                    <MenuItem value={"REDACCION_DOCUMENTACION"}>REDACCION_DOCUMENTACION</MenuItem>
-                    <MenuItem value={"RESOLUCION_PROBLEMAS"}>RESOLUCION_PROBLEMAS</MenuItem>
-                    <MenuItem value={"ATENCION_CLIENTE"}>ATENCION_CLIENTE</MenuItem>
-                    <MenuItem value={"INSTALACION_CABLEADO"}>INSTALACION_CABLEADO</MenuItem>
-                    <MenuItem value={"MANTENIMIENTO_IMPRESORAS"}>MANTENIMIENTO_IMPRESORAS</MenuItem>
-                    <MenuItem value={"CONFIGURACION_TELEFONIA"}>CONFIGURACION_TELEFONIA</MenuItem>
-                    <MenuItem value={"MANEJO_HERRAMIENTAS"}>MANEJO_HERRAMIENTAS</MenuItem>
+                    <MenuItem value={"ADMINISTRACION_BASEDATOS"}>ADMINISTRACION BASEDATOS</MenuItem>
+                    <MenuItem value={"SEGURIDAD_INFORMATICA"}>SEGURIDAD INFORMATICA</MenuItem>
+                    <MenuItem value={"ANALISIS_SISTEMAS"}>ANALISIS SISTEMAS</MenuItem>
+                    <MenuItem value={"CAPACITACION_USUARIOS"}>CAPACITACION USUARIOS</MenuItem>
+                    <MenuItem value={"REDACCION_DOCUMENTACION"}>REDACCION DOCUMENTACION</MenuItem>
+                    <MenuItem value={"RESOLUCION_PROBLEMAS"}>RESOLUCION PROBLEMAS</MenuItem>
+                    <MenuItem value={"ATENCION_CLIENTE"}>ATENCION CLIENTE</MenuItem>
+                    <MenuItem value={"INSTALACION_CABLEADO"}>INSTALACION CABLEADO</MenuItem>
+                    <MenuItem value={"MANTENIMIENTO_IMPRESORAS"}>MANTENIMIENTO IMPRESORAS</MenuItem>
+                    <MenuItem value={"CONFIGURACION_TELEFONIA"}>CONFIGURACION TELEFONIA</MenuItem>
+                    <MenuItem value={"MANEJO_HERRAMIENTAS"}>MANEJO HERRAMIENTAS</MenuItem>
                   </Select>
                 </FormControl>
+                </div>
 
-                <div>
+                <div className="flex justify-between">
                   <button 
                     className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-2" 
                     type="submit"

@@ -158,10 +158,17 @@ const RegistersModal = ({ buttonStyles }: modalProps) => {
         closeAfterTransition
       >
         <Fade in={open}>
-          <ModalContent sx={style}>
+          <ModalContent sx={{ 
+            width: '90%', 
+            maxWidth: '1200px', 
+            position: 'absolute', 
+            top: '50%', 
+            left: '50%', 
+            transform: 'translate(-50%, -50%)',
+          }}>
             <h2
               id="spring-modal-title"
-              className="text-xl modal-title flex justify-center"
+              className="text-3xl modal-title flex justify-center"
             >
               Crear registro
             </h2>
@@ -169,71 +176,90 @@ const RegistersModal = ({ buttonStyles }: modalProps) => {
             <div>
               <form
                 onSubmit={handleSubmit}
-                className="grid grid-cols-2 gap-4"
+                className="grid grid-cols-2 gap-8"
                 noValidate
                 autoComplete="off"
               >
                 <div>
-                  <FormControl fullWidth>
-                    <InputLabel>Estado</InputLabel>
-                    <Select
-                      value={estado}
-                      onChange={(e) => setEstado(e.target.value)}
-                    >
-                      <MenuItem value={"TECNICO_NO_NECESARIO"}>
-                        TECNICO_NO_NECESARIO
-                      </MenuItem>
-                      <MenuItem value={"TECNICO_POR_ASIGNAR"}>
-                        TECNICO_POR_ASIGNAR
-                      </MenuItem>
-                      <MenuItem value={"TECNICO_ASIGNADO"}>
-                        TECNICO_ASIGNADO
-                      </MenuItem>
-                    </Select>
-                  </FormControl>
 
-                  <div className="mt-6 mb-6">
-                    <TextField
-                      id="datetime-local"
-                      label="Fecha de ocurrencia"
-                      type="datetime-local"
-                      value={fechaPublicacion.toISOString().substring(0, 16)}
-                      onChange={(e) =>
-                        setFechaPublicacion(new Date(e.target.value))
-                      }
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
-                      onClick={() => {
-                        console.log(fechaPublicacion);
-                      }}
-                    />
+                <div className="flex space-x-4">
+                    <div className='w-3/4 mt-4 mb-4'>
+                    <FormControl fullWidth>
+                      <TextField
+                        label="Titulo"
+                        value={titulo}
+                        onChange={(e) => setTitulo(e.target.value)}
+                      />
+                    </FormControl>
+                    </div>
+
+                    <div className='w-1/4 mt-4 mb-4'>
+                    <FormControl fullWidth>
+                      <TextField
+                        id="datetime-local"
+                        label="Fecha de ocurrencia"
+                        type="datetime-local"
+                        value={fechaPublicacion.toISOString().substring(0, 16)}
+                        onChange={(e) =>
+                          setFechaPublicacion(new Date(e.target.value))
+                        }
+                        InputLabelProps={{
+                          shrink: true,
+                        }}
+                        onClick={() => {
+                          console.log(fechaPublicacion);
+                        }}
+                      />
+                    </FormControl>
+                    </div>
                   </div>
 
-                  <FormControl fullWidth>
-                    <InputLabel>Prioridad</InputLabel>
-                    <Select
-                      value={prioridad}
-                      onChange={(e) => setPrioridad(e.target.value)}
-                    >
-                      <MenuItem value={"URGENTE"}>URGENTE</MenuItem>
-                      <MenuItem value={"NO_URGENTE"}>NO_URGENTE</MenuItem>
-                    </Select>
-                  </FormControl>
-                  <div className="mt-6 mb-6">
-                    <TextField
-                      label="Titulo"
-                      value={titulo}
-                      onChange={(e) => setTitulo(e.target.value)}
-                    />
+                  <div className="flex space-x-4">
+                    <div className='w-1/2 mt-4 mb-4'>
+                    <FormControl fullWidth>
+                      <InputLabel>Estado</InputLabel>
+                      <Select
+                        value={estado}
+                        onChange={(e) => setEstado(e.target.value)}
+                      >
+                        <MenuItem value={"TECNICO_NO_NECESARIO"}>
+                          TECNICO NO NECESARIO
+                        </MenuItem>
+                        <MenuItem value={"TECNICO_POR_ASIGNAR"}>
+                          TECNICO POR ASIGNAR
+                        </MenuItem>
+                        <MenuItem value={"TECNICO_ASIGNADO"}>
+                          TECNICO ASIGNADO
+                        </MenuItem>
+                      </Select>
+                    </FormControl>
+                    </div>
+
+                    <div className='w-1/2 mb-4 mt-4'>
+                    <FormControl fullWidth>
+                      <InputLabel>Prioridad</InputLabel>
+                      <Select
+                        value={prioridad}
+                        onChange={(e) => setPrioridad(e.target.value)}
+                      >
+                        <MenuItem value={"URGENTE"}>URGENTE</MenuItem>
+                        <MenuItem value={"NO_URGENTE"}>NO_URGENTE</MenuItem>
+                      </Select>
+                    </FormControl>
+                    </div>
                   </div>
-                  <div className="mt-6 mb-6">
+
+                  <div className="flex space-x-4">
+                  <div className='w-4/6 mt-4 mb-4'>
+                  <FormControl fullWidth>
                     <TextField
                       label="Ubicacion"
                       value={ubicacion}
                       onChange={(e) => setUbicacion(e.target.value)}
                     />
+                    </FormControl>
                   </div>
+                  <div className='w-2/6 mt-4 mb-4'>
                   <FormControl fullWidth>
                     <InputLabel>Clasificación</InputLabel>
                     <Select
@@ -244,7 +270,7 @@ const RegistersModal = ({ buttonStyles }: modalProps) => {
                       <MenuItem value={"SOFTWARE"}>SOFTWARE</MenuItem>
                       <MenuItem value={"REDES"}>REDES</MenuItem>
                       <MenuItem value={"BASES_DE_DATOS"}>
-                        BASES_DE_DATOS
+                        BASES DE DATOS
                       </MenuItem>
                       <MenuItem value={"SEGURIDAD"}>SEGURIDAD</MenuItem>
                       <MenuItem value={"TELEFONÍA"}>TELEFONÍA</MenuItem>
@@ -252,6 +278,8 @@ const RegistersModal = ({ buttonStyles }: modalProps) => {
                       <MenuItem value={"CABLEADO"}>CABLEADO</MenuItem>
                     </Select>
                   </FormControl>
+                  </div>
+                  </div>
                 </div>
 
                 <div>
@@ -260,7 +288,7 @@ const RegistersModal = ({ buttonStyles }: modalProps) => {
                   </Button>
                   {addingNewEquipo == false ? (
                     <div>
-                      <div>
+                      <div className="w-3/4">
                         <FormControl fullWidth>
                           <InputLabel>Equipo</InputLabel>
                           <Select
@@ -282,15 +310,20 @@ const RegistersModal = ({ buttonStyles }: modalProps) => {
                   </Button>
                   {addingNewEquipo == true ? (
                     <div>
-                      <h3 className="text-lg mb-4">Datos del equipo</h3>
-                      <div className="mt-6 mb-6">
-                        <TextField
-                          label="Nombre del equipo"
-                          value={nombre}
-                          onChange={(e) => setNombre(e.target.value)}
-                        />
+                      <h3 className="text-lg mt-2 mb-4">Datos del equipo</h3>
+                      
+                     <div className="flex space-x-2"> 
+                      <div className="w-4/6 mt-4 mb-4">
+                      <FormControl fullWidth>
+                          <TextField
+                            label="Nombre del equipo"
+                            value={nombre}
+                            onChange={(e) => setNombre(e.target.value)}
+                          />
+                          </FormControl>
                       </div>
 
+                      <div className='w-2/6 mt-4 mb-4'>
                       <FormControl fullWidth>
                         <InputLabel>Estado de reparación</InputLabel>
                         <Select
@@ -301,8 +334,12 @@ const RegistersModal = ({ buttonStyles }: modalProps) => {
                           <MenuItem value={"IRREPARABLE"}>IRREPARABLE</MenuItem>
                         </Select>
                       </FormControl>
+                      </div>
+                      </div>
 
-                      <div className="mt-4">
+                      <div className="flex space-x-4">
+                      <div className="w-4/6 mt-4 mb-4">
+                      <FormControl fullWidth>
                         <TextField
                           label="Descripción"
                           multiline
@@ -312,21 +349,28 @@ const RegistersModal = ({ buttonStyles }: modalProps) => {
                           value={descripcion}
                           onChange={(e) => setDescripcion(e.target.value)}
                         />
+                        </FormControl>
                       </div>
 
+                      <div className="w-2/6 mt-4 mb-4">
                       <input
                         type="file"
                         onChange={(e) => setFoto(e.target.files[0])} // Añade esto para manejar la imagen
                         className="my-2"
                       />
+                      </div>
+                      </div>
                     </div>
                   ) : null}
                 </div>
-
+                
+                
+              </form>
+              <div className="flex justify-between">
                 <button
                   className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-2"
                   type="submit"
-                >
+                  >
                   Guardar
                 </button>
 
@@ -334,10 +378,11 @@ const RegistersModal = ({ buttonStyles }: modalProps) => {
                   className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
                   type="button"
                   onClick={handleClose}
-                >
-                  Cancelar
+                  >
+                Cancelar
                 </button>
-              </form>
+              </div>
+              
             </div>
           </ModalContent>
         </Fade>
