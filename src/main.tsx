@@ -35,6 +35,13 @@ const router = createBrowserRouter([
     element: <SaveRegister />,
   },
   {
+<<<<<<< Updated upstream
+=======
+    path: "/users",
+    element: <Users />
+  },
+  {
+>>>>>>> Stashed changes
     path: "/add/user",
     element: <SaveUser />,
   },
