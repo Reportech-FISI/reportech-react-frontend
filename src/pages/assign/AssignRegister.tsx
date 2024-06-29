@@ -6,6 +6,7 @@ import { Button } from '@mui/material'
 import AssignModal from '../../components/assign/AssignModal'
 import AssignDetails from '../../components/assign/AssignDetails'
 import ManualAssignModal from '../../components/assign/ManualAssignModal'
+import backgroundImage from '../../pages/assign/backgroundForProyect.png'
 
 const AssignRegister = () => {
 
@@ -13,7 +14,7 @@ const AssignRegister = () => {
   const [flag, setFlag] = useState<boolean | null>(false);
 
   return (
-    <div className='h-screen bg-gradient-to-b from-black to-gray-500'>
+    <div className='h-screen bg-cover bg-center' style={{backgroundImage:`url(${backgroundImage})`}}>
       <Appbar />
       <div className='my-5 mx-5 grid grid-cols-2 gap-4'>
         <div className='bg-yellow-300 rounded-xl pb-5'>
