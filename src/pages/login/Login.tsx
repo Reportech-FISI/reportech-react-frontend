@@ -52,39 +52,52 @@ export const Login = () => {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="bg-white p-12 rounded-lg shadow-lg flex items-center space-x-12">
-        <img src="./src/pages/login/fisi.webp" alt="FISI" className="w-64 h-64 object-contain"/>
-        <div className="max-w-lg w-full ">
-          <form onSubmit={handleLogin}>
-            <h1 className="text-2xl font-bold mb-4 text-center">INICIAR SESIÓN</h1>
-            <div className="mb-4">
-              <input 
-                type="text" 
-                placeholder="Email" 
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required 
-                className="w-80 px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-300"
-              />
+    <div className="relative min-h-screen">
+      <div 
+        className="absolute inset-0 z-0"
+        style={{
+          backgroundImage: 'url(./src/pages/login/background.jpg)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      ></div>
+      
+      <div className="absolute inset-0 z-10 backdrop-blur-sm bg-white/30">
+        <div className="relative z-20 flex items-center justify-center min-h-screen">
+          <div className="bg-white p-12 rounded-lg shadow-lg flex items-center space-x-12">
+            <img src="./src/pages/login/fisi.webp" alt="FISI" className="w-64 h-64 object-contain"/>
+            <div className="max-w-lg w-full">
+              <form onSubmit={handleLogin}>
+                <h1 className="text-2xl font-bold mb-4 text-center">INICIAR SESIÓN</h1>
+                <div className="mb-4">
+                  <input
+                    type="text"
+                    placeholder="Email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    className="w-80 px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-300"
+                  />
+                </div>
+                <div className="mb-6">
+                  <input
+                    type="password"
+                    placeholder="Contraseña"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                    className="w-80 px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-300"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  className="w-80 bg-blue-500 text-white py-2 rounded hover:bg-blue-700 transition duration-200"
+                >
+                  Ingresar
+                </button>
+              </form>
             </div>
-            <div className="mb-6">
-              <input 
-                type="password" 
-                placeholder="Contraseña" 
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required 
-                className="w-80 px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-300"
-              />
-            </div>
-            <button 
-              type="submit" 
-              className="w-80 bg-blue-500 text-white py-2 rounded hover:bg-blue-700 transition duration-200"
-            >
-              Ingresar
-            </button>
-          </form>
+          </div>
         </div>
       </div>
     </div>

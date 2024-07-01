@@ -23,28 +23,15 @@ export const Home = () => {
           <p className="text-sm text-center mt-2">Este botón sirve para acceder a los registros</p>
         </div>
 
-        
-
         {rol === 'ADMIN' && (
           <div className="flex flex-col items-center w-1/5">
-            <button className="size-full" onClick={() => navigate('/users')}>
-              <img src={userIcon} alt="usuario" className="size-full" />
+            <button className="size-full" onClick={ () => navigate('/users')}>
+              <img src={userIcon} alt="user" className="size-full" />
             </button>
             <h2 className="text-4xl"> Usuarios </h2>
-          </div>
+            <p className="text-sm text-center mt-2">Este botón sirve para ver la lista de usuarios</p>
+          </div> 
         )}
-
-
-
-         <div className="flex flex-col items-center w-1/5">
-          <button className="size-full" onClick={ () => navigate('/users')}>
-            <img src={userIcon} alt="user" className="size-full" />
-          </button>
-          <h2 className="text-4xl"> Usuarios </h2>
-          <p className="text-sm text-center mt-2">Este botón sirve para ver la lista de usuarios</p>
-        </div> 
-
-        
 
         <div className="flex flex-col items-center w-1/5">
           <button className="size-full" onClick={() => navigate('/assign')}>

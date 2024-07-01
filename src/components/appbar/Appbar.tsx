@@ -9,7 +9,7 @@ const Appbar = () => {
   const { nombres, apellidos, rol } = useAuth();
 
   return (
-    <div className="flex justify-between bg-slate-100 p-2 w-full px-16">
+    <div className="flex justify-between bg-slate-100 p-2 w-full px-16 shadow">
       <div className="flex items-center">
         <Box sx={{ flexGrow: 0 }}>
           <AdminPanelSettingsIcon fontSize="large" color="primary" />

@@ -7,6 +7,7 @@ import {
   Paper,
   TablePagination,
   TableContainer,
+  makeStyles,
 } from "@mui/material";
 import Table from "@mui/material/Table";
 import quickSort from "../../algorithms/quickSort";
@@ -15,9 +16,26 @@ import { Reporte } from "../../models/Reporte_Fila";
 import { useNavigate } from "react-router-dom";
 import RegistersDeleteModal from "./RegistersDeleteModal";
 
-// TODO: Crear mockup de reporte
+const useStyles = makeStyles((theme) => ({
+  table: {
+    minWidth: 650,
+  },
+  tableContainer: {
+      borderRadius: 15,
+      margin: '10px 10px',
+      maxWidth: 950
+  },
+  tableHeaderCell: {
+    fontWeight: 'bold',
+    backgroundColor: theme.palette.primary.dark,
+    color: theme.palette.getContrastText(theme.palette.primary.dark)
+  },
+}));
 
 const RegistersTable = () => {
+
+  const classes = useStyles();
+
   const navigate = useNavigate();
 
   const [reportes, setReportes] = useState<Reporte[]>([]);
@@ -58,24 +76,14 @@ const RegistersTable = () => {
     setPage(0);
   };
 
-
-  // useEffect(() => {
-  //   const sortedData = quickSort([...reportes], (a: Reporte, b: Reporte) => {
-  //     const comparison = String(a[sortField]).localeCompare(
-  //       String(b[sortField]),
-  //     );
-  //     return sortDirection === "asc" ? comparison : -comparison;
-  //   });
-  //   setReportes(sortedData);
-  // }, [sortField, sortDirection]);
-
+  
   return (
     <div className="flex items-center justify-center ">
       <TableContainer component={Paper} sx={{ width: "90%" }}>
         <Table>
           <TableHead>
             <TableRow sx={{}}>
-              <TableCell sx={{ width: "10%", textAlign: "center" }}>
+              <TableCell sx={{ width: "10%", textAlign: "center" }} className={classes.tableHeaderCell}>
                 Id
                 <SortButtons field="id" onSort={toggleSort} />
               </TableCell>
