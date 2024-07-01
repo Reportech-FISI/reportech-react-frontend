@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   TableBody,
   TableCell,
@@ -27,7 +27,8 @@ const RegistersTable = () => {
   const [sortField, setSortField] = useState<keyof Reporte>("fechaPublicacion"); // Por defecto se ordena por fecha de publicación
 
   const toggleSort = (field: keyof Reporte, isAscending: boolean) => {
-    setSortDirection(isAscending ? "asc" : "desc");
+    const direction: "asc" | "desc" | undefined = isAscending ? "asc" : "desc";
+    setSortDirection(direction);
     setSortField(field);
   };
 
@@ -37,11 +38,14 @@ const RegistersTable = () => {
     setReportes(data);
   };
 
-  // 1/5 Algoritmos
-  const sortedReportes = quickSort([...reportes], (a: Reporte, b: Reporte) => {
-    const comparison = String(a[sortField]).localeCompare(String(b[sortField]));
-    return sortDirection === "asc" ? comparison : -comparison;
-  });
+  useEffect(() => {
+    fetchReportes();
+  }, []);
+
+  // 1/5 Algoritmos.
+  const sortedReportes = useMemo(() => {
+    return quickSort([...reportes], sortField, sortDirection);
+  }, [reportes, sortField, sortDirection]);
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -54,19 +58,16 @@ const RegistersTable = () => {
     setPage(0);
   };
 
-  useEffect(() => {
-    fetchReportes();
-  }, []);
 
-  useEffect(() => {
-    const sortedData = quickSort([...reportes], (a: Reporte, b: Reporte) => {
-      const comparison = String(a[sortField]).localeCompare(
-        String(b[sortField]),
-      );
-      return sortDirection === "asc" ? comparison : -comparison;
-    });
-    setReportes(sortedData);
-  }, [sortField, sortDirection]);
+  // useEffect(() => {
+  //   const sortedData = quickSort([...reportes], (a: Reporte, b: Reporte) => {
+  //     const comparison = String(a[sortField]).localeCompare(
+  //       String(b[sortField]),
+  //     );
+  //     return sortDirection === "asc" ? comparison : -comparison;
+  //   });
+  //   setReportes(sortedData);
+  // }, [sortField, sortDirection]);
 
   return (
     <div className="flex items-center justify-center ">

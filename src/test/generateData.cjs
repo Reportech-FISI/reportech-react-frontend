@@ -39,14 +39,19 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var faker_1 = require("@faker-js/faker");
 var cargos = ['REPARACION_COMPUTADORAS', 'CONFIGURACION_REDES', 'SOPORTE_SOFTWARE', 'PROGRAMACION', 'ADMINISTRACION_BASEDATOS', 'SEGURIDAD_INFORMATICA', 'ANALISIS_SISTEMAS', 'CAPACITACION_USUARIOS', 'REDACCION_DOCUMENTACION', 'RESOLUCION_PROBLEMAS', 'ATENCION_CLIENTE', 'INSTALACION_CABLEADO', 'MANTENIMIENTO_IMPRESORAS', 'CONFIGURACION_TELEFONIA', 'MANEJO_HERRAMIENTAS'];
 var clasificacion = ['HARDWARE', 'SOFTWARE', 'REDES', 'BASES_DE_DATOS', 'SEGURIDAD', 'TELEFONÍA', 'IMPRESIÓN', 'CABLEADO'];
+var BATCH_SIZE = 1000; // Tamaño del lote
 function createTrabajadores() {
     return __awaiter(this, void 0, void 0, function () {
-        var promises, i, cargosUnicos, trabajador, promesa, error_1;
+        var i, batchPromises, j, cargosUnicos, trabajador, promesa, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    promises = [];
-                    for (i = 0; i < 50; i++) {
+                    i = 0;
+                    _a.label = 1;
+                case 1:
+                    if (!(i < 10000)) return [3 /*break*/, 6];
+                    batchPromises = [];
+                    for (j = 0; j < BATCH_SIZE; j++) {
                         cargosUnicos = new Set();
                         while (cargosUnicos.size < 3) {
                             cargosUnicos.add(faker_1.faker.helpers.arrayElement(cargos));
@@ -70,38 +75,47 @@ function createTrabajadores() {
                             .then(function (response) { return response.json(); })
                             .then(function (data) { return console.log(data); })
                             .catch(function (error) { return console.error('Error:', error); });
-                        promises.push(promesa);
-                        console.log("Solicitud ".concat(i, " enviada"));
+                        batchPromises.push(promesa);
+                        console.log("Solicitud ".concat(i + j, " enviada"));
                     }
-                    _a.label = 1;
-                case 1:
-                    _a.trys.push([1, 3, , 4]);
-                    return [4 /*yield*/, Promise.all(promises)];
+                    _a.label = 2;
                 case 2:
-                    _a.sent();
-                    console.log('Todas las solicitudes se han completado');
-                    return [3 /*break*/, 4];
+                    _a.trys.push([2, 4, , 5]);
+                    return [4 /*yield*/, Promise.all(batchPromises)];
                 case 3:
+                    _a.sent();
+                    console.log("Lote ".concat(i / BATCH_SIZE + 1, " completado"));
+                    return [3 /*break*/, 5];
+                case 4:
                     error_1 = _a.sent();
                     console.error('Ocurrió un error en alguna de las solicitudes:', error_1);
-                    return [3 /*break*/, 4];
-                case 4: return [2 /*return*/];
+                    return [3 /*break*/, 5];
+                case 5:
+                    i += BATCH_SIZE;
+                    return [3 /*break*/, 1];
+                case 6:
+                    console.log('Todas las solicitudes de trabajadores se han completado');
+                    return [2 /*return*/];
             }
         });
     });
 }
 function createEquipos() {
     return __awaiter(this, void 0, void 0, function () {
-        var promises, i, equipo, promesa, error_2;
+        var i, batchPromises, j, equipo, promesa, error_2;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    promises = [];
-                    for (i = 0; i < 50; i++) {
+                    i = 0;
+                    _a.label = 1;
+                case 1:
+                    if (!(i < 10000)) return [3 /*break*/, 6];
+                    batchPromises = [];
+                    for (j = 0; j < BATCH_SIZE; j++) {
                         equipo = {
                             estadoReparacion: faker_1.faker.helpers.arrayElement(['REPARABLE', 'IRREPARABLE']),
                             descripcion: faker_1.faker.lorem.sentence(),
-                            nombre: "PC ".concat(i),
+                            nombre: "PC ".concat(i + j),
                         };
                         promesa = fetch('http://localhost:8080/api/test/equipo', {
                             method: 'POST',
@@ -113,39 +127,48 @@ function createEquipos() {
                             .then(function (response) { return response.json(); })
                             .then(function (data) { return console.log(data); })
                             .catch(function (error) { return console.error('Error:', error); });
-                        promises.push(promesa);
-                        console.log("Solicitud ".concat(i, " enviada"));
+                        batchPromises.push(promesa);
+                        console.log("Solicitud ".concat(i + j, " enviada"));
                     }
-                    _a.label = 1;
-                case 1:
-                    _a.trys.push([1, 3, , 4]);
-                    return [4 /*yield*/, Promise.all(promises)];
+                    _a.label = 2;
                 case 2:
-                    _a.sent();
-                    console.log('Todas las solicitudes se han completado');
-                    return [3 /*break*/, 4];
+                    _a.trys.push([2, 4, , 5]);
+                    return [4 /*yield*/, Promise.all(batchPromises)];
                 case 3:
+                    _a.sent();
+                    console.log("Lote ".concat(i / BATCH_SIZE + 1, " completado"));
+                    return [3 /*break*/, 5];
+                case 4:
                     error_2 = _a.sent();
                     console.error('Ocurrió un error en alguna de las solicitudes:', error_2);
-                    return [3 /*break*/, 4];
-                case 4: return [2 /*return*/];
+                    return [3 /*break*/, 5];
+                case 5:
+                    i += BATCH_SIZE;
+                    return [3 /*break*/, 1];
+                case 6:
+                    console.log('Todas las solicitudes de equipos se han completado');
+                    return [2 /*return*/];
             }
         });
     });
 }
 function createReportes() {
     return __awaiter(this, void 0, void 0, function () {
-        var promises, i, registro, promesa, error_3;
+        var i, batchPromises, j, registro, promesa, error_3;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    promises = [];
-                    for (i = 0; i < 200; i++) {
+                    i = 0;
+                    _a.label = 1;
+                case 1:
+                    if (!(i < 10000)) return [3 /*break*/, 6];
+                    batchPromises = [];
+                    for (j = 0; j < BATCH_SIZE; j++) {
                         registro = {
                             estado: faker_1.faker.helpers.arrayElement(['TECNICO_NO_NECESARIO', 'TECNICO_POR_ASIGNAR', 'TECNICO_ASIGNADO']),
                             fechaPublicacion: faker_1.faker.date.between({ from: new Date('10/06/2024'), to: new Date('10/07/2025') }).toISOString(),
                             prioridad: faker_1.faker.helpers.arrayElement(['URGENTE', 'NO_URGENTE']),
-                            titulo: "Registro ".concat(i),
+                            titulo: "Registro ".concat(i + j),
                             userDesignado: null,
                             clasificacion: faker_1.faker.helpers.arrayElement(clasificacion),
                             ubicacion: 'Aula 205 NP',
@@ -166,21 +189,27 @@ function createReportes() {
                             .then(function (response) { return response.json(); })
                             .then(function (data) { return console.log(data); })
                             .catch(function (error) { return console.error('Error:', error); });
-                        promises.push(promesa);
+                        batchPromises.push(promesa);
+                        console.log("Solicitud ".concat(i + j, " enviada"));
                     }
-                    _a.label = 1;
-                case 1:
-                    _a.trys.push([1, 3, , 4]);
-                    return [4 /*yield*/, Promise.all(promises)];
+                    _a.label = 2;
                 case 2:
-                    _a.sent();
-                    console.log('Todas las solicitudes se han completado');
-                    return [3 /*break*/, 4];
+                    _a.trys.push([2, 4, , 5]);
+                    return [4 /*yield*/, Promise.all(batchPromises)];
                 case 3:
+                    _a.sent();
+                    console.log("Lote ".concat(i / BATCH_SIZE + 1, " completado"));
+                    return [3 /*break*/, 5];
+                case 4:
                     error_3 = _a.sent();
                     console.error('Ocurrió un error en alguna de las solicitudes:', error_3);
-                    return [3 /*break*/, 4];
-                case 4: return [2 /*return*/];
+                    return [3 /*break*/, 5];
+                case 5:
+                    i += BATCH_SIZE;
+                    return [3 /*break*/, 1];
+                case 6:
+                    console.log('Todas las solicitudes de reportes se han completado');
+                    return [2 /*return*/];
             }
         });
     });
@@ -192,18 +221,14 @@ function inicializarDatos() {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 4, , 5]);
-                    // Espera a que ambas funciones se completen antes de proceder
                     return [4 /*yield*/, createTrabajadores()];
                 case 1:
-                    // Espera a que ambas funciones se completen antes de proceder
                     _a.sent();
                     return [4 /*yield*/, createEquipos()];
                 case 2:
                     _a.sent();
-                    // Una vez completadas las funciones anteriores, llama a createReportes
                     return [4 /*yield*/, createReportes()];
                 case 3:
-                    // Una vez completadas las funciones anteriores, llama a createReportes
                     _a.sent();
                     console.log('Todas las entidades han sido creadas exitosamente');
                     return [3 /*break*/, 5];
@@ -216,5 +241,4 @@ function inicializarDatos() {
         });
     });
 }
-// Llama a la función de inicialización
 inicializarDatos();
