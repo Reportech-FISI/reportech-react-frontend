@@ -85,8 +85,8 @@ const ManualAssignModal = ({registerId}: {registerId: number}) => {
 
   return (
     <div>
-      <Button sx={{backgroundColor: 'white'}} onClick={handleOpen}>
-        Asignacion manual
+      <Button sx={{backgroundColor: 'white', padding: 1.5, borderRadius: 2}} onClick={handleOpen}>
+        Asignación manual
       </Button>
       <Modal
         open={open}

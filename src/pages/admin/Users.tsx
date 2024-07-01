@@ -4,18 +4,14 @@ import CreateUser from '../../components/users/CreateUser'
 
 const Users = () => {
   return (
-    <div>
+    <div className="bg-white" >
       <Appbar/>
-      <h1 className="font-semibold text-5xl flex justify-center p-6 m-4">
+      <h1 className="flex font-semibold text-5xl justify-center p-3 pt-5">
         Usuarios
       </h1>
-      <div className='flex justify-center'>
-        <div className='flex flex-col w-2/3'>
-          <CreateUser />
-          <UsersTable/>
-        </div>
+        <CreateUser />
+        <UsersTable/>
       </div>
-    </div>
   )
 }
 
