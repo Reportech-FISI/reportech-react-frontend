@@ -8,7 +8,7 @@ export const Registers = () => {
   return (
     <div className="bg-white">
       <Appbar />
-      <h1 className="font-semibold text-4xl flex justify-center pt-4">
+      <h1 className="flex font-semibold text-5xl justify-center p-3 pt-5">
         Reportes
       </h1>
       <RegisterSearchBar />

@@ -41,28 +41,28 @@ const UsersTable = () => {
   }, []);
 
   return (
-    <div className='flex justify-center'>
-      <TableContainer component={Paper} >
+    <div className='flex items-center justify-center'>
+      <TableContainer component={Paper} sx={{ width: "90%" }}>
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>
+              <TableCell sx={{ width: "10%", textAlign: "center" }}>
                 Id
                 <SortButtons field='id' onSort={toggleSort} />
               </TableCell>
-              <TableCell>
+              <TableCell sx={{ width: "20%", textAlign: "center" }}>
                 Nombre
                 <SortButtons field='nombres' onSort={toggleSort} />
               </TableCell>
-              <TableCell>
+              <TableCell sx={{ width: "20%", textAlign: "center" }}>
                 Apellido
                 <SortButtons field='apellidos' onSort={toggleSort} />
               </TableCell>
-              <TableCell>
+              <TableCell sx={{ width: "30%", textAlign: "center" }}>
                 Correo
                 <SortButtons field='email' onSort={toggleSort} />
               </TableCell>
-              <TableCell>
+              <TableCell sx={{ width: "30%", textAlign: "center" }}>
                 Cargo
                 <SortButtons field='cargo' onSort={toggleSort} />
               </TableCell>
