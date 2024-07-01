@@ -93,11 +93,11 @@ const Test = () => {
     // </div>
     <div className="h-screen">
       <PDFDownloadLink document={<PDF />} fileName="myfirstpdf.pdf">
-        {({ loading, url, error, blob }) =>
+        {({ loading }) =>
           loading ? (
             <button>Loading Document ...</button>
           ) : (
-            <button>Download now!</button>
+            <button>Descargar PDF</button>
           )
         }
       </PDFDownloadLink>

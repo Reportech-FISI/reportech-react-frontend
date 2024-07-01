@@ -61,7 +61,7 @@ export const Login = () => {
             <div className="mb-4">
               <input 
                 type="text" 
-                placeholder="Usuario" 
+                placeholder="Email" 
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required 

@@ -1,8 +1,6 @@
 import React, { useState } from 'react'
 import Appbar from '../../components/appbar/Appbar'
-import RegisterSearchBar from '../../components/registers/RegisterSearchBar'
 import AssignTable from '../../components/assign/AssignTable'
-import { Button } from '@mui/material'
 import AssignModal from '../../components/assign/AssignModal'
 import AssignDetails from '../../components/assign/AssignDetails'
 import ManualAssignModal from '../../components/assign/ManualAssignModal'
@@ -33,7 +31,7 @@ const AssignRegister = () => {
             </div>
             <div className=''>
               <div className='flex justify-center'>
-                <AssignModal registerId = {selectedReportId}/>
+                <AssignModal registerId = {selectedReportId!}/>
               </div>
               <div className='mt-2 flex justify-center'>
                 <ManualAssignModal registerId={selectedReportId!}/>

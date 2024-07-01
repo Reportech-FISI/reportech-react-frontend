@@ -78,7 +78,7 @@ const UsersTable = () => {
                 <TableCell>{trabajador.nombres}</TableCell>
                 <TableCell>{trabajador.apellidos}</TableCell>
                 <TableCell>{trabajador.email}</TableCell>
-                <TableCell>{trabajador.cargo}</TableCell>
+                <TableCell>{Array.isArray(trabajador.cargo) ? trabajador.cargo.join(' / ') : trabajador.cargo}</TableCell>
                 <TableCell>
                   <UsersDeleteModal userId={trabajador.id ?? 0}/>
                 </TableCell>

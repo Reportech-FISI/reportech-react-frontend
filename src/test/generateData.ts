@@ -126,10 +126,8 @@ async function createReportes() {
 
 async function inicializarDatos() {
     try {
-        // Espera a que ambas funciones se completen antes de proceder
         await createTrabajadores();
         await createEquipos();
-        // Una vez completadas las funciones anteriores, llama a createReportes
         await createReportes();
         console.log('Todas las entidades han sido creadas exitosamente');
     } catch (error) {
@@ -137,5 +135,4 @@ async function inicializarDatos() {
     }
 }
 
-// Llama a la función de inicialización
 inicializarDatos();
