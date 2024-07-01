@@ -71,7 +71,7 @@ const AssignDetails: React.FC<AssignDetailsProps> = ({ registerId, flag }) => {
   return (
     <div>
       {mostrarDetails == false ? (
-        <div className="flex justify-center text-2xl mb-7">
+        <div className="flex justify-center text-2xl mb-4">
           Ningún registro seleccionado.
         </div>
       ): null}
