@@ -13,19 +13,19 @@ const AssignRegister = () => {
   const [flag, setFlag] = useState<boolean | null>(false);
 
   return (
-    <div className='bg-white'>
+    <div className='h-screen bg-cover bg-center bg-white' >
       <Appbar />
-      <div className='mt-5 grid grid-cols-2 gap-4'>
-        <div className='bg-green-300'>
-          <div className='pl-24 pt-5 mb-10'>
-            <h1 className='font-semibold text-5xl mb-2'> Registros aceptados </h1>
-            <p>Seleccione un registro a asignar.</p>
+      <div className='my-5 mx-5 grid grid-cols-2 gap-4'>
+        <div className='bg-stone-50 shadow-md rounded-xl pb-5'>
+          <div className='pt-5 mb-10'>
+            <h1 className='flex justify-center font-semibold text-5xl mb-2'> Registros aceptados </h1>
+            <p className='flex justify-center'>Seleccione un registro a asignar.</p>
           </div>
           {/* <RegisterSearchBar/> */}
           <AssignTable onReportClick={setSelectedReportId} flagReportClickeado={setFlag}/>
         </div>
 
-        <div className='bg-blue-300'>
+        <div className='bg-stone-50 shadow-md rounded-xl'>
           <div>
             <h1 className='flex justify-center p-6 font-semibold text-5xl mb-2'>Información</h1>
             <div>

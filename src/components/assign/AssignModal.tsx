@@ -48,8 +48,8 @@ const AssignModal = (registerId) => {
 
   return (
     <div>
-      <Button sx={{backgroundColor: 'white'}} onClick={handleOpen}>
-        Autoasignacion
+      <Button sx={{backgroundColor: 'white', padding: 1.5, borderRadius: 2}} onClick={handleOpen}>
+        Autoasignación
       </Button>
       <Modal
         aria-labelledby="unstyled-modal-title"
@@ -59,7 +59,7 @@ const AssignModal = (registerId) => {
       >
         <Fade in={open}>
           <ModalContent sx={style} >
-            <h1 className="modal-title flex justify-center font-bold text-3xl my-3">Autoasignacion</h1>
+            <h1 className="modal-title flex justify-center font-bold text-3xl my-3">Autoasignación</h1>
             <h2 className='text-center mb-4'>Seleccione uno de los resultados obtenidos del algoritmo</h2>
             <div className='grid grid-cols-3 gap-4'>
               { 
