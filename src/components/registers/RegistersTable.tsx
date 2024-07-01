@@ -7,7 +7,7 @@ import {
   Paper,
   TablePagination,
   TableContainer,
-  makeStyles,
+  Typography
 } from "@mui/material";
 import Table from "@mui/material/Table";
 import quickSort from "../../algorithms/quickSort";
@@ -15,26 +15,31 @@ import SortButtons from "../sortButtons/SortButtons";
 import { Reporte } from "../../models/Reporte_Fila";
 import { useNavigate } from "react-router-dom";
 import RegistersDeleteModal from "./RegistersDeleteModal";
+import { styled } from '@mui/material/styles';
 
-const useStyles = makeStyles((theme) => ({
-  table: {
-    minWidth: 650,
-  },
-  tableContainer: {
-      borderRadius: 15,
-      margin: '10px 10px',
-      maxWidth: 950
-  },
-  tableHeaderCell: {
-    fontWeight: 'bold',
-    backgroundColor: theme.palette.primary.dark,
-    color: theme.palette.getContrastText(theme.palette.primary.dark)
-  },
+
+const StyledTableContainer = styled(TableContainer)(({ theme }) => ({
+  borderRadius: 15,
+  margin: '10px 10px',
+}));
+
+const TitleTableCell = styled(TableCell)(({ theme }) => ({
+  fontWeight: 'bold',
+  backgroundColor: ' #446aea ',
+  color: theme.palette.getContrastText(theme.palette.primary.dark),
+}));
+
+const StatusTypography = styled(Typography)(() => ({
+  fontWeight: 'bold',
+  fontSize: '0.75rem',
+  color: 'white',
+  backgroundColor: 'grey',
+  borderRadius: 8,
+  padding: '3px 10px',
+  display: 'inline-block'
 }));
 
 const RegistersTable = () => {
-
-  const classes = useStyles();
 
   const navigate = useNavigate();
 
@@ -79,30 +84,31 @@ const RegistersTable = () => {
   
   return (
     <div className="flex items-center justify-center ">
-      <TableContainer component={Paper} sx={{ width: "90%" }}>
+      <StyledTableContainer component={Paper} sx={{ width: "90%" }}>
         <Table>
           <TableHead>
             <TableRow sx={{}}>
-              <TableCell sx={{ width: "10%", textAlign: "center" }} className={classes.tableHeaderCell}>
+              <TitleTableCell  sx={{ width: "10%", textAlign: "center" }} >
                 Id
                 <SortButtons field="id" onSort={toggleSort} />
-              </TableCell>
-              <TableCell sx={{ width: "20%", textAlign: "center" }}>
+              </TitleTableCell >
+              <TitleTableCell sx={{ width: "20%", textAlign: "center" }}>
                 Titulo
                 <SortButtons field="titulo" onSort={toggleSort} />
-              </TableCell>
-              <TableCell sx={{ width: "20%", textAlign: "center" }}>
+              </TitleTableCell>
+              <TitleTableCell sx={{ width: "20%", textAlign: "center" }}>
                 Estado
                 <SortButtons field="estado" onSort={toggleSort} />
-              </TableCell>
-              <TableCell sx={{ width: "20%", textAlign: "center" }}>
+              </TitleTableCell>
+              <TitleTableCell sx={{ width: "20%", textAlign: "center" }}>
                 Prioridad
                 <SortButtons field="prioridad" onSort={toggleSort} />
-              </TableCell>
-              <TableCell sx={{ width: "20%", textAlign: "center" }}>
+              </TitleTableCell>
+              <TitleTableCell sx={{ width: "20%", textAlign: "center" }}>
                 Fecha de Publicación
                 <SortButtons field="fechaPublicacion" onSort={toggleSort} />
-              </TableCell>
+              </TitleTableCell>
+              <TitleTableCell></TitleTableCell>
             </TableRow>
           </TableHead>
 
@@ -131,13 +137,30 @@ const RegistersTable = () => {
                       sx={{ textAlign: "center" }}
                       onClick={() => navigate(`/details/${reporte.id}`)}
                     >
-                      {reporte.estado}
+                      <StatusTypography
+                        style={{
+                          backgroundColor: 
+                          ((reporte.estado === "TECNICO_ASIGNADO" && '  #1966f6 ') ||
+                          (reporte.estado === "TECNICO_POR_ASIGNAR" && '  #eca01a ') ||
+                          (reporte.estado === "TECNICO_NO_NECESARIO" && ' #b5ada1 '))
+                        }}
+                      >
+                        {reporte.estado}
+                      </StatusTypography>
                     </TableCell>
                     <TableCell
                       sx={{ textAlign: "center" }}
                       onClick={() => navigate(`/details/${reporte.id}`)}
                     >
-                      {reporte.prioridad}
+                      <Typography
+                        style={{
+                          color: 
+                          ((reporte.prioridad === "URGENTE" && 'red') ||
+                          (reporte.prioridad === "NO_URGENTE" && ' #198ef6 '))
+                        }}
+                      >
+                        {reporte.prioridad}
+                      </Typography>
                     </TableCell>
                     <TableCell
                       sx={{ textAlign: "center" }}
@@ -162,7 +185,7 @@ const RegistersTable = () => {
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
-      </TableContainer>
+      </StyledTableContainer>
     </div>
   );
 };

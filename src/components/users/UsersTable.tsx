@@ -1,9 +1,28 @@
 import { useEffect, useState } from 'react'
 import { Trabajador } from '../../models/trabajador/Trabajador';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TablePagination } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TablePagination, Typography } from '@mui/material';
 import mergeSort from '../../algorithms/mergeSort';
 import SortButtons from '../sortButtons/SortButtons';
 import UsersDeleteModal from './UsersDeleteModal';
+import { styled } from '@mui/material/styles';
+
+const CargoTypography = styled(Typography)(() => ({
+  fontWeight: 'bold',
+  fontSize: '0.75rem',
+  color: 'white',
+  backgroundColor: 'grey',
+  borderRadius: 8,
+  padding: '3px 10px',
+  display: 'inline-block',
+  marginBottom: '3px',
+  marginRight: '6px'
+}));
+
+const TitleTableCell = styled(TableCell)(({ theme }) => ({
+  fontWeight: 'bold',
+  backgroundColor: ' #879ff1 ',
+  color: theme.palette.getContrastText(theme.palette.primary.dark),
+}));
 
 const UsersTable = () => {
 
@@ -42,31 +61,31 @@ const UsersTable = () => {
 
   return (
     <div className='flex items-center justify-center'>
-      <TableContainer component={Paper} sx={{ width: "90%" }}>
+      <TableContainer component={Paper} sx={{ width: "90%", borderRadius: 5 }}>
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell sx={{ width: "10%", textAlign: "center" }}>
+              <TitleTableCell sx={{ width: "10%", textAlign: "center" }}>
                 Id
                 <SortButtons field='id' onSort={toggleSort} />
-              </TableCell>
-              <TableCell sx={{ width: "20%", textAlign: "center" }}>
+              </TitleTableCell>
+              <TitleTableCell sx={{ width: "10%", textAlign: "center" }}>
                 Nombre
                 <SortButtons field='nombres' onSort={toggleSort} />
-              </TableCell>
-              <TableCell sx={{ width: "20%", textAlign: "center" }}>
+              </TitleTableCell>
+              <TitleTableCell sx={{ width: "10%", textAlign: "center" }}>
                 Apellido
                 <SortButtons field='apellidos' onSort={toggleSort} />
-              </TableCell>
-              <TableCell sx={{ width: "30%", textAlign: "center" }}>
+              </TitleTableCell>
+              <TitleTableCell sx={{ width: "30%", textAlign: "center" }}>
                 Correo
                 <SortButtons field='email' onSort={toggleSort} />
-              </TableCell>
-              <TableCell sx={{ width: "30%", textAlign: "center" }}>
+              </TitleTableCell>
+              <TitleTableCell sx={{ width: "80%", textAlign: "center" }}>
                 Cargo
                 <SortButtons field='cargo' onSort={toggleSort} />
-              </TableCell>
-              <TableCell></TableCell>
+              </TitleTableCell>
+              <TitleTableCell></TitleTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -74,11 +93,38 @@ const UsersTable = () => {
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             .map((trabajador: Trabajador) => (
               <TableRow key={trabajador.id}>
-                <TableCell>{trabajador.id}</TableCell>
-                <TableCell>{trabajador.nombres}</TableCell>
-                <TableCell>{trabajador.apellidos}</TableCell>
-                <TableCell>{trabajador.email}</TableCell>
-                <TableCell>{Array.isArray(trabajador.cargo) ? trabajador.cargo.join(' / ') : trabajador.cargo}</TableCell>
+                <TableCell sx={{ width: "10%", textAlign: "center" }}>{trabajador.id}</TableCell>
+                <TableCell sx={{ width: "10%", textAlign: "center" }}>{trabajador.nombres}</TableCell>
+                <TableCell sx={{ width: "10%", textAlign: "center" }}>{trabajador.apellidos}</TableCell>
+                <TableCell sx={{ width: "30%", textAlign: "center" }}>{trabajador.email}</TableCell>                
+                <TableCell sx={{ width: "80%", textAlign: "center" }}>
+                  {Array.isArray(trabajador.cargo) ? trabajador.cargo.map((cargo, index) => (
+                    <CargoTypography 
+                    key={index}
+                    style={{
+                      backgroundColor:
+                        cargo === 'REPARACION_COMPUTADORAS' ? '#FFD700' :
+                        cargo === 'CONFIGURACION_REDES' ? '#1E90FF' :
+                        cargo === 'SOPORTE_SOFTWARE' ? '#32CD32' :
+                        cargo === 'PROGRAMACION' ? '#8A2BE2' :
+                        cargo === 'ADMINISTRACION_BASEDATOS' ? '#FF4500' :
+                        cargo === 'SEGURIDAD_INFORMATICA' ? '#B22222' :
+                        cargo === 'ANALISIS_SISTEMAS' ? '#DAA520' :
+                        cargo === 'CAPACITACION_USUARIOS' ? '#20B2AA' :
+                        cargo === 'REDACCION_DOCUMENTACION' ? '#778899' :
+                        cargo === 'RESOLUCION_PROBLEMAS' ? '#2E8B57' :
+                        cargo === 'ATENCION_CLIENTE' ? '#FF69B4' :
+                        cargo === 'INSTALACION_CABLEADO' ? '#A52A2A' :
+                        cargo === 'MANTENIMIENTO_IMPRESORAS' ? '#DEB887' :
+                        cargo === 'CONFIGURACION_TELEFONIA' ? '#5F9EA0' :
+                        cargo === 'MANEJO_HERRAMIENTAS' ? '#9ACD32' :
+                        'transparent' // Color por defecto si no coincide con ninguno
+                    }}
+                  >
+                    {cargo}
+                  </CargoTypography>
+                  )) : trabajador.cargo}
+                </TableCell>
                 <TableCell>
                   <UsersDeleteModal userId={trabajador.id ?? 0}/>
                 </TableCell>

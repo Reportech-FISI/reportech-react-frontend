@@ -29,14 +29,19 @@ const AssignRegister = () => {
             <div>
               <AssignDetails registerId = {selectedReportId!} flag = {flag!}/>
             </div>
-            <div className=''>
-              <div className='flex justify-center'>
-                <AssignModal registerId = {selectedReportId!}/>
-              </div>
-              <div className='mt-2 flex justify-center'>
-                <ManualAssignModal registerId={selectedReportId!}/>
-              </div>
-            </div>
+            {
+              flag && (
+                <div className=''>
+                  <div className='flex justify-center'>
+                    <AssignModal registerId = {selectedReportId!}/>
+                  </div>
+                  <div className='mt-2 flex justify-center'>
+                    <ManualAssignModal registerId={selectedReportId!}/>
+                  </div>
+                </div>
+              )
+            }
+            
           </div>
         </div>
 

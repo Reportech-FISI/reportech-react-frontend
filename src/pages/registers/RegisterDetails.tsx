@@ -6,6 +6,7 @@ import { Equipo } from '../../models/equipo/Equipo';
 import RegistersDeleteModal from '../../components/registers/RegistersDeleteModal';
 import RegistersUpdate from '../../components/registers/RegistersUpdate';
 import { useReporte } from '../../documents/ReporteContext';
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 
 export const RegisterDetails = () => {
 
@@ -74,92 +75,137 @@ export const RegisterDetails = () => {
   return (
     <>
     <Appbar/>
-    <div className="container mx-auto pt-16 p-5 bg-white shadow-md">
-      <div>
-      <h1 className="text-3xl font-bold mb-5 text-center">Detalles</h1>
-      <div>
-        <div className="text-lg font-semibold mb-2">Datos del registro:</div>
-          <table className="w-full border-collapse table-auto">
-            <tbody>
-              <tr>
-                <td className="border p-2">ID: {reporte.id}</td>
-                <td className="border p-2">Título: {reporte.titulo}</td>
-              </tr>
-              <tr>
-                <td className="border p-2">Fecha: {fechaFormateada} </td>
-                <td className="border p-2">Estado: {reporte.estado} </td>
-              </tr>
-              <tr>
-                <td className="border p-2">Prioridad: {reporte.prioridad} </td>
-                <td className="border p-2">Ubicación: {reporte.ubicacion}</td>
-              </tr>
-              <tr>
-                <td className="border p-2" >Reportante: {reporte.userReporterNombre}</td>
-                <td className='border p-2' >Clasificacion: {reporte.clasificacion} </td>
-              </tr>
-              { reporte.estado == "TECNICO_NO_NECESARIO" ? (
+    <div className=" container mx-auto mt-16 px-3 shadow-md">
+      <div className=' bg-white'>
+        <div className=' bg-white p-7 rounded-md'>
+          <h1 className="text-3xl font-bold mb-5 text-center">Detalles</h1>
+          <div>
+          <div className="text-lg font-semibold mb-2">Datos del registro:</div>
+            <table className="w-full border-collapse table-auto">
+              <tbody>
                 <tr>
-                  <td className="border p-2" colSpan={2}>Tecnico especializado no necesario: Designado a soporte.</td>
+                  <td className="border p-2">
+                    <span className="font-semibold text-blue-700">ID:</span>
+                    <span className="ml-2">{reporte.id}</span>
+                  </td>
+                  <td className="border p-2">
+                    <span className="font-semibold text-blue-800 ">Título:</span>
+                    <span className="ml-2">{reporte.titulo}</span>
+                  </td>
                 </tr>
-              ) : (
                 <tr>
-                  <td className="border p-2" colSpan={2}>Encargado asignado: {reporte.userDesignado}</td>
+                  <td className="border p-2">
+                    <span className="font-semibold text-blue-800 ">Fecha:</span>
+                    <span className="ml-2">{fechaFormateada}</span>
+                  </td>
+                  <td className="border p-2">
+                    <span className="font-semibold text-blue-800 ">Estado:</span>
+                    <span className="ml-2">{reporte.estado}</span>
+                  </td>
                 </tr>
-              )}
-
-            </tbody>
-          </table>
-        </div>
-        <div>
-          <div className="text-lg font-semibold mt-5 mb-2">Datos del equipo:</div>
-          <table className="w-full border-collapse table-auto">
-            <tbody>
-              <tr>
-                <td className="border p-2">ID: {equipo.id}</td>
-                <td className="border p-2 w-2/4 whitespace-normal break-words">Nombre: {equipo.nombre}</td>
-                <td className="border p-2 align-text-top" rowSpan={3}>Foto :
-                {equipo.foto && equipo.foto.id ? (
-                  <img src={`http://localhost:8080/api/equipo/img/${equipo.foto.id}`} alt="imagen" className="w-60"/>
+                <tr>
+                  <td className="border p-2">
+                    <span className="font-semibold text-blue-800 ">Prioridad:</span>
+                    <span className="ml-2">{reporte.prioridad}</span>
+                  </td>
+                  <td className="border p-2">
+                    <span className="font-semibold text-blue-800 ">Ubicación:</span>
+                    <span className="ml-2">{reporte.ubicacion}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td className="border p-2">
+                    <span className="font-semibold text-blue-800 ">Reportante:</span>
+                    <span className="ml-2">{reporte.userReporterNombre}</span>
+                  </td>
+                  <td className="border p-2">
+                    <span className="font-semibold text-blue-800 ">Clasificación:</span>
+                    <span className="ml-2">{reporte.clasificacion}</span>
+                  </td>
+                </tr>
+                {reporte.estado === "TECNICO_NO_NECESARIO" ? (
+                  <tr>
+                    <td className="border p-2" colSpan={2}>
+                      <span className="font-semibold text-blue-800 ">Tecnico especializado no necesario:</span>
+                      <span className="ml-2 text-blue-600">Designado a soporte.</span>
+                    </td>
+                  </tr>
                 ) : (
-                  <p className="text-gray-700">No hay imagen disponible</p>
+                  <tr>
+                    <td className="border p-2" colSpan={2}>
+                      <span className="font-semibold text-blue-800 ">Encargado asignado:</span>
+                      <span className="ml-2 ">{reporte.userDesignado}</span>
+                    </td>
+                  </tr>
                 )}
-                </td>
-              </tr>
-              <tr>
-                <td className="border p-2 w-3/4 whitespace-normal break-words" colSpan={2}>Descripción del problema: {equipo.descripcion}</td>
-              </tr>
-              <tr>
-                <td className="border p-2" colSpan={2}>Estado de reparación: {equipo.estadoReparacion} </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>  
-      </div>
-      <div className='flex justify-start mt-4'>
-        <div 
-          className="border-red-500 hover:bg-red-500 hover:text-white font-bold py-2 px-4 rounded mr-2 flex cursor-pointer"
-        >
-          <RegistersDeleteModal reporteId={+registerId!} />
-        </div>
+              </tbody>
+            </table>
+            </div>
+            <div>
+              <div className="text-lg font-semibold mt-5 mb-2">Datos del equipo:</div>
+              <table className="w-full border-collapse table-auto">
+                <tbody>
+                  <tr>
+                    <td className="border p-2">
+                      <span className="font-semibold text-blue-800 ">ID:</span>
+                      <span className="ml-2">{equipo.id}</span>
+                    </td>
+                    <td className="border p-2 w-2/4 whitespace-normal break-words">
+                      <span className="font-semibold text-blue-800 ">Nombre:</span>
+                      <span className="ml-2">{equipo.nombre}</span>
+                    </td>
+                    <td className="border p-2 align-text-top" rowSpan={3}>
+                      <span className="font-semibold text-blue-800 ">Foto:</span>
+                      <div className="mt-1">
+                        {equipo.foto && equipo.foto.id ? (
+                          <img src={`http://localhost:8080/api/equipo/img/${equipo.foto.id}`} alt="imagen" className="w-60"/>
+                        ) : (
+                          <p className="text-gray-700">No hay imagen disponible</p>
+                        )}
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border p-2 w-3/4 whitespace-normal break-words" colSpan={2}>
+                      <span className="font-semibold text-blue-800 ">Descripción del problema:</span>
+                      <span className="ml-2">{equipo.descripcion}</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border p-2" colSpan={2}>
+                      <span className="font-semibold text-blue-800 ">Estado de reparación:</span>
+                      <span className="ml-2">{equipo.estadoReparacion}</span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>  
+          </div>
+        <div className='ml-6 flex justify-start py-4'>
+          <div 
+            className="border border-red-500 hover:bg-red-500 hover:text-white font-bold py-2 px-3 rounded mr-2 flex cursor-pointer"
+          >
+            <RegistersDeleteModal reporteId={+registerId!} />
+          </div>
 
-        <div>
-          <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold  rounded mr-2" 
-          >
-            <RegistersUpdate registro = {reporte}/>
-          </button>
-        </div>
-        <div>
-          <button
-            className="bg-orange-500 hover:bg-orange-700 text-white font-bold  rounded mr-2" 
-          >
-            <a href={`http://localhost:5173/test`}>
-              Generar PDF
-            </a>
-          </button>
+          <div>
+            <button
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold  rounded mr-2" 
+            >
+              <RegistersUpdate registro = {reporte}/>
+            </button>
+          </div>
+          <div>
+            <button
+              className="border border-orange-400 p-2 px-3 bg-orange-500 hover:bg-orange-700 text-white font-bold  rounded mr-2" 
+            >
+              <a href={`http://localhost:5173/test`}>
+                <PictureAsPdfIcon/>
+              </a>
+            </button>
+          </div>
         </div>
       </div>
-      
     </div>
     </>
   );
