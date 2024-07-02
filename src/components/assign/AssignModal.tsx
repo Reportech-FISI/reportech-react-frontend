@@ -22,18 +22,16 @@ const AssignModal = ({registerId}: {registerId: number}) => {
     if (open) {
       fetch(`http://localhost:8080/api/autoassign/${registerId}`)
         .then(res => res.json())
-        //.then(data => setUserFetched(data));
         .then(data => {
-          // Asegurarse de que data no sea nulo antes de asignarlo a userFetched
           if (data) {
             setUserFetched(data);
           } else {
-            setUserFetched([]); // Asignar un arreglo vacío si data es nulo
+            setUserFetched([]); 
           }
         })
         .catch(error => {
           console.error('Error fetching data:', error);
-          setUserFetched([]); // Asignar un arreglo vacío en caso de error
+          setUserFetched([]); 
         });
       console.log(userFetched);
     }
@@ -65,7 +63,7 @@ const AssignModal = ({registerId}: {registerId: number}) => {
 
     console.log(response.json())
 
-    setTimeout(() => {console.log("Enviando...")}, 1000)
+    setTimeout(() => {console.log("Enviando...")}, 2000)
     location.reload();
   }
 

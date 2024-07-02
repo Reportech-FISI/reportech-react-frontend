@@ -72,6 +72,26 @@ const CreateUser = () => {
     } catch (error) {
       console.error('Error:', error);
     }
+
+    // Enviar por email la contraseña generada
+    const subject = "Contraseña generada para acceso al sistema"
+    const message = "Se le ha generado una contraseña para acceder al sistema. La contraseña es: " + generatedPassword;
+
+    try {
+      const response = await fetch(`http://localhost:8080/api/mail/send/${userData.email}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ subject, message })
+      });
+
+      if (response.ok) {
+        console.log('Correo enviado');
+      }
+    } catch (error) {
+      console.error('Error')
+    }
   }
 
   return (

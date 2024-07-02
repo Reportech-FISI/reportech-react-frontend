@@ -3,6 +3,8 @@ import { ModalContent } from "../../styles/modalContent"
 import { style } from "../../styles/style"
 import { useEffect, useState } from "react";
 import { Trabajador } from "../../models/trabajador/Trabajador";
+import mergeSort from "../../algorithms/mergeSort";
+import SortButtons from "../sortButtons/SortButtons";
 
 const ManualAssignModal = ({registerId}: {registerId: number}) => {
 
@@ -49,6 +51,15 @@ const ManualAssignModal = ({registerId}: {registerId: number}) => {
     .then(data => setRegistro(data))
   }, [registerId])
 
+  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
+  const [sortField, setSortField] = useState<keyof Trabajador>('id'); 
+
+  const toggleSort = (field: string, isAscending: boolean) => {
+    setSortDirection(isAscending ? 'asc' : 'desc');
+    setSortField(field as keyof Trabajador);
+  };
+
+  const sortedTrabajadores = mergeSort([...trabajadores], sortField, sortDirection);
 
   useEffect(() => {
     fetchTrabajadores();
@@ -79,7 +90,29 @@ const ManualAssignModal = ({registerId}: {registerId: number}) => {
 
     console.log(response.json())
 
-    setTimeout(() => {console.log("Enviando...")}, 1000)
+    // Envio por correo de notificacion de la asignación
+
+    const subject = "Nueva asignación de reporte";
+    const message = `Se le ha asignado el reporte ${registro.titulo}.\nAcceder al sistema para ver los detalles.`;
+
+    try {
+      const response = await fetch(`http://localhost:8080/api/mail/send/assigned/${trabajadorId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({subject, message})
+      });
+
+      if (!response.ok) {
+        throw new Error('Error al enviar los datos a /api/mail');
+      }
+
+    } catch (error) {
+      console.error('Error:', error);
+    }
+
+    setTimeout(() => {console.log("Enviando...")}, 3000)
     location.reload();
   }
 
@@ -110,20 +143,24 @@ const ManualAssignModal = ({registerId}: {registerId: number}) => {
                   <TableRow>
                     <TableCell>
                       Id
+                      <SortButtons field='id' onSort={toggleSort} />
                     </TableCell>
                     <TableCell>
                       Nombre
+                      <SortButtons field='id' onSort={toggleSort} />
                     </TableCell>
                     <TableCell>
                       Apellido
+                      <SortButtons field='id' onSort={toggleSort} />
                     </TableCell>
                     <TableCell>
                       Cargo
+                      <SortButtons field='id' onSort={toggleSort} />
                     </TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {Array.from(trabajadores)
+                  {Array.from(sortedTrabajadores)
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((trabajador: Trabajador) => (
                     <TableRow key={trabajador.id} onClick={
