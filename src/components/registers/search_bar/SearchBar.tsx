@@ -15,7 +15,6 @@ interface Reporte {
 }
 
 const SearchBar = () => {
-  const [reportes, setReportes] = useState<Reporte[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [reportesMap, setReportesMap] = useState<Map<string, Reporte>>(
     new Map(),
@@ -34,7 +33,6 @@ const SearchBar = () => {
     const fetchReportes = async () => {
       const response = await fetch("http://localhost:8080/api/reportes");
       const data: Reporte[] = await response.json();
-      setReportes(data);
 
       const map = new Map<string, Reporte>();
       data.forEach((reporte) => map.set(reporte.titulo, reporte));

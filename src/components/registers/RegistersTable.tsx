@@ -4,7 +4,6 @@ import {
   TableCell,
   TableHead,
   TableRow,
-  Paper,
   TablePagination,
   TableContainer,
   Typography
@@ -43,11 +42,12 @@ const RegistersTable = () => {
 
   const navigate = useNavigate();
 
-  const [reportes, setReportes] = useState<Reporte[]>([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [sortDirection, setSortDirection] = useState("asc"); // Ascendente por defecto
-  const [sortField, setSortField] = useState<keyof Reporte>("fechaPublicacion"); // Por defecto se ordena por fecha de publicación
+
+  const [reportes, setReportes] = useState<Reporte[]>([]);
+  const [sortDirection, setSortDirection] = useState("asc");
+  const [sortField, setSortField] = useState<keyof Reporte>("fechaPublicacion"); 
 
   const toggleSort = (field: keyof Reporte, isAscending: boolean) => {
     const direction: "asc" | "desc" | undefined = isAscending ? "asc" : "desc";
@@ -84,7 +84,7 @@ const RegistersTable = () => {
   
   return (
     <div className="flex items-center justify-center ">
-      <StyledTableContainer component={Paper} sx={{ width: "90%" }}>
+      <StyledTableContainer  sx={{ width: "90%" }}>
         <Table>
           <TableHead>
             <TableRow sx={{}}>
@@ -142,7 +142,8 @@ const RegistersTable = () => {
                           backgroundColor: 
                           ((reporte.estado === "TECNICO_ASIGNADO" && '  #1966f6 ') ||
                           (reporte.estado === "TECNICO_POR_ASIGNAR" && '  #eca01a ') ||
-                          (reporte.estado === "TECNICO_NO_NECESARIO" && ' #b5ada1 '))
+                          (reporte.estado === "TECNICO_NO_NECESARIO" && ' #b5ada1 ')) ||
+                          undefined
                         }}
                       >
                         {reporte.estado}
@@ -156,7 +157,8 @@ const RegistersTable = () => {
                         style={{
                           color: 
                           ((reporte.prioridad === "URGENTE" && 'red') ||
-                          (reporte.prioridad === "NO_URGENTE" && ' #198ef6 '))
+                          (reporte.prioridad === "NO_URGENTE" && ' #198ef6 ')) ||
+                          undefined
                         }}
                       >
                         {reporte.prioridad}
