@@ -16,7 +16,7 @@ export const Home = () => {
       <Appbar />
       <div className="pt-8 flex flex-col justify-evenly items-center h-screen">
       <h1 className='text-9xl font-bold italic text-gray-800 relative'>
-        <span className='relative z-10 animate-pulse'>REPORTECH</span>
+        <span className='relative z-10 animate-pulse'></span>
         <span className='absolute top-0 left-0 w-full h-full bg-gradient-to-r from-blue-600 to-blue-400 blur-md animate-pulse opacity-75'></span>
       </h1>
         <div className="flex justify-evenly items-center h-screen">
