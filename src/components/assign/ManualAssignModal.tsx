@@ -2,7 +2,6 @@ import { Button, Dialog, DialogActions, DialogContent, DialogContentText, Dialog
 import { ModalContent } from "../../styles/modalContent"
 import { style } from "../../styles/style"
 import { useEffect, useState } from "react";
-import { Registro } from "../../models/registro/Registro";
 import { Trabajador } from "../../models/trabajador/Trabajador";
 
 const ManualAssignModal = ({registerId}: {registerId: number}) => {
@@ -11,7 +10,7 @@ const ManualAssignModal = ({registerId}: {registerId: number}) => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(7);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
   const [openDialog, setOpenDialog] = useState(false);
 
   const handleChangePage = (event: unknown, newPage: number) => {
@@ -19,7 +18,7 @@ const ManualAssignModal = ({registerId}: {registerId: number}) => {
   };
   
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRowsPerPage(parseInt(event.target.value, 7));
+    setRowsPerPage(parseInt(event.target.value, 5));
     setPage(0);
   };  
 
@@ -28,7 +27,9 @@ const ManualAssignModal = ({registerId}: {registerId: number}) => {
   const fetchTrabajadores = async () => {
     const response = await fetch('http://localhost:8080/api/trabajadores');
     const data: Set<Trabajador> = await response.json();
-    setTrabajadores(data);
+    const tecnicos = Array.from(data).filter(trabajador => trabajador.rol! === 'TECNICO');
+    setTrabajadores(new Set(tecnicos));
+    //setTrabajadores(data);
   }
 
   const [userNombreAsignado, setUserNombreAsignado] = useState('');
@@ -84,12 +85,13 @@ const ManualAssignModal = ({registerId}: {registerId: number}) => {
 
   return (
     <div>
-      <Button sx={{backgroundColor: 'white'}} onClick={handleOpen}>
-        Asignacion manual
+      <Button sx={{backgroundColor: 'white', padding: 1.5, borderRadius: 2}} onClick={handleOpen}>
+        Asignación manual
       </Button>
       <Modal
         open={open}
         onClose={handleClose}
+        sx={{height: '80%', margin: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'center'}}
       >
         <Fade in={open}>
           <ModalContent sx={style}>
@@ -101,56 +103,56 @@ const ManualAssignModal = ({registerId}: {registerId: number}) => {
               <h1>Clasificacion: {registro.clasificacion}</h1>
             </div>
 
-          <h1 className="font-semibold text-2xl mb-1">Usuario por asignar</h1>
-          <TableContainer component={Paper} >
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell>
-                    Id
-                  </TableCell>
-                  <TableCell>
-                    Nombre
-                  </TableCell>
-                  <TableCell>
-                    Apellido
-                  </TableCell>
-                  <TableCell>
-                    Cargo
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {Array.from(trabajadores)
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((trabajador: Trabajador) => (
-                  <TableRow key={trabajador.id} onClick={
-                    () => {
-                      setUserNombreAsignado(trabajador.nombres);
-                      setUserApellidoAsignado(trabajador.apellidos);
-                      setTrabajadorId(trabajador.id!);
-                      setOpenDialog(true);
-                      setUserDesignado(trabajador.nombres + ' ' + trabajador.apellidos);
-                    }
-                  }>
-                    <TableCell>{trabajador.id}</TableCell>
-                    <TableCell>{trabajador.nombres}</TableCell>
-                    <TableCell>{trabajador.apellidos}</TableCell>
-                    <TableCell>{trabajador.cargo}</TableCell>
+            <h1 className="font-semibold text-2xl mb-1">Usuario por asignar</h1>
+            <TableContainer component={Paper} >
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>
+                      Id
+                    </TableCell>
+                    <TableCell>
+                      Nombre
+                    </TableCell>
+                    <TableCell>
+                      Apellido
+                    </TableCell>
+                    <TableCell>
+                      Cargo
+                    </TableCell>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-            <TablePagination
-              rowsPerPageOptions={[7, 15, 40]}
-              component="div"
-              count={Array.from(trabajadores).length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-            />
-          </TableContainer>
+                </TableHead>
+                <TableBody>
+                  {Array.from(trabajadores)
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((trabajador: Trabajador) => (
+                    <TableRow key={trabajador.id} onClick={
+                      () => {
+                        setUserNombreAsignado(trabajador.nombres);
+                        setUserApellidoAsignado(trabajador.apellidos);
+                        setTrabajadorId(trabajador.id!);
+                        setOpenDialog(true);
+                        setUserDesignado(trabajador.nombres + ' ' + trabajador.apellidos);
+                      }
+                    }>
+                      <TableCell>{trabajador.id}</TableCell>
+                      <TableCell>{trabajador.nombres}</TableCell>
+                      <TableCell>{trabajador.apellidos}</TableCell>
+                      <TableCell>{Array.isArray(trabajador.cargo) ? trabajador.cargo.join(' / ') : trabajador.cargo}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+              <TablePagination
+                rowsPerPageOptions={[5, 10, 20]}
+                component="div"
+                count={Array.from(trabajadores).length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+              />
+            </TableContainer>
           </ModalContent>
         </Fade>
       </Modal>

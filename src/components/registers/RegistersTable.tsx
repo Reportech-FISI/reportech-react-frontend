@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   TableBody,
   TableCell,
@@ -7,6 +7,7 @@ import {
   Paper,
   TablePagination,
   TableContainer,
+  Typography
 } from "@mui/material";
 import Table from "@mui/material/Table";
 import quickSort from "../../algorithms/quickSort";
@@ -14,10 +15,32 @@ import SortButtons from "../sortButtons/SortButtons";
 import { Reporte } from "../../models/Reporte_Fila";
 import { useNavigate } from "react-router-dom";
 import RegistersDeleteModal from "./RegistersDeleteModal";
+import { styled } from '@mui/material/styles';
 
-// TODO: Crear mockup de reporte
+
+const StyledTableContainer = styled(TableContainer)(({ theme }) => ({
+  borderRadius: 15,
+  margin: '10px 10px',
+}));
+
+const TitleTableCell = styled(TableCell)(({ theme }) => ({
+  fontWeight: 'bold',
+  backgroundColor: ' #446aea ',
+  color: theme.palette.getContrastText(theme.palette.primary.dark),
+}));
+
+const StatusTypography = styled(Typography)(() => ({
+  fontWeight: 'bold',
+  fontSize: '0.75rem',
+  color: 'white',
+  backgroundColor: 'grey',
+  borderRadius: 8,
+  padding: '3px 10px',
+  display: 'inline-block'
+}));
 
 const RegistersTable = () => {
+
   const navigate = useNavigate();
 
   const [reportes, setReportes] = useState<Reporte[]>([]);
@@ -27,7 +50,8 @@ const RegistersTable = () => {
   const [sortField, setSortField] = useState<keyof Reporte>("fechaPublicacion"); // Por defecto se ordena por fecha de publicación
 
   const toggleSort = (field: keyof Reporte, isAscending: boolean) => {
-    setSortDirection(isAscending ? "asc" : "desc");
+    const direction: "asc" | "desc" | undefined = isAscending ? "asc" : "desc";
+    setSortDirection(direction);
     setSortField(field);
   };
 
@@ -37,11 +61,14 @@ const RegistersTable = () => {
     setReportes(data);
   };
 
-  // 1/5 Algoritmos
-  const sortedReportes = quickSort([...reportes], (a: Reporte, b: Reporte) => {
-    const comparison = String(a[sortField]).localeCompare(String(b[sortField]));
-    return sortDirection === "asc" ? comparison : -comparison;
-  });
+  useEffect(() => {
+    fetchReportes();
+  }, []);
+
+  // 1/5 Algoritmos.
+  const sortedReportes = useMemo(() => {
+    return quickSort([...reportes], sortField, sortDirection);
+  }, [reportes, sortField, sortDirection]);
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -54,46 +81,34 @@ const RegistersTable = () => {
     setPage(0);
   };
 
-  useEffect(() => {
-    fetchReportes();
-  }, []);
-
-  useEffect(() => {
-    const sortedData = quickSort([...reportes], (a: Reporte, b: Reporte) => {
-      const comparison = String(a[sortField]).localeCompare(
-        String(b[sortField]),
-      );
-      return sortDirection === "asc" ? comparison : -comparison;
-    });
-    setReportes(sortedData);
-  }, [sortField, sortDirection]);
-
+  
   return (
     <div className="flex items-center justify-center ">
-      <TableContainer component={Paper} sx={{ width: "90%" }}>
+      <StyledTableContainer component={Paper} sx={{ width: "90%" }}>
         <Table>
           <TableHead>
             <TableRow sx={{}}>
-              <TableCell sx={{ width: "10%", textAlign: "center" }}>
+              <TitleTableCell  sx={{ width: "10%", textAlign: "center" }} >
                 Id
                 <SortButtons field="id" onSort={toggleSort} />
-              </TableCell>
-              <TableCell sx={{ width: "20%", textAlign: "center" }}>
+              </TitleTableCell >
+              <TitleTableCell sx={{ width: "20%", textAlign: "center" }}>
                 Titulo
                 <SortButtons field="titulo" onSort={toggleSort} />
-              </TableCell>
-              <TableCell sx={{ width: "20%", textAlign: "center" }}>
+              </TitleTableCell>
+              <TitleTableCell sx={{ width: "20%", textAlign: "center" }}>
                 Estado
                 <SortButtons field="estado" onSort={toggleSort} />
-              </TableCell>
-              <TableCell sx={{ width: "20%", textAlign: "center" }}>
+              </TitleTableCell>
+              <TitleTableCell sx={{ width: "20%", textAlign: "center" }}>
                 Prioridad
                 <SortButtons field="prioridad" onSort={toggleSort} />
-              </TableCell>
-              <TableCell sx={{ width: "20%", textAlign: "center" }}>
+              </TitleTableCell>
+              <TitleTableCell sx={{ width: "20%", textAlign: "center" }}>
                 Fecha de Publicación
                 <SortButtons field="fechaPublicacion" onSort={toggleSort} />
-              </TableCell>
+              </TitleTableCell>
+              <TitleTableCell></TitleTableCell>
             </TableRow>
           </TableHead>
 
@@ -122,13 +137,30 @@ const RegistersTable = () => {
                       sx={{ textAlign: "center" }}
                       onClick={() => navigate(`/details/${reporte.id}`)}
                     >
-                      {reporte.estado}
+                      <StatusTypography
+                        style={{
+                          backgroundColor: 
+                          ((reporte.estado === "TECNICO_ASIGNADO" && '  #1966f6 ') ||
+                          (reporte.estado === "TECNICO_POR_ASIGNAR" && '  #eca01a ') ||
+                          (reporte.estado === "TECNICO_NO_NECESARIO" && ' #b5ada1 '))
+                        }}
+                      >
+                        {reporte.estado}
+                      </StatusTypography>
                     </TableCell>
                     <TableCell
                       sx={{ textAlign: "center" }}
                       onClick={() => navigate(`/details/${reporte.id}`)}
                     >
-                      {reporte.prioridad}
+                      <Typography
+                        style={{
+                          color: 
+                          ((reporte.prioridad === "URGENTE" && 'red') ||
+                          (reporte.prioridad === "NO_URGENTE" && ' #198ef6 '))
+                        }}
+                      >
+                        {reporte.prioridad}
+                      </Typography>
                     </TableCell>
                     <TableCell
                       sx={{ textAlign: "center" }}
@@ -153,7 +185,7 @@ const RegistersTable = () => {
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
-      </TableContainer>
+      </StyledTableContainer>
     </div>
   );
 };

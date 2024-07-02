@@ -1,14 +1,13 @@
-import React, { useState } from 'react'
-import { Modal as BaseModal } from '@mui/base/Modal';
-import clsx from 'clsx';
+import { useEffect, useState } from 'react'
 import { styled, css } from '@mui/system';
 import { Button, Fade, Modal } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import UserAssignedCard from './UserAssignedCard';
+import { Trabajador } from '../../models/trabajador/Trabajador';
 
 
 
-const AssignModal = (registerId) => {
+const AssignModal = ({registerId}: {registerId: number}) => {
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -17,39 +16,64 @@ const AssignModal = (registerId) => {
   const [showContent, setShowContent] = useState(false);
   const [userAssigned, setUserAssigned] = useState(String);
 
-  const userFetched = [ // Relacionarlo a la API que utilizará el algoritmo
-    {
-      id: 1,
-      nombre: 'Juan',
-      apellido: 'Perez',
-      email: 'juan@unmsm.edu.pe',
-      cargo: ['REPARACION_COMPUTADORAS', 'MANTENIMIENTO_SERVIDORES'],
-      tiempoExperiencia: 5,
-    },
-    {
-      id: 2,
-      nombre: 'Luis',
-      apellido: 'Gonzales',
-      email: '',
-      cargo: ['REPARACION_COMPUTADORAS', 'MANTENIMIENTO_SERVIDORES'],
-      tiempoExperiencia: 3,
-    },
-    {
-      id: 3,
-      nombre: 'Pedro',
-      apellido: 'Torres',
-      email: '',
-      cargo: ['REPARACION_COMPUTADORAS', 'MANTENIMIENTO_SERVIDORES'],
-      tiempoExperiencia: 2,
-    },
-  ]
+  const [userFetched, setUserFetched] = useState([]);
+
+  useEffect(() => {
+    if (open) {
+      fetch(`http://localhost:8080/api/autoassign/${registerId}`)
+        .then(res => res.json())
+        //.then(data => setUserFetched(data));
+        .then(data => {
+          // Asegurarse de que data no sea nulo antes de asignarlo a userFetched
+          if (data) {
+            setUserFetched(data);
+          } else {
+            setUserFetched([]); // Asignar un arreglo vacío si data es nulo
+          }
+        })
+        .catch(error => {
+          console.error('Error fetching data:', error);
+          setUserFetched([]); // Asignar un arreglo vacío en caso de error
+        });
+      console.log(userFetched);
+    }
+  }, [open, registerId])
 
   const registerTitle = sessionStorage.getItem("registertoassign");
 
+  const [trabajadorId, setTrabajadorId] = useState(0);
+
+  const handleSetUserDesignado = async (event: { preventDefault: () => void; }) => {
+    event.preventDefault();
+
+    const data = {
+      userAssigned
+      // estado
+    }
+
+    const response = await fetch(`http://localhost:8080/api/reporte/${registerId}/${trabajadorId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+
+    if (!response.ok) {
+      throw new Error('Error al enviar los datos a /api/reporte/registerId/trabajadorId');
+    }
+
+    console.log(response.json())
+
+    setTimeout(() => {console.log("Enviando...")}, 1000)
+    location.reload();
+  }
+
+
   return (
     <div>
-      <Button sx={{backgroundColor: 'white'}} onClick={handleOpen}>
-        Autoasignacion
+      <Button sx={{backgroundColor: 'white', padding: 1.5, borderRadius: 2}} onClick={handleOpen}>
+        Autoasignación
       </Button>
       <Modal
         aria-labelledby="unstyled-modal-title"
@@ -59,21 +83,25 @@ const AssignModal = (registerId) => {
       >
         <Fade in={open}>
           <ModalContent sx={style} >
-            <h1 className="modal-title flex justify-center font-bold text-3xl my-3">Autoasignacion</h1>
+            <h1 className="modal-title flex justify-center font-bold text-3xl my-3">Autoasignación</h1>
             <h2 className='text-center mb-4'>Seleccione uno de los resultados obtenidos del algoritmo</h2>
             <div className='grid grid-cols-3 gap-4'>
               { 
-                userFetched.map((user, index) => {
+                userFetched.map((user: Trabajador) => {
                 return (
                   <div 
-                    key={index}
+                    key={user.id}
                     className='bg-cyan-200 flex justify-center p-2' 
                     onClick={
-                      () => {setShowContent(true); setUserAssigned(user.nombre)}
+                      () => {
+                        setShowContent(true); 
+                        setUserAssigned(user.nombres);
+                        setTrabajadorId(user.id!);
+                      }
                     }>
                     <UserAssignedCard 
-                      nombres={user.nombre}
-                      apellidos={user.apellido}
+                      nombres={user.nombres}
+                      apellidos={user.apellidos}
                       correo={user.email}
                       cargos={user.cargo}
                       tiempoExperiencia={user.tiempoExperiencia}
@@ -82,14 +110,17 @@ const AssignModal = (registerId) => {
                 )
               })}
 
-              
             </div>
             {
               showContent && (
               <div className=''>
                 <h1 className='text-center text-lg my-2'>Desea asignar a {userAssigned} a {registerTitle} ?</h1>
                 <div className='flex justify-center'>
-                  <Button>Asignar</Button>
+                  <Button
+                    onClick={ handleSetUserDesignado }
+                  >
+                    Asignar
+                  </Button>
                   <Button onClick={() => {
                     setShowContent(false);
                     handleClose();
@@ -142,7 +173,7 @@ const ModalContent = styled('div')(
 );
 
 const style = {
-  position: 'absolute' as 'absolute',
+  position: 'absolute',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',

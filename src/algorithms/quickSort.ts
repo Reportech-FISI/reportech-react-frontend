@@ -1,21 +1,27 @@
-function quickSort<T>(arr: T[], compareFn: (a: T, b: T) => number): T[] {
+function quickSort<T>(arr: T[], attribute: keyof T, order: 'asc' | 'desc' = 'asc'): T[] {
   if (arr.length < 2) {
     return arr;
   }
 
-  const pivot = arr[arr.length - 1];
-  const left = [];
-  const right = [];
+  const pivot = arr[Math.floor(arr.length / 2)];
+  const left = arr.filter(item => compare(item, pivot, attribute, order) < 0);
+  const right = arr.filter(item => compare(item, pivot, attribute, order) > 0);
+  const middle = arr.filter(item => compare(item, pivot, attribute, order) === 0);
 
-  for (let i = 0; i < arr.length - 1; i++) {
-    if (compareFn(arr[i], pivot) < 0) {
-      left.push(arr[i]);
-    } else {
-      right.push(arr[i]);
-    }
-  }
+  return [
+    ...quickSort(left, attribute, order),
+    ...middle,
+    ...quickSort(right, attribute, order),
+  ];
+}
 
-  return [...quickSort(left, compareFn), pivot, ...quickSort(right, compareFn)];
+function compare<T>(a: T, b: T, attribute: keyof T, order: 'asc' | 'desc'): number {
+  const isNumeric = typeof a[attribute] === 'number';
+  const comparison = isNumeric
+    ? (+a[attribute] - +b[attribute])
+    : String(a[attribute]).localeCompare(String(b[attribute]));
+
+  return order === 'asc' ? comparison : -comparison;
 }
 
 export default quickSort;

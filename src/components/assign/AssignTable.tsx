@@ -1,14 +1,21 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { TableBody, TableCell, TableHead, TableRow, Paper, TablePagination, TableContainer } from '@mui/material'
 import Table from '@mui/material/Table';
 import quickSort from '../../algorithms/quickSort';
 import SortButtons from '../sortButtons/SortButtons';
 import { Reporte } from '../../models/Reporte_Fila';
+import { styled } from '@mui/material/styles';
 
 type AssignTableProps = {
   onReportClick: (reportId: number) => void;
   flagReportClickeado: (flag: boolean) => void;
 };
+
+const TitleTableCell = styled(TableCell)(({ theme }) => ({
+  fontWeight: 'bold',
+  backgroundColor: '  #f7c56e ',
+  color: theme.palette.getContrastText(theme.palette.primary.dark),
+}));
 
 const AssignTable: React.FC<AssignTableProps> = ({onReportClick, flagReportClickeado}) => {
 
@@ -16,10 +23,11 @@ const AssignTable: React.FC<AssignTableProps> = ({onReportClick, flagReportClick
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [sortDirection, setSortDirection] = useState('asc'); // Ascendente por defecto
-  const [sortField, setSortField] = useState<keyof Reporte>('fechaPublicacion'); // Por defecto se ordena por fecha de publicación
+  const [sortField, setSortField] = useState<keyof Reporte>('titulo'); // Por defecto se ordena por fecha de publicación
   
   const toggleSort = (field: keyof Reporte, isAscending: boolean) => {
-    setSortDirection(isAscending ? 'asc' : 'desc');
+    const direction: "asc" | "desc" | undefined = isAscending ? "asc" : "desc";
+    setSortDirection(direction);
     setSortField(field);
   };
   
@@ -29,10 +37,14 @@ const AssignTable: React.FC<AssignTableProps> = ({onReportClick, flagReportClick
     setReportes(data);
   };
 
-  const sortedReportes = quickSort([...reportes], (a: Reporte, b: Reporte) => {
-    const comparison = String(a[sortField]).localeCompare(String(b[sortField]));
-    return sortDirection === 'asc' ? comparison : -comparison;
-  });
+  useEffect(() => {
+    fetchReportes();
+  }, []);
+
+  const sortedReportes = useMemo(() => {
+    return quickSort([...reportes], sortField, sortDirection);
+  }, [reportes, sortField, sortDirection]);
+
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -43,40 +55,28 @@ const AssignTable: React.FC<AssignTableProps> = ({onReportClick, flagReportClick
     setPage(0);
   };  
   
-  useEffect(() => {
-    fetchReportes();
-  }, []);
-
-  useEffect(() => {
-    const sortedData = quickSort([...reportes], (a: Reporte, b: Reporte) => {
-      const comparison = String(a[sortField]).localeCompare(String(b[sortField]));
-      return sortDirection === 'asc' ? comparison : -comparison;
-    });
-    setReportes(sortedData);
-  }, [sortField, sortDirection]);
-
   return (
     <div className='flex items-center justify-center ' >
       <TableContainer component={Paper} sx={{ width: '80%' }} >
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>
+              <TitleTableCell>
                 Id
                 <SortButtons field="id" onSort={toggleSort} />
-              </TableCell>
-              <TableCell>
+              </TitleTableCell>
+              <TitleTableCell>
                 Titulo
                 <SortButtons field="titulo" onSort={toggleSort} />
-              </TableCell>
-              <TableCell>
+              </TitleTableCell>
+              <TitleTableCell>
                 Clasificacion
                 <SortButtons field="clasificacion" onSort={toggleSort} />
-              </TableCell>
-              <TableCell>
+              </TitleTableCell>
+              <TitleTableCell>
                 Fecha de Publicación
                 <SortButtons field="fechaPublicacion" onSort={toggleSort} />
-              </TableCell>
+              </TitleTableCell>
             </TableRow>
           </TableHead>
 
