@@ -102,11 +102,12 @@ const CreateUser = () => {
       >
         <Fade in={open}>
           <ModalContent sx={style}>
-            <h2 id="spring-modal-title" className="text-3xl modal-title flex justify-center">
+            <h2 id="spring-modal-title" className="text-3xl modal-title flex justify-center bg-yellow-300 py-4 px-4 rounded-lg">
               Añadir usuario
             </h2>
             <div>
               <form onSubmit={handleSubmit} >
+              <div className="border border-gray-300 p-4">
               <div className="flex space-x-4">
                 <div className='w-1/2 mb-4 mt-2'>
                   <FormControl fullWidth >
@@ -163,7 +164,7 @@ const CreateUser = () => {
                   </FormControl>
                 </div>
                 
-                <div className='mb-4'>
+                <div className='mb-2'>
                 <FormControl fullWidth>
                   <InputLabel>Cargo</InputLabel>
                   <Select
@@ -200,8 +201,9 @@ const CreateUser = () => {
                   </Select>
                 </FormControl>
                 </div>
+                </div>
 
-                <div className="flex justify-between">
+                <div className="flex justify-between my-4">
                   <button 
                     className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-2" 
                     type="submit"

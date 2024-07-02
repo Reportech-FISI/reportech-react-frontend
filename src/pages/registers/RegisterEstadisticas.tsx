@@ -15,7 +15,7 @@ const RegisterEstadisticas = () => {
           <Box
             width="100%-10px"
             height="550px"
-            bgcolor="#fecdd3"
+            bgcolor="#fafaf9"
             display="flex"
             flexDirection={"column"}
             alignContent="center"
@@ -36,7 +36,7 @@ const RegisterEstadisticas = () => {
           <Box
             width="100%-10px"
             height="550px"
-            bgcolor="#e9d5ff"
+            bgcolor="#fafaf9"
             display="flex"
             flexDirection={"column"}
             alignContent="center"
@@ -57,7 +57,7 @@ const RegisterEstadisticas = () => {
           <Box
             width="100%-10px"
             height="550px"
-            bgcolor="#bbf7d0"
+            bgcolor="#fafaf9"
             display="flex"
             flexDirection={"column"}
             alignContent="center"
