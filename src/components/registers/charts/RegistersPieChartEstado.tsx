@@ -28,7 +28,6 @@ const RegistersPieChartEstado = () => {
          { id: 1, value: reportesPorEstado[1], label: 'T. por asginar' },
          { id: 2, value: reportesPorEstado[2], label: 'T. asignado' },
       ];
-      console.log(arr);
       setPieData(arr);
    }, [reportes]);
 
