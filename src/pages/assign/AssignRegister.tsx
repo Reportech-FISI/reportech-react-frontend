@@ -16,7 +16,7 @@ const AssignRegister = () => {
       <div className='my-5 mx-5 grid grid-cols-2 gap-4'>
         <div className='bg-stone-50 shadow-md rounded-xl pb-5'>
           <div className='pt-5 mb-10'>
-            <h1 className='flex justify-center font-semibold text-5xl mb-2'> Registros aceptados </h1>
+            <h1 className='flex justify-center font-semibold text-5xl mb-2'> Registros Aceptados </h1>
             <p className='flex justify-center'>Seleccione un registro a asignar.</p>
           </div>
           {/* <RegisterSearchBar/> */}

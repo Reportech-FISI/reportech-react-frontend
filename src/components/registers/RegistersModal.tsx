@@ -168,12 +168,12 @@ const RegistersModal = ({ buttonStyles }: modalProps) => {
           }}>
             <h2
               id="spring-modal-title"
-              className="text-3xl modal-title flex justify-center"
+              className="text-3xl modal-title flex justify-center bg-yellow-300 py-4 px-4 rounded-lg"
             >
-              Crear registro
+              Crear Registro
             </h2>
 
-            <div>
+            <div className="border border-gray-300 p-4">
               <form
                 onSubmit={handleSubmit}
                 className="grid grid-cols-2 gap-8"
@@ -183,7 +183,7 @@ const RegistersModal = ({ buttonStyles }: modalProps) => {
                 <div>
 
                 <div className="flex space-x-4">
-                    <div className='w-3/4 mt-4 mb-4'>
+                    <div className='w-3/4 mt-6 mb-4'>
                     <FormControl fullWidth>
                       <TextField
                         label="Titulo"
@@ -193,11 +193,11 @@ const RegistersModal = ({ buttonStyles }: modalProps) => {
                     </FormControl>
                     </div>
 
-                    <div className='w-1/4 mt-4 mb-4'>
+                    <div className='w-1/4 mt-6 mb-4'>
                     <FormControl fullWidth>
                       <TextField
                         id="datetime-local"
-                        label="Fecha de ocurrencia"
+                        label="Fecha"
                         type="datetime-local"
                         value={fechaPublicacion.toISOString().substring(0, 16)}
                         onChange={(e) =>
@@ -243,7 +243,7 @@ const RegistersModal = ({ buttonStyles }: modalProps) => {
                         onChange={(e) => setPrioridad(e.target.value)}
                       >
                         <MenuItem value={"URGENTE"}>URGENTE</MenuItem>
-                        <MenuItem value={"NO_URGENTE"}>NO_URGENTE</MenuItem>
+                        <MenuItem value={"NO_URGENTE"}>NO URGENTE</MenuItem>
                       </Select>
                     </FormControl>
                     </div>
@@ -282,13 +282,13 @@ const RegistersModal = ({ buttonStyles }: modalProps) => {
                   </div>
                 </div>
 
-                <div>
-                  <Button onClick={() => setAddingNewEquipo(false)}>
+                <div className="">
+                  <Button onClick={() => setAddingNewEquipo(false)} variant="outlined"  style={{marginTop: '25px'}} >
                     Seleccionar equipo existente
                   </Button>
                   {addingNewEquipo == false ? (
                     <div>
-                      <div className="w-3/4">
+                      <div className="w-4/4 mt-8 mb-8">
                         <FormControl fullWidth>
                           <InputLabel>Equipo</InputLabel>
                           <Select
@@ -305,12 +305,13 @@ const RegistersModal = ({ buttonStyles }: modalProps) => {
                       </div>
                     </div>
                   ) : null}
-                  <Button onClick={() => setAddingNewEquipo(true)}>
+                  <div>
+                  <Button  onClick={() => setAddingNewEquipo(true)} variant="outlined"  style={{marginTop: '25px'}} >
                     Añadir nuevo equipo
                   </Button>
                   {addingNewEquipo == true ? (
                     <div>
-                      <h3 className="text-lg mt-2 mb-4">Datos del equipo</h3>
+                      <h3 className="text-lg mt-8 mb-4 flex items-center justify-center h-full">Datos del equipo</h3>
                       
                      <div className="flex space-x-2"> 
                       <div className="w-4/6 mt-4 mb-4">
@@ -325,7 +326,7 @@ const RegistersModal = ({ buttonStyles }: modalProps) => {
 
                       <div className='w-2/6 mt-4 mb-4'>
                       <FormControl fullWidth>
-                        <InputLabel>Estado de reparación</InputLabel>
+                        <InputLabel>Estado</InputLabel>
                         <Select
                           value={estadoReparacion}
                           onChange={(e) => setEstadoReparacion(e.target.value)}
@@ -343,7 +344,7 @@ const RegistersModal = ({ buttonStyles }: modalProps) => {
                         <TextField
                           label="Descripción"
                           multiline
-                          rows={4}
+                          rows={5.5}
                           variant="outlined"
                           className="mt-4"
                           value={descripcion}
@@ -353,29 +354,49 @@ const RegistersModal = ({ buttonStyles }: modalProps) => {
                       </div>
 
                       <div className="w-2/6 mt-4 mb-4">
-                      <input
-                        type="file"
-                        onChange={(e) => setFoto(e.target.files[0])} // Añade esto para manejar la imagen
-                        className="my-2"
-                      />
-                      </div>
+                      <label className="block relative h-40 border border-gray-300 cursor-pointer">
+                        <input
+                          type="file"
+                          className="absolute inset-0 opacity-0 w-full h-full cursor-pointer"
+                          onChange={(e) => {
+                            const file = e.target.files[0];
+                            if (file) {
+                              const reader = new FileReader();
+                              reader.onload = (e) => {
+                                document.getElementById('image-preview').src = e.target.result;
+                              };
+                              reader.readAsDataURL(file);
+                            }
+                          }}
+                        />
+                        <img id="image-preview" className="h-full w-full object-contain" />
+                        <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center text-white text-sm font-bold opacity-0 hover:opacity-100 transition-opacity duration-300">
+                          Subir imagen
+                        </div>
+                      </label>
+                    </div>
+                      
+                      
+
                       </div>
                     </div>
                   ) : null}
+                  </div>
                 </div>
                 
                 
               </form>
+              </div>
               <div className="flex justify-between">
                 <button
-                  className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-2"
+                  className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded my-2"
                   type="submit"
                   >
                   Guardar
                 </button>
 
                 <button
-                  className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                  className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded my-2"
                   type="button"
                   onClick={handleClose}
                   >
@@ -383,7 +404,6 @@ const RegistersModal = ({ buttonStyles }: modalProps) => {
                 </button>
               </div>
               
-            </div>
           </ModalContent>
         </Fade>
       </Modal>

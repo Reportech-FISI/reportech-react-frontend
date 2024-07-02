@@ -47,7 +47,7 @@ const Appbar = () => {
           onClick={() => navigate("/")}
           className="p-2 bg-slate-700 hover:bg-slate-600 rounded text-zinc-100"
         >
-          Log out
+          Cerrar sesión
         </button>
       </div>
     </div>

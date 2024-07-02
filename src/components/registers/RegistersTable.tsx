@@ -84,7 +84,7 @@ const RegistersTable = () => {
   
   return (
     <div className="flex items-center justify-center ">
-      <StyledTableContainer component={Paper} sx={{ width: "90%" }}>
+      <StyledTableContainer component={Paper} sx={{ width: "90%", borderRadius: 5  }}>
         <Table>
           <TableHead>
             <TableRow sx={{}}>
