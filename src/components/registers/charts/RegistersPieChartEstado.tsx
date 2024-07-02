@@ -25,7 +25,7 @@ const RegistersPieChartEstado = () => {
       const reportesPorEstado = arbol.reportesPorEstado();
       const arr = [
          { id: 0, value: reportesPorEstado[0], label: 'T. no necesario' },
-         { id: 1, value: reportesPorEstado[1], label: 'T. por asginar' },
+         { id: 1, value: reportesPorEstado[1], label: 'T. por asignar' },
          { id: 2, value: reportesPorEstado[2], label: 'T. asignado' },
       ];
       setPieData(arr);
