@@ -14,8 +14,14 @@ export const Home = () => {
   return (
     <>
       <Appbar />
-      <div className="pt-16 flex justify-evenly items-center h-screen">
-        <div className="flex flex-col items-center w-1/5">
+      <div className="pt-8 flex flex-col justify-evenly items-center h-screen">
+      <h1 className='text-9xl font-bold italic text-gray-800 relative'>
+        <span className='relative z-10 animate-pulse'></span>
+        <span className='absolute top-0 left-0 w-full h-full bg-gradient-to-r from-blue-600 to-blue-400 blur-md animate-pulse opacity-75'></span>
+      </h1>
+        <div className="flex justify-evenly items-center h-screen">
+
+        <div className="flex flex-col items-center w-1/2 -mt-8 p-8">
           <button className="size-full" onClick={() => navigate(`/registers`)}>
             <img src={registerIcon} alt="registro" className="size-full" />
           </button>
@@ -24,7 +30,7 @@ export const Home = () => {
         </div>
 
         {rol === 'ADMIN' && (
-          <div className="flex flex-col items-center w-1/5">
+          <div className="flex flex-col items-center w-1/2 -mt-8 p-8">
             <button className="size-full" onClick={ () => navigate('/users')}>
               <img src={userIcon} alt="user" className="size-full" />
             </button>
@@ -33,12 +39,13 @@ export const Home = () => {
           </div> 
         )}
 
-        <div className="flex flex-col items-center w-1/5">
+        <div className="flex flex-col items-center w-1/2 -mt-8 p-8">
           <button className="size-full" onClick={() => navigate('/assign')}>
             <img src={userIcon} alt="user" className="size-full" />
           </button>
           <h2 className="text-4xl"> Asignación </h2>
           <p className="text-sm text-center mt-2">Este botón sirve para realizar asignaciones</p>
+        </div>
         </div>
       </div>
 

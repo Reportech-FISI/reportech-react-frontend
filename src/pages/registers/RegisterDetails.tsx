@@ -75,10 +75,10 @@ export const RegisterDetails = () => {
   return (
     <>
     <Appbar/>
-    <div className=" container mx-auto mt-16 px-3 shadow-md">
+    <div className=" container mx-auto px-3 py-1 shadow-md">
       <div className=' bg-white'>
         <div className=' bg-white p-7 rounded-md'>
-          <h1 className="text-3xl font-bold mb-5 text-center">Detalles</h1>
+          <h1 className="text-5xl font-bold mb-5 text-center">Detalles</h1>
           <div>
           <div className="text-lg font-semibold mb-2">Datos del registro:</div>
             <table className="w-full border-collapse table-auto">
@@ -181,7 +181,7 @@ export const RegisterDetails = () => {
               </table>
             </div>  
           </div>
-        <div className='ml-6 flex justify-start py-4'>
+        <div className='ml-6 flex justify-start py-2'>
           <div 
             className="border border-red-500 hover:bg-red-500 hover:text-white font-bold py-2 px-3 rounded mr-2 flex cursor-pointer"
           >
