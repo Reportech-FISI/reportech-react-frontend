@@ -199,7 +199,7 @@ export const RegisterDetails = () => {
             <button
               className="border border-orange-400 p-2 px-3 bg-orange-500 hover:bg-orange-700 text-white font-bold  rounded mr-2" 
             >
-              <a href={`http://localhost:5173/test`}>
+              <a href={`https://reportech.netlify.app/test`}>
                 <PictureAsPdfIcon/>
               </a>
             </button>
