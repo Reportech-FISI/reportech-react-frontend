@@ -95,13 +95,13 @@ class ArbolBusquedaBinaria {
    reportesPorEstadoRecursivo(nodoActual: NodoArbol | null, estados: number[]) {
       if (nodoActual !== null) {
          switch (nodoActual.reporte.estado) {
-            case 'TECNICO_NO_NECESARIO':
+            case 'NO_NECESARIO':
                estados[0] += 1;
                break;
-            case 'TECNICO_POR_ASIGNAR':
+            case 'POR_RESOLVER':
                estados[1] += 1;
                break;
-            case 'TECNICO_ASIGNADO':
+            case 'RESUELTO':
                estados[2] += 1;
                break;
          }

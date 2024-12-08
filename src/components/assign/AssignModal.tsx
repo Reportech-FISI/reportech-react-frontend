@@ -20,7 +20,7 @@ const AssignModal = ({registerId}: {registerId: number}) => {
 
   useEffect(() => {
     if (open) {
-      fetch(`http://localhost:8080/api/autoassign/${registerId}`)
+      fetch(`${import.meta.env.VITE_API_URL}/api/autoassign/${registerId}`)
         .then(res => res.json())
         .then(data => {
           if (data) {
@@ -49,7 +49,7 @@ const AssignModal = ({registerId}: {registerId: number}) => {
       // estado
     }
 
-    const response = await fetch(`http://localhost:8080/api/reporte/${registerId}/${trabajadorId}`, {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/reporte/${registerId}/${trabajadorId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'

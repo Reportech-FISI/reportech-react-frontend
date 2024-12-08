@@ -27,7 +27,7 @@ const ManualAssignModal = ({registerId}: {registerId: number}) => {
   const [trabajadores, setTrabajadores] = useState<Set<Trabajador> >(new Set());
 
   const fetchTrabajadores = async () => {
-    const response = await fetch('http://localhost:8080/api/trabajadores');
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/trabajadores`);
     const data: Set<Trabajador> = await response.json();
     const tecnicos = Array.from(data).filter(trabajador => trabajador.rol! === 'TECNICO');
     setTrabajadores(new Set(tecnicos));
@@ -46,7 +46,7 @@ const ManualAssignModal = ({registerId}: {registerId: number}) => {
   })
 
   useEffect(() => {
-    fetch(`http://localhost:8080/api/reporte/${registerId}`)
+    fetch(`${import.meta.env.VITE_API_URL}/api/reporte/${registerId}`)
     .then(res => res.json())
     .then(data => setRegistro(data))
   }, [registerId])
@@ -76,7 +76,7 @@ const ManualAssignModal = ({registerId}: {registerId: number}) => {
       // estado
     }
 
-    const response = await fetch(`http://localhost:8080/api/reporte/${registerId}/${trabajadorId}`, {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/reporte/${registerId}/${trabajadorId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
@@ -96,7 +96,7 @@ const ManualAssignModal = ({registerId}: {registerId: number}) => {
     const message = `Se le ha asignado el reporte ${registro.titulo}.\nAcceder al sistema para ver los detalles.`;
 
     try {
-      const response = await fetch(`http://localhost:8080/api/mail/send/assigned/${trabajadorId}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/mail/send/assigned/${trabajadorId}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

@@ -38,7 +38,7 @@ const UsersTable = () => {
   };
 
   const fetchTrabajadores = async () => {
-    const response = await fetch('http://localhost:8080/api/trabajadores');
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/trabajadores`);
     const data: Set<Trabajador> = await response.json();
     setTrabajadores(data);
   }

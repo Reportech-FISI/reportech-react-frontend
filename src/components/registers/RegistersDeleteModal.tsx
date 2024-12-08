@@ -14,7 +14,7 @@ const RegistersDeleteModal = ({reporteId}: {reporteId: number}) => {
   const navigate = useNavigate();
 
   const fetchDeleteRegister = async () => {
-    const response = await fetch(`http://localhost:8080/api/reporte/${reporteId}`, {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/reporte/${reporteId}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json'

@@ -23,10 +23,12 @@
     "@ngneat/falso": "^7.2.0",
     "@react-pdf/renderer": "^3.4.4",
     "@types/node": "^20.14.4",
+    "dotenv": "^16.4.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.23.0",
-    "styled-components": "^6.1.11"
+    "styled-components": "^6.1.11",
+    "ts-node": "^10.9.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.1.1",

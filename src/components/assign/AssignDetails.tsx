@@ -44,7 +44,7 @@ const AssignDetails: React.FC<AssignDetailsProps> = ({ registerId, flag }) => {
   })
 
   useEffect(() => {
-    fetch(`http://localhost:8080/api/reporte/${registerId}`)
+    fetch(`${import.meta.env.VITE_API_URL}/api/reporte/${registerId}`)
     .then(res => res.json())
     .then(data => setRegistro(data))
   }, [registerId])
@@ -54,7 +54,7 @@ const AssignDetails: React.FC<AssignDetailsProps> = ({ registerId, flag }) => {
 
   const fetchEquipo = async () => {
     try {
-      const response = await fetch(`http://localhost:8080/api/reporte/${registerId}/equipo/${registro.titulo}`);
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/reporte/${registerId}/equipo/${registro.titulo}`);
       const data = await response.json();
       console.log('Datos del equipo recibidos:', data);
       setEquipo(data);
@@ -120,7 +120,7 @@ const AssignDetails: React.FC<AssignDetailsProps> = ({ registerId, flag }) => {
           <Paper className="p-5 bg-gray-100 mb-3 w-2/3">
             <Typography variant="h6" className="text-orange-600">Imagen: </Typography>
             {equipo.foto && equipo.foto.id ? (
-              <img src={`http://localhost:8080/api/equipo/img/${equipo.foto.id}`} alt="imagen" className="w-60"/>
+              <img src={`${import.meta.env.VITE_API_URL}/api/equipo/img/${equipo.foto.id}`} alt="imagen" className="w-60"/>
             ) : (
               <Typography variant="body1" className="text-gray-700">No hay imagen disponible</Typography>
             )}

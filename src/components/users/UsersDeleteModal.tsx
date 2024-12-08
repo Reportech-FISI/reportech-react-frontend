@@ -11,7 +11,7 @@ const UsersDeleteModal = ({userId}: {userId: number}) => {
   const handleClose = () => setOpen(false);
 
   const fetchDeleteUser = async () => {
-    const response = await fetch(`http://localhost:8080/api/trabajador/${userId}`, {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/trabajador/${userId}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json'

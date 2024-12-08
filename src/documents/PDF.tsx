@@ -99,7 +99,7 @@ export const PDF = () => {
   
   const savedFotoId = localStorage.getItem('fotoid') as string;
   const fotoid = JSON.parse(savedFotoId);
-  const Foto = () => `http://localhost:8080/api/equipo/img/${fotoid}`;
+  const Foto = () => `${import.meta.env.VITE_API_URL}/api/equipo/img/${fotoid}`;
 
   return (
     <Document>

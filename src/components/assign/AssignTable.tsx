@@ -32,7 +32,7 @@ const AssignTable: React.FC<AssignTableProps> = ({onReportClick, flagReportClick
   };
   
   const fetchReportes = async () => {
-    const response = await fetch('http://localhost:8080/api/assign/reportes');
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/assign/reportes`);
     const data: Reporte[] = await response.json();
     setReportes(data);
   };

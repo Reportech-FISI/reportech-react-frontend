@@ -5,11 +5,88 @@ import { Registro } from '../models/registro/Registro';
 
 const cargos = ['REPARACION_COMPUTADORAS', 'CONFIGURACION_REDES', 'SOPORTE_SOFTWARE', 'PROGRAMACION', 'ADMINISTRACION_BASEDATOS', 'SEGURIDAD_INFORMATICA', 'ANALISIS_SISTEMAS', 'CAPACITACION_USUARIOS', 'REDACCION_DOCUMENTACION', 'RESOLUCION_PROBLEMAS', 'ATENCION_CLIENTE', 'INSTALACION_CABLEADO', 'MANTENIMIENTO_IMPRESORAS', 'CONFIGURACION_TELEFONIA', 'MANEJO_HERRAMIENTAS'];
 const clasificacion = ['HARDWARE','SOFTWARE', 'REDES', 'BASES_DE_DATOS','SEGURIDAD', 'TELEFONÍA', 'IMPRESIÓN', 'CABLEADO'];
+const ubicaciones = [
+    'Salón 100',
+    'Salón 101',
+    'Salón 102',
+    'Salón 103',
+    'Salón 104',
+    'Salón 105',
+    'Salón 106',
+    'Salón 107',
+    'Salón 108',
+    'Salón 109',
+    'Laboratorio 1° piso',
+    'Biblioteca',
+    'Unidad de economía',
+    'DGA',
+    'CERSEU',
+    'Departamento académico de CC',
+    'Auditorio',
+    'Decanato',
+    'Salón 200',
+    'Salón 201',
+    'Salón 202',
+    'Salón 203',
+    'Salón 204',
+    'Salón 206',
+    'Salón 207',
+    'Salón 208',
+    'Salón 209',
+    'Salón 210',
+    'Aula Magna',
+    'Salón tercio estudiantil',
+    'Salón de catedráticos',
+    'Unidad de posgrado',
+    'Unidad de matrícula',
+    'Dirección de Escuela de Software',
+    'Dirección de Escuela de Sistemas',
+    'UNAYOE y Bienestar',
+    'Salón 300',
+    'Salón 301',
+    'Salón 302',
+    'Salón 303',
+    'Salón 304',
+    'Salón 305',
+    'Salón 306',
+    'Salón 307',
+    'Salón 308',
+    'Salón 309',
+    'Salón 310',
+    'Salón 311',
+    'Salón 312',
+    'Salón 101 - NP',
+    'Salón 102 - NP',
+    'Salón 103 - NP',
+    'Salón 104 - NP',
+    'Salón 105 - NP',
+    'Salón 106 - NP',
+    'Salón 107 - NP',
+    'Salón 108 - NP',
+    'Salón 109 - NP',
+    'Salón de estudio - NP',
+    'Data center',
+    'Laboratorio 01 - NP',
+    'Laboratorio 02 - NP',
+    'Laboratorio 03 - NP',
+    'Laboratorio 04 - NP',
+    'Laboratorio 05 - NP',
+    'Laboratorio 06 - NP',
+    'Salón 200 - NP',
+    'Salón 201 - NP',
+    'Salón 202 - NP',
+    'Laboratorio 07 - NP',
+    'Laboratorio 08 - NP',
+    'Salón de música',
+    'General (pabellón principal)',
+    'General (pabellón nuevo)',
+    'General (todo el campus)'
+]
 
 const BATCH_SIZE = 1000; // Tamaño del lote
 
 async function createTrabajadores() {
-    for(let i = 0; i < 10000; i += BATCH_SIZE) {
+    for(let i = 0; i < 1000; i += BATCH_SIZE) {
         const batchPromises = [];
         for(let j = 0; j < BATCH_SIZE; j++) {
             const cargosUnicos = new Set<string>();
@@ -51,13 +128,13 @@ async function createTrabajadores() {
 }
 
 async function createEquipos() {
-    for(let i = 0; i < 10000; i += BATCH_SIZE) {
+    for(let i = 0; i < 1000; i += BATCH_SIZE) {
         const batchPromises = [];
         for(let j = 0; j < BATCH_SIZE; j++) {
             const equipo: Equipo = {
                 estadoReparacion: faker.helpers.arrayElement(['REPARABLE', 'IRREPARABLE']),
                 descripcion: faker.lorem.sentence(),
-                nombre: `PC ${i + j}`,
+                nombre: faker.commerce.productName(), 
             }
 
             const promesa = fetch('http://localhost:8080/api/test/equipo', {
@@ -84,18 +161,22 @@ async function createEquipos() {
     console.log('Todas las solicitudes de equipos se han completado');
 }
 
+function capitalizeFirstLetter(string: string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 async function createReportes() {
-    for(let i = 0; i < 10000; i += BATCH_SIZE) {
+    for(let i = 0; i < 1000; i += BATCH_SIZE) {
         const batchPromises = [];
         for(let j = 0; j < BATCH_SIZE; j++) {
             const registro: Registro = {
                 estado: faker.helpers.arrayElement(['TECNICO_NO_NECESARIO', 'TECNICO_POR_ASIGNAR','TECNICO_ASIGNADO']),
-                fechaPublicacion: faker.date.between({from: new Date('10/06/2024'), to: new Date('10/07/2025')}).toISOString(),
+                fechaPublicacion: faker.date.between({from: new Date('01/01/2024'), to: new Date('12/12/2024')}).toISOString(),
                 prioridad: faker.helpers.arrayElement(['URGENTE', 'NO_URGENTE']),
-                titulo: `Registro ${i + j}`,
+                titulo: `${capitalizeFirstLetter(faker.hacker.verb())} ${faker.hacker.adjective()} ${faker.hacker.noun()}`,
                 userDesignado: null,
                 clasificacion: faker.helpers.arrayElement(clasificacion),
-                ubicacion: 'Aula 205 NP',
+                ubicacion: faker.helpers.arrayElement(ubicaciones),
                 equipo: {
                     id: faker.number.int({min: 1, max: 50})
                 },
@@ -140,3 +221,5 @@ async function inicializarDatos() {
 }
 
 inicializarDatos();
+
+// npx tsx src/test/generateData.ts

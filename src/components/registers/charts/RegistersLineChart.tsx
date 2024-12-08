@@ -8,7 +8,7 @@ const RegistersLineChart = () => {
    const [registersData, setRegistersData] = useState<number[]>([]);
 
    const fetchReportes = async () => {
-      const response = await fetch('http://localhost:8080/api/reportes');
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/reportes`);
       const data: Reporte[] = await response.json();
       setReportes(data);
    };

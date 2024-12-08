@@ -32,7 +32,7 @@ const RegistersUpdate = ({registro}) => {
 
     console.log(data);
 
-    const response = await fetch(`http://localhost:8080/api/reporte/${registro.id}`, {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/reporte/${registro.id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
@@ -77,9 +77,9 @@ const RegistersUpdate = ({registro}) => {
                   <FormControl fullWidth>
                     <InputLabel>Estado</InputLabel>
                     <Select value={estado} onChange={(e) => setEstado(e.target.value)}>
-                      <MenuItem value={"TECNICO_NO_NECESARIO"}>TECNICO_NO_NECESARIO</MenuItem>
-                      <MenuItem value={"TECNICO_POR_ASIGNAR"}>TECNICO_POR_ASIGNAR</MenuItem>
-                      <MenuItem value={"TECNICO_ASIGNADO"}>TECNICO_ASIGNADO</MenuItem>
+                      <MenuItem value={"NO_NECESARIO"}>NO_NECESARIO</MenuItem>
+                      <MenuItem value={"POR_RESOLVER"}>POR_RESOLVER</MenuItem>
+                      <MenuItem value={"RESUELTO"}>RESUELTO</MenuItem>
                     </Select>
                   </FormControl>
 
@@ -115,14 +115,14 @@ const RegistersUpdate = ({registro}) => {
                   <FormControl fullWidth>
                     <InputLabel>Clasificación</InputLabel>
                     <Select value={clasificacion} onChange={(e) => setClasificacion(e.target.value)}>
-                      <MenuItem value={"HARDWARE"}>HARDWARE</MenuItem>
-                      <MenuItem value={"SOFTWARE"}>SOFTWARE</MenuItem>
-                      <MenuItem value={"REDES"}>REDES</MenuItem>
-                      <MenuItem value={"BASES_DE_DATOS"}>BASES_DE_DATOS</MenuItem>
-                      <MenuItem value={"SEGURIDAD"}>SEGURIDAD</MenuItem>
-                      <MenuItem value={"TELEFONÍA"}>TELEFONÍA</MenuItem>
-                      <MenuItem value={"IMPRESIÓN"}>IMPRESIÓN</MenuItem>
-                      <MenuItem value={"CABLEADO"}>CABLEADO</MenuItem>
+                      <MenuItem value={"PRODUCTOS"}>PRODUCTOS</MenuItem>
+                      <MenuItem value={"INVENTARIO"}>INVENTARIO</MenuItem>
+                      <MenuItem value={"VENTAS"}>VENTAS</MenuItem>
+                      <MenuItem value={"COMPRAS"}>COMPRAS</MenuItem>
+                      <MenuItem value={"CLIENTES"}>CLIENTES</MenuItem>
+                      <MenuItem value={"PROVEEDORES"}>PROVEEDORES</MenuItem>
+                      <MenuItem value={"FACTURACIÓN"}>FACTURACIÓN</MenuItem>
+                      <MenuItem value={"ENVÍOS"}>ENVÍOS</MenuItem>
                     </Select>
                   </FormControl>
                 </div>

@@ -4,52 +4,93 @@ import userIcon from "../../assets/usuario.svg";
 import Appbar from "../../components/appbar/Appbar";
 import { useAuth } from "../../AuthProvider";
 import escudoSM from "../../assets/escudoUNMSM.png";
+import assignIcon from "../../assets/asig.svg";
+import { useState } from "react";
+import { Button, Modal, Typography } from "@mui/material";
+import { Box } from "@mui/system";
 
 export const Home = () => {
 
   const { rol } = useAuth();
   const navigate = useNavigate();
   
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const handleOpen = () => setIsModalOpen(true);
+  const handleClose = () => setIsModalOpen(false);
   return (
     <>
       <Appbar />
       <div className="pt-8 flex flex-col justify-evenly items-center h-screen">
-      <h1 className='text-9xl font-bold italic text-gray-800 relative'>
-        <span className='relative z-10 animate-pulse'></span>
-        <span className='absolute top-0 left-0 w-full h-full bg-gradient-to-r from-blue-600 to-blue-400 blur-md animate-pulse opacity-75'></span>
-      </h1>
+        <h1 className='text-9xl font-bold italic text-gray-800 relative'>
+          <span className='relative z-10 animate-pulse'></span>
+          <span className='absolute top-0 left-0 w-full h-full bg-gradient-to-r from-blue-600 to-blue-400 blur-md animate-pulse opacity-75'></span>
+        </h1>
         <div className="flex justify-evenly items-center h-screen">
 
-        <div className="flex flex-col items-center w-1/2 -mt-8 p-8">
-          <button className="size-full" onClick={() => navigate(`/registers`)}>
-            <img src={registerIcon} alt="registro" className="size-full" />
-          </button>
-          <h2 className="text-4xl"> Registros </h2>
-          <p className="text-sm text-center mt-2">Este botón sirve para acceder a los registros</p>
-        </div>
-
-        {rol === 'ADMIN' && (
           <div className="flex flex-col items-center w-1/2 -mt-8 p-8">
-            <button className="size-full" onClick={ () => navigate('/users')}>
-              <img src={userIcon} alt="user" className="size-full" />
+            <button className="size-full" onClick={() => navigate(`/registers`)}>
+              <img src={registerIcon} alt="registro" className="size-full" />
             </button>
-            <h2 className="text-4xl"> Usuarios </h2>
-            <p className="text-sm text-center mt-2">Este botón sirve para ver la lista de usuarios</p>
-          </div> 
-        )}
+            <h2 className="text-4xl"> Registros </h2>
+            <p className="text-sm text-center mt-2">Esta funcionalidad sirve para acceder a los registros</p>
+          </div>
 
-        <div className="flex flex-col items-center w-1/2 -mt-8 p-8">
-          <button className="size-full" onClick={() => navigate('/assign')}>
-            <img src={userIcon} alt="user" className="size-full" />
-          </button>
-          <h2 className="text-4xl"> Asignación </h2>
-          <p className="text-sm text-center mt-2">Este botón sirve para realizar asignaciones</p>
-        </div>
-        </div>
-      </div>
+          {rol === 'ADMIN' && (
+            <div className="flex flex-col items-center w-1/2 -mt-8 p-8">
+              <button className="size-full" onClick={ () => navigate('/users')}>
+                <img src={userIcon} alt="user" className="size-full" />
+              </button>
+              <h2 className="text-4xl"> Usuarios </h2>
+              <p className="text-sm text-center mt-2">Esta funcionalidad sirve para ver la lista de usuarios</p>
+            </div> 
+          )}
 
-      
+          <div className="flex flex-col items-center w-1/2 -mt-8 p-8">
+            <button 
+              className="pb-4 size-full" 
+              onClick={() => handleOpen()}
+            >
+              <img src={assignIcon} alt="user" className="size-full" />
+            </button>
+            <h2 className="text-4xl"> Asignación </h2>
+            <p className="text-sm text-center mt-2">Esta acción sirve para realizar asignaciones</p>
+          </div>
+        </div>
+      </div>   
+
+      <Modal
+        open={isModalOpen}
+        onClose={handleClose}
+        aria-labelledby="modal-title"
+        aria-describedby="modal-description"
+      >
+        <Box
+          sx={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: 400,
+            bgcolor: 'white',
+            border: '2px solid #000',
+            boxShadow: 24,
+            p: 4,
+          }}
+        >
+          <Typography id="modal-title" variant="h6" component="h2">
+            Función en implementación
+          </Typography>
+          <Typography id="modal-description" sx={{ mt: 2 }}>
+            Esta funcionalidad está en desarrollo y estará disponible próximamente.
+          </Typography>
+          <Button onClick={handleClose} sx={{ mt: 2 }}>
+            Cerrar
+          </Button>
+        </Box>
+      </Modal>
+
+
       <footer className="bg-gray-800 text-white py-8">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">

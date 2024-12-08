@@ -46,7 +46,7 @@ export const RegisterDetails = () => {
 
 
   useEffect(() => {
-    fetch(`http://localhost:8080/api/reporte/${registerId}`)
+    fetch(`${import.meta.env.VITE_API_URL}/api/reporte/${registerId}`)
       .then(response => response.json())
       .then(data => setReporte(data));
   }, [registerId]);
@@ -55,7 +55,7 @@ export const RegisterDetails = () => {
   const fechaFormateada = `${fecha.toLocaleDateString()} ${fecha.toLocaleTimeString()}`;
 
   const fetchEquipo = async () => {
-    await fetch(`http://localhost:8080/api/reporte/${registerId}/equipo/${reporte.titulo}`)
+    await fetch(`${import.meta.env.VITE_API_URL}/api/reporte/${registerId}/equipo/${reporte.titulo}`)
       .then(response => response.json())
       .then(data => setEquipo(data));
 
@@ -158,7 +158,7 @@ export const RegisterDetails = () => {
                       <span className="font-semibold text-blue-800 ">Foto:</span>
                       <div className="mt-1">
                         {equipo.foto && equipo.foto.id ? (
-                          <img src={`http://localhost:8080/api/equipo/img/${equipo.foto.id}`} alt="imagen" className="w-60"/>
+                          <img src={`${import.meta.env.VITE_API_URL}/api/equipo/img/${equipo.foto.id}`} alt="imagen" className="w-60"/>
                         ) : (
                           <p className="text-gray-700">No hay imagen disponible</p>
                         )}

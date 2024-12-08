@@ -58,7 +58,7 @@ const CreateUser = () => {
     
     console.log(userData);
     try {
-      const response = await fetch('http://localhost:8080/api/trabajador', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/trabajador`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -78,7 +78,7 @@ const CreateUser = () => {
     const message = "Se le ha generado una contraseña para acceder al sistema. La contraseña es: " + generatedPassword;
 
     try {
-      const response = await fetch(`http://localhost:8080/api/mail/send/${userData.email}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/mail/send/${userData.email}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

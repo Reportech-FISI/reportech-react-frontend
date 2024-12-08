@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import {
   TableBody,
   TableCell,
@@ -46,17 +46,11 @@ const RegistersTable = () => {
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const [reportes, setReportes] = useState<Reporte[]>([]);
-  const [sortDirection, setSortDirection] = useState("asc");
-  const [sortField, setSortField] = useState<keyof Reporte>("fechaPublicacion"); 
-
-  const toggleSort = (field: keyof Reporte, isAscending: boolean) => {
-    const direction: "asc" | "desc" | undefined = isAscending ? "asc" : "desc";
-    setSortDirection(direction);
-    setSortField(field);
-  };
+  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
+  const [sortField, setSortField] = useState<keyof Reporte>("id"); 
 
   const fetchReportes = async () => {
-    const response = await fetch("http://localhost:8080/api/reportes");
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/reportes`);
     const data: Reporte[] = await response.json();
     setReportes(data);
   };
@@ -65,10 +59,15 @@ const RegistersTable = () => {
     fetchReportes();
   }, []);
 
+  const toggleSort = useCallback((field: keyof Reporte, isAscending: boolean) => {
+    const direction: "asc" | "desc" = isAscending ? "asc" : "desc";
+    setSortDirection(direction);
+    setSortField(field);
+  }, []);
+
   // 1/5 Algoritmos.
-  const sortedReportes = useMemo(() => {
-    return quickSort([...reportes], sortField, sortDirection);
-  }, [reportes, sortField, sortDirection]);
+  const sortedReportes = quickSort([...reportes], sortField, sortDirection);
+
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -140,9 +139,9 @@ const RegistersTable = () => {
                       <StatusTypography
                         style={{
                           backgroundColor: 
-                          ((reporte.estado === "TECNICO_ASIGNADO" && '  #1966f6 ') ||
-                          (reporte.estado === "TECNICO_POR_ASIGNAR" && '  #eca01a ') ||
-                          (reporte.estado === "TECNICO_NO_NECESARIO" && ' #b5ada1 ')) ||
+                          ((reporte.estado === "RESUELTO" && '  #1966f6 ') ||
+                          (reporte.estado === "POR_RESOLVER" && '  #eca01a ') ||
+                          (reporte.estado === "NO_NECESARIO" && ' #b5ada1 ')) ||
                           undefined
                         }}
                       >
