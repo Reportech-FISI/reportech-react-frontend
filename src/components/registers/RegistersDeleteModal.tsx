@@ -45,16 +45,15 @@ const RegistersDeleteModal = ({reporteId}: {reporteId: number}) => {
           <ModalContent sx={style}>
             <h2>Seguro que desea eliminar el registro?</h2>
             <div className='flex justify-end mt-4'>
-              <button 
+                <button 
                 className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-2" 
-                onClick={() => {
-                  fetchDeleteRegister();
-                  navigate('/registers');
-                  location.reload()
+                onClick={async () => {
+                  await fetchDeleteRegister();
+                  location.reload();
                 }}
-              >
+                >
                 Si
-              </button>
+                </button>
               <button 
                 className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" 
                 type="button" 

@@ -60,7 +60,7 @@ export const Login = () => {
       <div 
         className="absolute inset-0 z-0"
         style={{
-          backgroundImage: 'url(./src/pages/login/background.jpg)',
+          backgroundImage: 'url(/background.jpg)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}
@@ -70,7 +70,7 @@ export const Login = () => {
         <div className="relative z-20 flex flex-col items-center justify-center min-h-screen">
           <h1 className='text-9xl font-bold mb-8 animate-pulse animate-infinite italic'></h1>
           <div className="bg-white p-8 rounded-lg shadow-lg flex items-center space-x-8">
-            <img src="./src/pages/login/fisi.webp" alt="FISI" className="w-48 h-48 object-contain"/>
+            <img src="/fisi.webp" alt="FISI" className="w-48 h-48 object-contain"/>
             <div className="max-w-lg w-full">
               <form onSubmit={handleLogin}>
                 <h1 className="text-2xl font-bold mb-4 text-center">INICIAR SESIÓN</h1>
